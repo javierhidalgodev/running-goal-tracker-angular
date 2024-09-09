@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { dateValidatorFn } from '../../../utils/utils';
 import { ActivatedRoute } from '@angular/router';
 import { Goal, GoalActivity, GoalService } from '../../../services/goal.service';
+import { GoalWithExtraDetails } from '../../../models/goals';
 
 @Component({
   selector: 'app-activity',
@@ -10,12 +11,15 @@ import { Goal, GoalActivity, GoalService } from '../../../services/goal.service'
   styleUrl: './activity.component.scss'
 })
 export class ActivityComponent implements OnInit {
-  @Input() selectedGoal: Goal | any;
+  @Input() selectedGoal: GoalWithExtraDetails | any;
   @Output() emitAddActivity = new EventEmitter<GoalActivity>()
   activityForm: FormGroup = new FormGroup([])
   goalId?: number 
 
-  constructor (private _formBuilder: FormBuilder, private _route: ActivatedRoute, private _goalService: GoalService) { }
+  constructor (
+    private _formBuilder: FormBuilder,
+    private _route: ActivatedRoute,
+    private _goalService: GoalService) { }
 
   ngOnInit(): void {
     this.goalId = Number(this._route.snapshot.paramMap.get('id'))

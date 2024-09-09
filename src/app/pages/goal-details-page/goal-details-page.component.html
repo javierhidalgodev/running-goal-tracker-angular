@@ -1,49 +1,20 @@
-<!-- Si existe el objetivo lo renderiza, si no renderiza el mensaje de error abajo -->
-<ng-container *ngIf="selectedGoal; else goalNotFound">
-    <!-- Renderiza el objetivo pasándole los datos por @Input -->
-    <!-- Además recibe dos emisore de eventos, para manejar el modal de añadir actividad y el modal para mostrar una actividad completa -->
+<ng-container *ngIf="goalWithExtraDetails; else goalNotFound">
     <app-goal-detail
-        [selectedGoal]="selectedGoal"
-        (emitOpenModal)="handleModal()"
-        (emitComplete)="completeModal()">
+        [selectedGoal]="goalWithExtraDetails"
+        (emitOpenModal)="openModal()">
     </app-goal-detail>
 </ng-container>
 
-<!-- Que se rendiza si no hay goal disponible -->
 <ng-template #goalNotFound>
-    <p>{{ errorMessage }}</p>
+    <div errorMessage>{{ errorMessage }}</div>
 </ng-template>
 
-<!-- Botón para volver a los objetivos -->
 <a class="go-back-btn" mat-flat-button routerLink="/goals">GO BACK</a>
 
-<!-- Modal que solo se abre si isModalOpen está en true (es decir, que se ha recibido el evento desde el componente de actividad) y no se ha completado aún la actividad -->
-<ng-container *ngIf="isModalOpen">
-    <!-- El modal, al emitir el evento de cerrar, ejecuta la función que modifica isModal a false, lo que cierra este modal -->
-    <app-modal (emitCloseEvent)="closeModal()">
-        <!-- La actividad emite un evento que pasa la actividad añadida para gestionar el elemento selectedGoal, y que allí donde sea pasado, se pueda actualizar, concretamente al componente que renderiza el objetivo -->
-        <app-activity (emitAddActivity)="activityAdded($event)" [selectedGoal]="selectedGoal"></app-activity>
+<ng-container *ngIf="activeModal">
+    <app-modal (emitCloseEvent)="closeModal()" [ngSwitch]="activeModal">
+        <app-activity *ngSwitchCase="'activityForm'" (emitAddActivity)="activityAdded($event)" [selectedGoal]="goalWithExtraDetails"></app-activity>
+        <app-goal-complete-modal *ngSwitchCase="'goalCompleted'"></app-goal-complete-modal>
+        <!-- En principio no necesito manejar un caso de DEFAULT ya que está controlado el valor que puede tomar activeModal -->
     </app-modal>
 </ng-container>
-
-<!-- Encargado de renderizar el componente emergente y temporal que avisa de que una actividad ha sido añadida -->
- <!-- Esto ocurre cuando se ejecuta en este componente la acción de añadir la actividad al objetivo -->
-<!-- <ng-container *ngIf="activitySuccessMessage">
-    <div class="success-message">
-        {{ activitySuccessMessage }}
-    </div>
-</ng-container> -->
-
-<!-- Este container debería renderizarse cuando el modal se ponga como visible y además la actividad sea marcada como completada -->
- <!-- El flujo ocurre así:
-  1. Se añade la actividad.
-  2. Llega al componente padre, que envía como @Input el objetivo al componente que renderiza el objetivo.
-  3. Este actualiza los datos en la tabla (que es hijo de este componente).
-  4. A su vez debe emitir el evento que indique que se ha completado la actividad, para abirr el modal en cuestión.
- -->
-<ng-container *ngIf="complete">
-    <app-modal (emitCloseEvent)="closeModal()">
-        <app-goal-complete-modal></app-goal-complete-modal>
-    </app-modal>
-</ng-container>
-

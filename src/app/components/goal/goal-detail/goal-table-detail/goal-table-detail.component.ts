@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Goal } from '../../../../services/goal.service';
+import { GoalWithExtraDetails } from '../../../../models/goals';
 
 @Component({
   selector: 'app-goal-table-detail',
@@ -7,8 +8,7 @@ import { Goal } from '../../../../services/goal.service';
   styleUrl: './goal-table-detail.component.scss'
 })
 export class GoalTableDetailComponent implements OnInit {
-  @Input() selectedGoal?: Goal;
-  @Input() goalTotal: number = 0;
+  @Input() selectedGoal?: GoalWithExtraDetails;
 
   errorMessage?: string;
 

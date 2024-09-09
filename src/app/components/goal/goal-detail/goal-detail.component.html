@@ -6,21 +6,21 @@
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <mat-progress-bar mode="determinate" [value]="goalProgress"></mat-progress-bar>
+            <mat-progress-bar mode="determinate" [value]="this.selectedGoal.goalProgress"></mat-progress-bar>
             <p><strong>Objetivo:</strong> {{ selectedGoal.km | kMtoEnd }}</p>
-            <p><strong>KM para finalizar:</strong> {{ selectedGoal.km | kMtoEnd: goalTotal }}</p>
+            <p><strong>KM para finalizar:</strong> {{ selectedGoal.km | kMtoEnd: this.selectedGoal.goalTotal }}</p>
             <p><strong>Descripción:</strong> {{ selectedGoal.description }}</p>
     
             <p><strong>Actividades registradas:</strong></p>
             <ng-container *ngIf="selectedGoal.activities.length > 0; else noActivitiesYet">
-                <app-goal-table-detail [selectedGoal]="selectedGoal" [goalTotal]="goalTotal"></app-goal-table-detail>
+                <app-goal-table-detail [selectedGoal]="selectedGoal"></app-goal-table-detail>
             </ng-container>
             <ng-template #noActivitiesYet>
                 <div class="no-activities-yet">No activities yet</div>
             </ng-template>
     
             <mat-card-actions>
-                <button mat-flat-button (click)="openModal()" [disabled]="goalTotal >= selectedGoal.km">ADD KMs</button>
+                <button mat-flat-button (click)="openModal()" [disabled]="this.selectedGoal.goalTotal >= selectedGoal.km">ADD KMs</button>
             </mat-card-actions>
         </mat-card-content>
     </mat-card>

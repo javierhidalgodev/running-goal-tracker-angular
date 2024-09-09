@@ -40,6 +40,7 @@ import { ActivityComponent } from './components/forms/activity/activity.componen
 import { ModalComponent } from './components/modal/modal.component';
 import { KMtoEndPipe } from './pipes/kmto-end.pipe';
 import { GoalCompleteModalComponent } from './components/goal/goal-detail/goal-complete-modal/goal-complete-modal.component';
+import { ErrorMessageDirective } from './directives/error-message.directive';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { GoalCompleteModalComponent } from './components/goal/goal-detail/goal-c
     ActivityComponent,
     ModalComponent,
     KMtoEndPipe,
-    GoalCompleteModalComponent
+    GoalCompleteModalComponent,
+    ErrorMessageDirective
   ],
   imports: [
     BrowserModule,

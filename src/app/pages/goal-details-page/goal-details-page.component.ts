@@ -1,7 +1,8 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Goal, GoalActivity, GoalService } from '../../services/goal.service';
-import { CdkTreeNodeOutletContext } from '@angular/cdk/tree';
+import { GoalActivity, GoalService } from '../../services/goal.service';
+import { ActiveModal, GoalWithExtraDetails } from '../../models/goals';
+import { calculateDaysToEnd, calculateGoalTotal, calculateProgress } from '../../utils/utils';
 
 @Component({
   selector: 'app-goal-details-page',
@@ -10,13 +11,13 @@ import { CdkTreeNodeOutletContext } from '@angular/cdk/tree';
 })
 export class GoalDetailsPageComponent implements OnInit {
   id: number = 0;
-  selectedGoal?: Goal;
-  daysToEnd: number = 0;
+  goalWithExtraDetails?: GoalWithExtraDetails;
 
+  // * Estos datos en principio permanecen, aunque los revisaremos más adelante
   errorMessage?: string
   activitySuccessMessage?: string;
   complete: boolean = false;
-  isModalOpen: boolean = false;
+  activeModal: ActiveModal = null;
 
   constructor(
     private _route: ActivatedRoute,
@@ -27,44 +28,43 @@ export class GoalDetailsPageComponent implements OnInit {
     this.id = this.getGoalIdFromRoute()
     this.fetchGoalById(this.id)
 
-    this.calculateDaysToEnd()
+    // ! Obsoleto de momento
+    // this.calculateDaysToEnd()
   }
 
   //  TODO: De momento los datos no persisten porque no está configurado para eso.
-  handleModal() {
-    this.isModalOpen = !this.isModalOpen
+  // handleModal() {
+  //   this.activeModal = !this.activeModal
+  // }
+
+  openModal() {
+    this.activeModal = 'activityForm'
   }
-  
+
   closeModal() {
-    this.isModalOpen = false;
-    if(this.complete) {
+    this.activeModal = null;
+    if (this.complete) {
       this.complete = false
     }
   }
 
-  completeModal() {
-    console.log('Complete en true hermano')
-    this.complete = true;
-  }
-
   activityAdded(event: GoalActivity) {
-    if (event && this.selectedGoal) {
-      this.selectedGoal = {
-        ...this.selectedGoal,
+    if (event && this.goalWithExtraDetails) {
+      this.goalWithExtraDetails = {
+        ...this.goalWithExtraDetails,
         activities: [
-          ...this.selectedGoal.activities,
+          ...this.goalWithExtraDetails.activities,
           event
         ]
       }
     }
-    this.isModalOpen = false
 
-    if(this.selectedGoal) {
-      let goalTotal = this.selectedGoal?.activities.reduce((acc, cur) => cur.km + acc , 0)
-      if(goalTotal >= this.selectedGoal?.km) {
-        this.complete = true
-      }
+    this.activeModal = null
+
+    if (this.goalWithExtraDetails) {
+      this.recalculateAfterAdd(this.goalWithExtraDetails)
     }
+
     // this.activitySuccessMessage = 'Activity added successfully!'
     // setTimeout(() => {
     //   this.activitySuccessMessage = undefined
@@ -79,11 +79,16 @@ export class GoalDetailsPageComponent implements OnInit {
   }
 
   private fetchGoalById(id: number) {
-    this._goalsService.getGoalById(this.id).subscribe({
+    this._goalsService.getGoalById(id).subscribe({
       next: res => {
         if (res) {
-          this.selectedGoal = res
-          // ? Separar a método a parte para mejorar legibilodad?
+          this.goalWithExtraDetails = {
+            ...res,
+            daysToEnd: calculateDaysToEnd(res),
+            goalTotal: calculateGoalTotal(res),
+            goalProgress: calculateProgress(res),
+            complete: false
+          }
         }
       },
       error: error => {
@@ -93,14 +98,20 @@ export class GoalDetailsPageComponent implements OnInit {
     })
   }
 
-  calculateDaysToEnd() {
-    if(this.selectedGoal) {
-      this.daysToEnd = Number(((new Date().getTime() - this.selectedGoal.startDate.getTime())/(1000*60*60*24)).toFixed())
-    }
-  }
-
   private handleErrorMessage(message: string) {
     console.log(message)
     this.errorMessage = message
+  }
+
+  private recalculateAfterAdd(goal: GoalWithExtraDetails) {
+    if (this.goalWithExtraDetails) {
+      this.goalWithExtraDetails.goalTotal = calculateGoalTotal(this.goalWithExtraDetails)
+      this.goalWithExtraDetails.goalProgress = calculateProgress(this.goalWithExtraDetails)
+
+      if (this.goalWithExtraDetails.goalTotal >= this.goalWithExtraDetails.km) {
+        this.goalWithExtraDetails.complete = true
+        this.activeModal = 'goalCompleted'
+      }
+    }
   }
 }
