@@ -1,0 +1,31 @@
+<form [formGroup]="registerForm" (submit)="register()">
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="text" placeholder="eve.holt@reqres.in" required aria-label="Email" required aria-required="true">
+        <mat-error *ngIf="getControl('email')?.errors?.['required'] && getControl('email')?.touched">
+            Email is required
+        </mat-error>
+        <mat-error *ngIf="getControl('email')?.errors?.['email']">
+            Please, enter a valid email address
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password" required aria-label="Password" aria-required="true">
+        <mat-error *ngIf="getControl('password')?.errors?.['required']">
+            Password is required
+        </mat-error>
+        <mat-error *ngIf="getControl('password')?.errors?.['minlength']">
+            Password must be at least 5 characters
+        </mat-error>
+        <mat-error *ngIf="getControl('password')?.errors?.['pattern'] && getControl('password')?.invalid">
+            Password must contain only letters and numbers
+        </mat-error>
+    </mat-form-field>
+    <div class="button-container" matTooltip="Complete this form to register" [matTooltipDisabled]="registerForm.valid">
+        <button mat-flat-button type="submit" [disabled]="registerForm.invalid">REGISTER</button>
+    </div>
+    <mat-error *ngIf="errorMessage">
+        {{ errorMessage }}
+    </mat-error>
+</form>

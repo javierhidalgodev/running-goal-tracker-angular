@@ -1,0 +1,26 @@
+:host {
+    width: 600px;
+}
+
+.form-toggle {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    button {
+        color: white;
+        font-size: x-large;
+
+        border-radius: 10px;
+    }
+}
+
+.divider {
+    display: inline-block;
+    width: 3px;
+    height: 24px;
+
+    background-color: #fff;
+}

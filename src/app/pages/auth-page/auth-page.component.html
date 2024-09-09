@@ -1,0 +1,13 @@
+<div class="form-toggle">
+    <button mat-button (click)="navigateTo('login')" [ngStyle]="{'background-color': currentAuthAction === 'login' ? '#f58a07' : ''}">LOGIN</button>
+    <div class="divider"></div>
+    <button mat-button (click)="navigateTo('register')" [ngStyle]="{'background-color': currentAuthAction === 'register' ? '#f58a07' : ''}">REGISTER</button>
+</div>
+
+<ng-container *ngIf="currentAuthAction === 'login'; else isRegister">
+    <app-login-form></app-login-form>
+</ng-container>
+
+<ng-template #isRegister>
+    <app-register-form></app-register-form>
+</ng-template>

@@ -1,0 +1,28 @@
+mat-card {
+    max-width: 600px;
+    padding: 20px;
+}
+
+mat-card-header {
+    h3 {
+        margin-top: 0;
+    }
+}
+
+mat-card-actions {
+    place-content: center;
+}
+
+.no-activities-yet {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+
+    padding: 16px 10px;
+    color: #888;
+    background-color: #eee;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 600;
+}

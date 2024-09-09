@@ -1,0 +1,14 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+mat-icon {
+    margin: 0 auto;
+    width: 200px;
+    height: auto;
+    font-size: 200px;
+    color: green;
+}

@@ -1,0 +1,25 @@
+:host {
+    width: 100%;
+    padding: 40px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.go-back-btn {
+    width: fit-content;
+}
+
+.success-message {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: fit-content;
+    padding: 10px 16px;
+    background-color: green;
+    color: white;
+    border-radius: 10px;
+}

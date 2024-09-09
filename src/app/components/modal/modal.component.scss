@@ -1,0 +1,40 @@
+.modal-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba($color: #000000, $alpha: .8);
+    backdrop-filter: blur(6px);
+
+    z-index: 2;
+}
+
+.modal-content {
+    position: relative;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.close-modal-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+
+    button {
+        background: none;
+        border: none;
+
+        &:hover {
+            color: orangered;
+        }
+    }
+}

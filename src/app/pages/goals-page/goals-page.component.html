@@ -1,0 +1,16 @@
+<h1>NEVER GIVE UP!</h1>
+
+<div class="cards-container">
+    <!-- De esta manera, el template expande la renderización al objeto que contiene, sin generar un elemento extra, como lo hariamos con un DIV normal -->
+    <ng-container *ngIf="isLoading">
+        <mat-spinner></mat-spinner>
+    </ng-container>
+
+    <ng-container *ngIf="goals.length === 0 && !isLoading">
+        <h3 class="no-data-yet-message">No data yet</h3>
+    </ng-container>
+
+    <ng-template ngFor let-goal [ngForOf]="goals">
+        <app-goal [goalObject]="goal"></app-goal>
+    </ng-template>
+</div>

@@ -1,0 +1,25 @@
+<h3 class="modal-content__header">NEW ACTIVITY</h3>
+<form [formGroup]="activityForm" (submit)="addActivity()">
+    <mat-form-field>
+        <mat-label>KMs</mat-label>
+        <input matInput formControlName="km" type="number" required>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>MM/DD/YYYY</mat-label>
+        <input
+            matInput
+            formControlName="date"
+            [matDatepicker]="picker"
+            [min]="selectedGoal.startDate"
+            [max]="selectedGoal.endDate"
+        >
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-error *ngIf="activityForm.get('km')?.errors?.['required'] && activityForm.get('km')?.touched">Please, enter a valid KM value</mat-error>
+    <mat-error *ngIf="activityForm.get('km')?.errors?.['min']">Value must be greater than 0.99</mat-error>
+    <mat-error *ngIf="activityForm.get('date')?.errors?.['isDate']&& activityForm.get('date')?.touched">Please, enter a valid date</mat-error>
+    <mat-error *ngIf="activityForm.get('date')?.errors?.['matDatepickerMin']&& activityForm.get('date')?.touched">Please, select date from the goal date range</mat-error>
+    <mat-error *ngIf="activityForm.get('date')?.errors?.['matDatepickerMax']&& activityForm.get('date')?.touched">Please, select date from the goal date range</mat-error>
+    <button mat-flat-button type="submit" [disabled]="activityForm.invalid">ADD</button>
+</form>
