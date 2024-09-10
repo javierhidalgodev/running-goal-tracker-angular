@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { GoalWithExtraDetails } from '../../../models/goals';
+import { GoalWithExtraDetails } from '../../../models/goals.model';
 
 @Component({
   selector: 'app-goal-detail',

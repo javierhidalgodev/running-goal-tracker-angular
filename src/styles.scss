@@ -9,7 +9,8 @@
 @include mat.core();
 
 // Define the theme object.
-$running-goals-theme: mat.define-theme((color: (theme-type: light,
+$running-goals-theme: mat.define-theme((color: (
+        theme-type: light,
         primary: mat.$azure-palette,
         tertiary: mat.$orange-palette,
       ),
@@ -19,6 +20,7 @@ $running-goals-theme: mat.define-theme((color: (theme-type: light,
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
+
 :root {
   @include mat.all-component-themes($running-goals-theme);
 }

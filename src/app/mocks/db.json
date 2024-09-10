@@ -1,0 +1,227 @@
+{
+  "goals": [
+    {
+      "id": "1",
+      "userId": 101,
+      "name": "Run 1000 km",
+      "description": "Complete 1000 km by the end of the year",
+      "startDate": "2024-01-01T00:00:00.000Z",
+      "endDate": "2024-12-31T00:00:00.000Z",
+      "km": 1000,
+      "activities": [
+        {
+          "date": "2024-01-05T00:00:00.000Z",
+          "km": 10
+        },
+        {
+          "date": "2024-01-10T00:00:00.000Z",
+          "km": 15
+        },
+        {
+          "date": "2024-01-15T00:00:00.000Z",
+          "km": 20
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "userId": 101,
+      "name": "Run 5 marathons",
+      "description": "Participate in 5 marathons this year",
+      "startDate": "2024-01-15T00:00:00.000Z",
+      "endDate": "2024-12-31T00:00:00.000Z",
+      "km": 210,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": []
+    },
+    {
+      "id": "3",
+      "userId": 102,
+      "name": "Run 500 km",
+      "description": "Achieve 500 km by mid-year",
+      "startDate": "2024-01-01T00:00:00.000Z",
+      "endDate": "2024-06-30T00:00:00.000Z",
+      "km": 500,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": []
+    },
+    {
+      "id": "4",
+      "userId": 103,
+      "name": "Run 10k every week",
+      "description": "Maintain a weekly running habit",
+      "startDate": "2024-01-01T00:00:00.000Z",
+      "endDate": "2024-12-31T00:00:00.000Z",
+      "km": 520,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": [
+        {
+          "date": "2024-02-03T00:00:00.000Z",
+          "km": 5
+        },
+        {
+          "date": "2024-02-07T00:00:00.000Z",
+          "km": 7
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "userId": 104,
+      "name": "Trail Running Challenge",
+      "description": "Participate in 3 trail running events",
+      "startDate": "2024-03-01T00:00:00.000Z",
+      "endDate": "2024-11-01T00:00:00.000Z",
+      "km": 120,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": [
+        {
+          "date": "2024-03-02T00:00:00.000Z",
+          "km": 12
+        },
+        {
+          "date": "2024-03-05T00:00:00.000Z",
+          "km": 18
+        },
+        {
+          "date": "2024-03-08T00:00:00.000Z",
+          "km": 10
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "userId": 105,
+      "name": "Run a Half Marathon",
+      "description": "Prepare for and run a half marathon",
+      "startDate": "2024-01-01T00:00:00.000Z",
+      "endDate": "2024-04-15T00:00:00.000Z",
+      "km": 21,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": []
+    },
+    {
+      "id": "7",
+      "userId": 106,
+      "name": "Run 300 km",
+      "description": "Cover 300 km in 3 months",
+      "startDate": "2024-04-01T00:00:00.000Z",
+      "endDate": "2024-06-30T00:00:00.000Z",
+      "km": 300,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": []
+    },
+    {
+      "id": "8",
+      "userId": 107,
+      "name": "Run a 10k race",
+      "description": "Participate in a local 10k race",
+      "startDate": "2024-02-01T00:00:00.000Z",
+      "endDate": "2024-04-01T00:00:00.000Z",
+      "km": 10,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": []
+    },
+    {
+      "id": "9",
+      "userId": 101,
+      "name": "Complete a marathon",
+      "description": "Run a full marathon within the year",
+      "startDate": "2024-05-01T00:00:00.000Z",
+      "endDate": "2024-12-01T00:00:00.000Z",
+      "km": 42,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": []
+    },
+    {
+      "id": "10",
+      "userId": 108,
+      "name": "Run a 5k with family",
+      "description": "Encourage family members to run a 5k together",
+      "startDate": "2024-03-15T00:00:00.000Z",
+      "endDate": "2024-06-15T00:00:00.000Z",
+      "km": 5,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": []
+    }
+  ],
+  "users": [
+    {
+      "id": "101",
+      "email": "user101@example.com",
+      "password": "hashed_password_101",
+      "registrationDate": "2024-01-01",
+      "profileImage": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg"
+    },
+    {
+      "id": "102",
+      "email": "user102@example.com",
+      "password": "hashed_password_102",
+      "registrationDate": "2024-01-05",
+      "profileImage": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg"
+    },
+    {
+      "id": "103",
+      "email": "user103@example.com",
+      "password": "hashed_password_103",
+      "registrationDate": "2024-01-10",
+      "profileImage": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg"
+    },
+    {
+      "id": "104",
+      "email": "user104@example.com",
+      "password": "hashed_password_104",
+      "registrationDate": "2024-01-15",
+      "profileImage": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg"
+    },
+    {
+      "id": "105",
+      "email": "user105@example.com",
+      "password": "hashed_password_105",
+      "registrationDate": "2024-01-20",
+      "profileImage": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg"
+    },
+    {
+      "id": "106",
+      "email": "user106@example.com",
+      "password": "hashed_password_106",
+      "registrationDate": "2024-01-25",
+      "profileImage": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg"
+    },
+    {
+      "id": "107",
+      "email": "user107@example.com",
+      "password": "hashed_password_107",
+      "registrationDate": "2024-02-01",
+      "profileImage": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg"
+    },
+    {
+      "id": "108",
+      "email": "user108@example.com",
+      "password": "hashed_password_108",
+      "registrationDate": "2024-02-05",
+      "profileImage": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg"
+    },
+    {
+      "id": "08aa",
+      "email": "mariano@gmail.com",
+      "password": "estoesmipassword",
+      "registrationDate": "2024-09-10T11:20:52.861Z",
+      "profileIMG": "profile-default.png"
+    },
+    {
+      "id": "851b",
+      "email": "facundo@gmail.com",
+      "password": "$2a$10$Zlxm2963Nyk6GeBLcdLQL.tTDsXoDAzsmwZv34wXkcGWCHOBDRHkK",
+      "registrationDate": "2024-09-10T11:34:29.403Z",
+      "profileIMG": "profile-default.png"
+    },
+    {
+      "id": "bdf0",
+      "email": "josefa@gmail.com",
+      "password": "$2a$10$108IHlcdsQc1LMDYyGsaXOaNFtO3BDk/mBY20bFOxJ85khjx9.mcK",
+      "registrationDate": "2024-09-10T11:36:30.415Z",
+      "profileIMG": "profile-default.png"
+    }
+  ]
+}

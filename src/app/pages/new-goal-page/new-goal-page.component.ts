@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NewGoal } from '../../models/goals';
+import { NewGoal } from '../../models/goals.model';
 import { GoalService } from '../../services/goal.service';
 
 @Component({

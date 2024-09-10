@@ -41,6 +41,8 @@ import { ModalComponent } from './components/modal/modal.component';
 import { KMtoEndPipe } from './pipes/kmto-end.pipe';
 import { GoalCompleteModalComponent } from './components/goal/goal-detail/goal-complete-modal/goal-complete-modal.component';
 import { ErrorMessageDirective } from './directives/error-message.directive';
+import { RegisterDbjsonFormComponent } from './components/forms/register-dbjson-form/register-dbjson-form.component';
+import { LoginDbjsonFormComponent } from './components/forms/login-dbjson-form/login-dbjson-form.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,9 @@ import { ErrorMessageDirective } from './directives/error-message.directive';
     ModalComponent,
     KMtoEndPipe,
     GoalCompleteModalComponent,
-    ErrorMessageDirective
+    ErrorMessageDirective,
+    RegisterDbjsonFormComponent,
+    LoginDbjsonFormComponent
   ],
   imports: [
     BrowserModule,

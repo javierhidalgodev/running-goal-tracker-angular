@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GoalService } from '../../services/goal.service';
 import { delay } from 'rxjs';
-import { Goal } from '../../models/goals';
+import { Goal } from '../../models/goals.model';
 
 @Component({
   selector: 'app-goals-page',

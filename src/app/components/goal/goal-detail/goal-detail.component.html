@@ -6,7 +6,7 @@
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <mat-progress-bar mode="determinate" [value]="this.selectedGoal.goalProgress"></mat-progress-bar>
+            <mat-progress-bar mode="determinate" color="tertiary" [value]="this.selectedGoal.goalProgress"></mat-progress-bar>
             <p><strong>Objetivo:</strong> {{ selectedGoal.km | kMtoEnd }}</p>
             <p><strong>KM para finalizar:</strong> {{ selectedGoal.km | kMtoEnd: this.selectedGoal.goalTotal }}</p>
             <p><strong>Descripción:</strong> {{ selectedGoal.description }}</p>

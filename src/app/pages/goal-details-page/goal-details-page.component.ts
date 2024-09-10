@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GoalService } from '../../services/goal.service';
-import { ActiveModal, GoalActivity, GoalWithExtraDetails } from '../../models/goals';
+import { ActiveModal, GoalActivity, GoalWithExtraDetails } from '../../models/goals.model';
 import { calculateDaysToEnd, calculateGoalTotal, calculateProgress } from '../../utils/utils';
 
 @Component({

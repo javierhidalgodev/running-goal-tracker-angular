@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GoalWithExtraDetails } from '../../../../models/goals';
+import { GoalWithExtraDetails } from '../../../../models/goals.model';
 
 @Component({
   selector: 'app-goal-table-detail',

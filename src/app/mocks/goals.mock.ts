@@ -1,4 +1,4 @@
-import { Goal } from "../models/goals";
+import { Goal } from "../models/goals.model";
 
 export const mockGoals: Goal[] = [
     {

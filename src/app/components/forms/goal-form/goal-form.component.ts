@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GoalService } from '../../../services/goal.service';
 import { dateValidatorFn } from '../../../utils/utils';
-import { NewGoal } from '../../../models/goals';
+import { NewGoal } from '../../../models/goals.model';
 
 @Component({
   selector: 'app-goal-form',

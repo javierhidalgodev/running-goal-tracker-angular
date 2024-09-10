@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { mockGoals } from '../mocks/goals.mock';
-import { Goal, GoalActivity, NewGoal } from '../models/goals';
+import { Goal, GoalActivity, NewGoal } from '../models/goals.model';
 
 @Injectable({
   providedIn: 'root'
