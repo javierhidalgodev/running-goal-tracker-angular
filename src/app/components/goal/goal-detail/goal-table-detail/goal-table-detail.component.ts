@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Goal } from '../../../../services/goal.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { GoalWithExtraDetails } from '../../../../models/goals';
 
 @Component({

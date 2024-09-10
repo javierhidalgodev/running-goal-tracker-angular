@@ -1,4 +1,4 @@
-import { Goal } from "../services/goal.service";
+import { Goal } from "../models/goals";
 
 export const mockGoals: Goal[] = [
     {

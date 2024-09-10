@@ -1,7 +1,6 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms"
 import { isValidDate } from "rxjs/internal/util/isDate"
-import { Goal } from "../services/goal.service"
-import { GoalWithExtraDetails } from "../models/goals"
+import { Goal, GoalWithExtraDetails } from "../models/goals"
 
 export function dateValidatorFn(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {

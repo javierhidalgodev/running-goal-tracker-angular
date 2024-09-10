@@ -1,7 +1,20 @@
 :host {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 600px;
     color: #fff;
+}
+
+.success-notification {
+    width: 100%;
+	padding: 10px 16px;
+    box-sizing: border-box;
+    margin-top: 20px;
+
+	background: #a9eea9;
+	border-radius: 11px;
+	color: green;
+	border: 1px solid green;
 }

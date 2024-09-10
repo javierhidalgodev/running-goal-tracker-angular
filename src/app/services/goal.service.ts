@@ -1,32 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { mockGoals } from '../mocks/goals.mock';
-
-export interface NewGoal {
-  name: string,
-  description: string,
-  startDate: Date,
-  endDate: Date,
-  km: number,
-  image?: string
-}
-
-export interface GoalActivity {
-  date: Date,
-  km: number
-}
-
-export interface Goal {
-  userId: number,
-  id: number,
-  name: string,
-  description: string,
-  startDate: Date,
-  endDate: Date,
-  km: number,
-  image?: string,
-  activities: GoalActivity[]
-}
+import { Goal, GoalActivity, NewGoal } from '../models/goals';
 
 @Injectable({
   providedIn: 'root'
@@ -72,7 +47,6 @@ export class GoalService {
     const goal = this.goals.find(g => g.id === goalId)
 
     if(goal) {
-      // goal.activities.push(activity)
       return of(activity)
     }
 

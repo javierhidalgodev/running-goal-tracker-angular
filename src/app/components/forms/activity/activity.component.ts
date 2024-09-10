@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { dateValidatorFn } from '../../../utils/utils';
 import { ActivatedRoute } from '@angular/router';
-import { Goal, GoalActivity, GoalService } from '../../../services/goal.service';
-import { GoalWithExtraDetails } from '../../../models/goals';
+import { GoalActivity, GoalWithExtraDetails } from '../../../models/goals';
+import { GoalService } from '../../../services/goal.service';
 
 @Component({
   selector: 'app-activity',
@@ -11,18 +11,18 @@ import { GoalWithExtraDetails } from '../../../models/goals';
   styleUrl: './activity.component.scss'
 })
 export class ActivityComponent implements OnInit {
-  @Input() selectedGoal: GoalWithExtraDetails | any;
+  @Input() selectedGoal?: GoalWithExtraDetails;
   @Output() emitAddActivity = new EventEmitter<GoalActivity>()
   activityForm: FormGroup = new FormGroup([])
-  goalId?: number 
 
-  constructor (
+  constructor(
     private _formBuilder: FormBuilder,
     private _route: ActivatedRoute,
     private _goalService: GoalService) { }
 
   ngOnInit(): void {
-    this.goalId = Number(this._route.snapshot.paramMap.get('id'))
+    // this.goalId = Number(this._route.snapshot.paramMap.get('id'))
+    // this.goalId = this.selectedGoal.id
 
     this.activityForm = this._formBuilder.group({
       km: ['', Validators.compose([
@@ -37,15 +37,16 @@ export class ActivityComponent implements OnInit {
   }
 
   addActivity() {
-    if(this.goalId) {
-      this._goalService.addActivityToGoal(this.goalId, this.activityForm.value).subscribe({
+    if(this.selectedGoal) {
+      this._goalService.addActivityToGoal(this.selectedGoal.id, this.activityForm.value).subscribe({
         next: value => {
           this.emitAddActivity.emit(this.activityForm.value)
         },
         error: error => console.log('Something went wrong!'),
         complete: () => console.log('Add activity to goal attempt completed!')
       })
-      this.activityForm.reset()
     }
+
+    this.activityForm.reset()
   }
 }

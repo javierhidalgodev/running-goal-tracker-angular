@@ -1,6 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Goal } from '../../../services/goal.service';
-import { calculateGoalTotal, calculateProgress } from '../../../utils/utils';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { GoalWithExtraDetails } from '../../../models/goals';
 
 @Component({

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { Goal, GoalService, NewGoal } from '../../../services/goal.service';
-import { isValidDate } from 'rxjs/internal/util/isDate';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { GoalService } from '../../../services/goal.service';
 import { dateValidatorFn } from '../../../utils/utils';
+import { NewGoal } from '../../../models/goals';
 
 @Component({
   selector: 'app-goal-form',
@@ -10,10 +10,11 @@ import { dateValidatorFn } from '../../../utils/utils';
   styleUrl: './goal-form.component.scss'
 })
 export class GoalFormComponent implements OnInit {
-  goalForm: FormGroup = new FormGroup({})
-  successMessage: string | null = null;
+  @Output() emitAddGoal = new EventEmitter<NewGoal>()
 
-  constructor(private _formBuilder: FormBuilder, private _http: GoalService) { }
+  goalForm: FormGroup = new FormGroup({})
+
+  constructor(private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.goalForm = this._formBuilder.group({
@@ -53,23 +54,16 @@ export class GoalFormComponent implements OnInit {
   }
 
   addGoal() {
+    // ? Es una validación más, aunque en principio el formulario no puede enviarse si no es correcto
     if (this.goalForm.valid) {
       const newGoal: NewGoal = {
         ...this.goalForm.value,
+        // TODO: Esto en realidad debería gestionarse con la opción de subir una imagen, y si no establecer una por defecto
         image: 'https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg'
-      } 
+      }
 
-      this._http.createGoal(newGoal).subscribe({
-        next: goal => {
-          console.log('Goal created: ', goal),
-
-          this.goalForm.reset()
-          this.successMessage = 'Goal added';
-          setTimeout(() => { this.successMessage = null }, 5000)
-        },
-        error: error => console.log('Error: ', error),
-        complete: () => console.log('Create goal attempt finished')
-      })
+      this.emitAddGoal.emit(newGoal)
+      this.goalForm.reset()
     }
   }
 }

@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { GoalActivity } from '../../services/goal.service';
 
 @Component({
   selector: 'app-modal',

@@ -1,6 +1,30 @@
-import { Goal } from "../services/goal.service"
-
 export type ActiveModal = 'activityForm' | 'goalCompleted' | null
+
+export interface NewGoal {
+    name: string,
+    description: string,
+    startDate: Date,
+    endDate: Date,
+    km: number,
+    image?: string
+}
+
+export interface GoalActivity {
+    date: Date,
+    km: number
+}
+
+export interface Goal {
+    userId: number,
+    id: number,
+    name: string,
+    description: string,
+    startDate: Date,
+    endDate: Date,
+    km: number,
+    image?: string,
+    activities: GoalActivity[]
+}
 
 export interface GoalWithExtraDetails extends Goal {
     daysToEnd: number;
