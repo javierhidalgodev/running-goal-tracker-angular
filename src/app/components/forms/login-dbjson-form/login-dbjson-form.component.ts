@@ -40,11 +40,9 @@ export class LoginDbjsonFormComponent implements OnInit {
 
   login() {
     if (this.loginForm.valid) {
-      this._authService.login(this.username?.value, this.password?.value).subscribe({
+      this._authService.loginDBJSON({email: this.username?.value, password: this.password?.value}).subscribe({
         next: value => {
-          console.log('Login successful. Welcome', this.username?.value)
-          localStorage.setItem('token', value.token)
-          this._router.navigate([''])
+          console.log(value)
         },
         error: error => {
           console.log('Login failed: ', error);

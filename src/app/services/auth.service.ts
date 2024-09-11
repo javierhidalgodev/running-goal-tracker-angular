@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, filter, from, Observable, switchMap, throwError } from 'rxjs';
+import { catchError, filter, find, from, Observable, of, switchMap, throwError } from 'rxjs';
 import { DEFAULT_PROFILE_USER_IMG, Login, NewUser, User } from '../models/user.model';
 import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 
 const API_URL = 'https://reqres.in/api';
 const API_DBJSON_URL = 'http://localhost:3000';
+const JWT_SECRET = 'pikachu'
 
 interface AuthResponse {
   token: string
@@ -41,13 +43,54 @@ export class AuthService {
   }
 
   loginDBJSON(loginData: Login) {
-    return this._http.get(`${API_DBJSON_URL}/users`).pipe(
-      filter((user: User | any) => {
-        return user.email === loginData.email
+    return this._http.get<User[]>(`${API_DBJSON_URL}/users?email=${loginData.email}`).pipe(
+      switchMap(users => {
+        if(users.length === 0) {
+          return throwError(() => new Error('User not found'))
+        }
+
+        const user = users[0]
+
+        return this.comparePassword(loginData.password, user.password).pipe(
+          switchMap(passwordMatch => {
+            if (!passwordMatch) {
+              return throwError(() => new Error('Invalid loading'))
+            }
+
+            const token = this.generateToken(user.id!, user.email)
+
+            localStorage.setItem('token', token)
+
+            return of({token, userId: user.id})
+          })
+        )
       }),
-      from()
+      catchError(error => {
+        console.log(error)
+        return throwError(() => new Error('Login failed'))
+      })
     )
   }
+
+  private comparePassword(password: string, hash: string): Observable<boolean> {
+    return new Observable<boolean>(observer => {
+      bcrypt.compare(password, hash, (err, res) => {
+        if (err) {
+          observer.error(err)
+        } else {
+          observer.next(res)
+          observer.complete()
+        }
+      })
+    })
+  }
+
+  private generateToken(userId: string, email: string): string {
+    return jwt.sign({userId, email}, JWT_SECRET, {
+      expiresIn: '3m'
+    })
+  }
+
   /**
    * ? Esto no está bien hecho, ya que la constraseña debería de ir con un hash
    */
