@@ -1,11 +1,11 @@
 <form [formGroup]="loginForm" (submit)="login()">
     <mat-form-field>
-        <mat-label>Username</mat-label>
-        <input matInput formControlName="username" type="text" placeholder="eve.holt@reqres.in" required aria-required="true" aria-label="Username">
-        <mat-error *ngIf="username?.errors?.['required'] && username?.touched">
-            Username is required
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" placeholder="eve.holt@reqres.in" required aria-required="true" aria-label="Email">
+        <mat-error *ngIf="email?.errors?.['required'] && email?.touched">
+            Email is required
         </mat-error>
-        <mat-error *ngIf="username?.errors?.['email']">
+        <mat-error *ngIf="email?.errors?.['email']">
             Plase, enter a valid email address
         </mat-error>
     </mat-form-field>

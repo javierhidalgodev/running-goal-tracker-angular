@@ -20,7 +20,7 @@ export class LoginDbjsonFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this._formBuilder.group({
-      username: ['', Validators.compose([
+      email: ['', Validators.compose([
         Validators.required,
         Validators.email
       ])],
@@ -31,8 +31,8 @@ export class LoginDbjsonFormComponent implements OnInit {
     })
   }
 
-  get username() {
-    return this.loginForm.get('username')
+  get email() {
+    return this.loginForm.get('email')
   }
   get password() {
     return this.loginForm.get('password')
@@ -40,22 +40,12 @@ export class LoginDbjsonFormComponent implements OnInit {
 
   login() {
     if (this.loginForm.valid) {
-      this._authService.loginDBJSON({email: this.username?.value, password: this.password?.value}).subscribe({
+      this._authService.loginDBJSON(this.loginForm.value).subscribe({
         next: value => {
-          console.log(value)
+          localStorage.setItem('token', value)
+          this._router.navigate(['/home'])
         },
-        error: error => {
-          console.log('Login failed: ', error);
-          if(error) {
-            this.errorMessage = 'Wrong credentials.'
-          } else {
-            this.errorMessage = 'Something went wrong during login process. Please, try again later.'
-          }
-
-          setTimeout(() => {
-            this.errorMessage = null;
-          }, 5000)
-        },
+        error: error => console.log(error),
         complete: () => console.log('Login attempt completed!')
       })
     }

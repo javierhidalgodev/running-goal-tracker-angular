@@ -40,18 +40,18 @@ export class RegisterDbjsonFormComponent implements OnInit {
 
   register() {
     if (this.registerForm.valid) {
-      this._authService.registerDBJSON({
-        email: this.getControl('email')?.value,
-        password: this.getControl('password')?.value
-      }
-      ).subscribe({
-        next: value => console.log(value),
-        error: error => {
-          console.log(`Registration failed: `, error);
-          this.errorMessage = `Something went wrong during registration process. Please, try again later.`
-        },
-        complete: () => console.log('Registration attempt completed!')
-      })
+      // this._authService.registerDBJSON({
+      //   email: this.getControl('email')?.value,
+      //   password: this.getControl('password')?.value
+      // }
+      // ).subscribe({
+      //   next: value => console.log(value),
+      //   error: error => {
+      //     console.log(`Registration failed: `, error);
+      //     this.errorMessage = `Something went wrong during registration process. Please, try again later.`
+      //   },
+      //   complete: () => console.log('Registration attempt completed!')
+      // })
     }
   }
 }
