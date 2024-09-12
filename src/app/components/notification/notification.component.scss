@@ -1,0 +1,21 @@
+.notification-container {
+    &>* {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        margin-top: 20px;
+        padding: 10px 16px;
+        border-radius: 4px;
+    }
+
+    .error {
+        color: rgb(95, 33, 32);
+        background-color: rgb(240, 160, 160);
+    }
+
+    .success {
+        color: rgb(30, 70, 32);
+        background-color: rgb(140, 237, 140);
+    }
+}

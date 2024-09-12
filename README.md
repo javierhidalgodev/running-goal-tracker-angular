@@ -2,17 +2,31 @@
 
 ## TAREAS
 
+### Manejador de mensajes
+
+Podemos buscar la manera de manejar los mensajes de notificación desde un servicio/componente externo, para simplificar la lógica interna de los componenentes.
+
+- [ ] Tenemos un servicio común con varias funciones que pueden ser emitidas en relación al tipo de mensaje que se quiera emitir. Esto emite un objeto que puede ser utilizado en el componente para renderizar lo que se necesite.
+
+**Manejar notificaciones de éxito/error**
+- [ ] Usamos un componente específico, que en el inicio se suscribe al emisor de notificaciones, iguala el mensaje interno a lo que recibe del emisor, y a los 5 segundos vuelve el mensaje a nulo.
+
+**Manejar validaciones de formulario**
+- [ ] Tenemos un componente específico, que en el inicio se suscribe al emisor esperando mensajes de validación.
+- [ ] Esto es un array de ninguna/varias posiciones, que determinará si el componente debe renderizarse o no.
+- [ ] Internamente renderizará tantos mensajes de validación (mat-error) cómo tenga el array que recibe.
+
 ### Refactoring del login/register
 
   - [ ] Crear un servicio especifico para emular el trabajo con una base de datos, que haga referencia a JSON-SERVER.
 
 **Guard**
- - [ ] El token debe existir en el localStorage.
- - [ ] Generando un endpoint en el back end, este debe comprobar la veracidad del token.
- - [ ] El token se envía con petición GET y por cabecera.
- - [ ] Se formatea en el back end y se comprueba.
- - [ ] Si la comprobación no da error devuelve un json con el token decodificado.
- - [ ] Si devuelve error, el guard lo maneja borrando el token y redirigiendo al login.
+ - [x] El token debe existir en el localStorage.
+ - [x] Generando un endpoint en el back end, este debe comprobar la veracidad del token.
+ - [x] El token se envía con petición GET y por cabecera.
+ - [x] Se formatea en el back end y se comprueba.
+ - [x] Si la comprobación no da error devuelve un json con el token decodificado.
+ - [x] Si devuelve error, el guard lo maneja borrando el token y redirigiendo al login.
 
 De esta manera las rutas protegidas lo estarán por el token verificado.
 
@@ -23,15 +37,14 @@ De esta manera las rutas protegidas lo estarán por el token verificado.
   - [x] Pedir al servicio que nos devuelva el usuario solicitado por email, manejar el error si no lo encuentra o si el servicio no está disponible.
   - [x] Usar también el servicio para, una vez recuperado el usuario, comprobar (con `bcrypt`) que la password es correcta.
   - [x] Comprobada la password (hash), generar con `jsonwebtoken` un token basado en el id del usuario y el email.
-  - [x] Guardar el `token` en `localStorage` para a partir de aquí permiti el resto de operaciones (`guard`).
+  - [x] Guardar el `token` en `localStorage` para a partir de aquí permitir el resto de operaciones (`guard`).
 
 **Register**
-  - [ ] Recibir los datos del fomulario.
-  - [ ] Pedir al servicio que compruebe la posible existencia de un usuario ya creado con el mismo email.
-  - [ ] Si no existe el usuario, crearlo y notificarlo.
-  - [ ] Si existe, devolver notificación.
-  - [ ] Manejar la posibilidad de que el servicio falle.
-
+  - [x] Recibir los datos del fomulario.
+  - [x] Pedir al servicio que compruebe la posible existencia de un usuario ya creado con el mismo email.
+  - [x] Si no existe el usuario, crearlo y notificarlo.
+  - [x] Si existe, devolver notificación.
+  - [x] Manejar la posibilidad de que el servicio falle.
 
 ### Goal Details Page
 **Considerar la creación de componentes independientes para:**

@@ -6,7 +6,7 @@ import { User } from '../models/user.model';
 @Injectable({
   providedIn: 'root'
 })
-export class DbServiceService {
+export class DbService {
   private _DB_URL = 'http://localhost:3000'
 
   constructor(private _http: HttpClient) { }
@@ -27,7 +27,7 @@ export class DbServiceService {
       map(users => users.length > 0 ? users[0] : null),
       catchError(error => {
         console.log(error)
-        return throwError(() => new Error('Something went wrong getting user by email'))
+        return throwError(() => new Error('Something went wrong. Please try again later.'))
       })
     )
   }

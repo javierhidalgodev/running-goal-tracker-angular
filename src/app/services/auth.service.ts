@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, from, Observable, switchMap, throwError } from 'rxjs';
 import { DEFAULT_PROFILE_USER_IMG, Login, NewUser, User } from '../models/user.model';
-import { DbServiceService } from './db-service.service';
+import { DbService } from './db.service';
 import bcrypt from 'bcryptjs'
 
 const API_URL = 'https://reqres.in/api';
@@ -23,7 +23,7 @@ interface RegistrationResponse {
 export class AuthService {
   constructor(
     private _http: HttpClient,
-    private _dbService: DbServiceService
+    private _dbService: DbService
   ) { }
 
   login(email: string, password: string): Observable<AuthResponse> {
@@ -68,13 +68,11 @@ export class AuthService {
       bcrypt.compare(password, hash, (err, res) => {
         if (err) {
           observer.error(err)
-        } else {
-          if (!res) {
-            observer.error('Invalid login')
-          }
-          observer.next(res)
-          observer.complete()
         }
+
+        // * El error se controla en la función principal
+        observer.next(res)
+        observer.complete()
       })
     })
   }
@@ -110,16 +108,17 @@ export class AuthService {
         return from(bcrypt.hash(newUser.password, 10)).pipe(
           switchMap(hash => {
             newUser.password = hash
-    
+
             const body: User = {
               ...newUser,
               registrationDate: new Date(),
               profileIMG: newUser.profileIMG || DEFAULT_PROFILE_USER_IMG
             }
-    
+
             return this._http.post<User>(`${API_DBJSON_URL}/users`, body)
           }),
-    
+
+          // ? A este nivel nunca llego porque no sé cómo generar un problema con el hash
           catchError(error => {
             console.log('Something went wrong:', error);
             return throwError(() => new Error('Please try again later'))

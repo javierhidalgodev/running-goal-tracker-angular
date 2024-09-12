@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DbServiceService } from '../../services/db-service.service';
+import { DbService } from '../../services/db.service';
 
 @Component({
   selector: 'app-home-page',
@@ -9,7 +9,7 @@ import { DbServiceService } from '../../services/db-service.service';
 export class HomePageComponent implements OnInit {
 
   constructor(
-    private _dbService: DbServiceService
+    private _dbService: DbService
   ) { }
 
   ngOnInit(): void {

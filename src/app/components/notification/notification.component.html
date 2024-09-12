@@ -1,0 +1,6 @@
+<div *ngIf="notificationMessage" class="notification-container">
+    <mat-card class="notification" [ngClass]="notificationMessage.type">
+        <mat-icon> {{ notificationMessage.type === 'error' ? 'error' : 'check_circle' }}</mat-icon>
+        <span>{{ notificationMessage.message }}</span>
+    </mat-card>
+</div>

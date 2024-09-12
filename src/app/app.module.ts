@@ -43,6 +43,8 @@ import { GoalCompleteModalComponent } from './components/goal/goal-detail/goal-c
 import { ErrorMessageDirective } from './directives/error-message.directive';
 import { RegisterDbjsonFormComponent } from './components/forms/register-dbjson-form/register-dbjson-form.component';
 import { LoginDbjsonFormComponent } from './components/forms/login-dbjson-form/login-dbjson-form.component';
+import { NotificationComponent } from './components/notification/notification.component';
+import { ValidationContainerComponent } from './components/validation-container/validation-container.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,9 @@ import { LoginDbjsonFormComponent } from './components/forms/login-dbjson-form/l
     GoalCompleteModalComponent,
     ErrorMessageDirective,
     RegisterDbjsonFormComponent,
-    LoginDbjsonFormComponent
+    LoginDbjsonFormComponent,
+    NotificationComponent,
+    ValidationContainerComponent
   ],
   imports: [
     BrowserModule,

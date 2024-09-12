@@ -13,7 +13,13 @@
     </div>
 </form>
 
-<div class="error-container" *ngIf="hasErrors()">
+<ng-content *ngIf="hasErrors().length > 0">
+    <app-validation-container/>
+</ng-content>
+
+<!-- <div class="validation-container" *ngIf="hasErrors().length > 0">
+
+    {{ hasErrors() | json }}
     <mat-error *ngIf="getControl('email')?.errors?.['required'] && getControl('email')?.touched">
         Email is required
     </mat-error>
@@ -29,11 +35,4 @@
     <mat-error *ngIf="getControl('password')?.errors?.['pattern'] && getControl('password')?.invalid">
         Password must contain only letters and numbers
     </mat-error>
-
-    <mat-error *ngIf="errorMessage">
-        {{ errorMessage }}
-    </mat-error>
-    <mat-card *ngIf="successMessage">
-        {{ successMessage }}
-    </mat-card>
-</div>
+</div> -->

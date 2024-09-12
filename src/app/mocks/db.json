@@ -236,6 +236,48 @@
       "password": "$2a$10$DkgcyFHXWcN8k54IdtudEuPJOtoj7xUSNq7dfzGnWMkmPbEjhKHVO",
       "registrationDate": "2024-09-11T17:40:36.863Z",
       "profileIMG": "profile-default.png"
+    },
+    {
+      "id": "df7c",
+      "email": "eve.holt@hotmail.com",
+      "password": "$2a$10$ug6EzUTsTWQKVUvFQvL5GuyYPQFgXrwHmX0tGCKKbYIjcL9uBwtO6",
+      "registrationDate": "2024-09-12T08:31:33.071Z",
+      "profileIMG": "profile-default.png"
+    },
+    {
+      "id": "9119",
+      "email": "eve.holt@reqres.in",
+      "password": "$2a$10$fewlrR6I3KQmY6PgbO7Y..K80mI4cBfnhfwHBkgLPDv73xsGKrTx6",
+      "registrationDate": "2024-09-12T08:33:56.338Z",
+      "profileIMG": "profile-default.png"
+    },
+    {
+      "id": "f2bd",
+      "email": "eve.holt@reqres.on",
+      "password": "$2a$10$ubRbUfT3HgJ2wm2cAwKRQunzMUsWUnGbulV/tcDB0kT8Rg15JJJh.",
+      "registrationDate": "2024-09-12T08:42:43.870Z",
+      "profileIMG": "profile-default.png"
+    },
+    {
+      "id": "cc9d",
+      "email": "eve.holt@reqres.i",
+      "password": "$2a$10$KjSHfeNXhVJTpwIlod1KleFu67PjT4WBqsAxEdYAH9ayfWg7tKXI.",
+      "registrationDate": "2024-09-12T08:43:18.800Z",
+      "profileIMG": "profile-default.png"
+    },
+    {
+      "id": "9d8d",
+      "email": "eve.holt@rs.in",
+      "password": "$2a$10$9Jj/hNGWStP2zAT.tUoENO4WHysJfSGqJBlYRN8M0sBU/c737jYMa",
+      "registrationDate": "2024-09-12T10:40:57.252Z",
+      "profileIMG": "profile-default.png"
+    },
+    {
+      "id": "d667",
+      "email": "eve.holt@rqres.in",
+      "password": "$2a$10$KWUrRUPzpmudCWWZLR0Nc.oWllI1LiimwnWSkwBBpZjQalQTr53ZG",
+      "registrationDate": "2024-09-12T10:41:34.387Z",
+      "profileIMG": "profile-default.png"
     }
   ]
 }

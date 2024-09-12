@@ -10,17 +10,15 @@ form {
     flex-direction: column;
 }
 
-.error-container {
+.validation-container {
     margin-top: 20px;
     padding: 10px;
+    border-radius: 4px;
+    color: rgb(95, 33, 32);
     background-color: #fff;
-    border-radius: 10px;
-    font-size: .9rem;
 }
 
 .button-container {
-    margin-top: 60px;
-
     button[type=submit] {
         width: 100%;
     }

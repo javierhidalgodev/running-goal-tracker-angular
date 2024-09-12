@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-register-dbjson-form',
@@ -14,7 +15,8 @@ export class RegisterDbjsonFormComponent implements OnInit {
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -46,19 +48,10 @@ export class RegisterDbjsonFormComponent implements OnInit {
     if (this.registerForm.valid) {
       this._authService.registerDBJSON(this.registerForm.value).subscribe({
         next: value => {
-          this.successMessage = 'User registered!'
-  
-          setTimeout(() => {
-            this.successMessage = null
-          }, 5000)
+          this._notificationService.success('User registered!')
         },
         error: error => {
-          console.log(error)
-          this.errorMessage = error
-
-          setTimeout(() => {
-            this.errorMessage = null
-          }, 5000)
+          this._notificationService.error(error)
         },
         complete: () => console.log('Register attempt completed!')
       })
@@ -66,9 +59,18 @@ export class RegisterDbjsonFormComponent implements OnInit {
   }
 
   hasErrors() {
-    return Object.keys(this.registerForm.controls).some(key => {
-      const control = this.registerForm.get(key)
-      return control?.invalid && control?.touched
+    // const errors = Object.keys(this.registerForm.controls).filter(key => {
+    //   const control = this.registerForm.get(key)
+    //   console.log(control?.errors)
+    //   return control?.invalid && control?.touched
+    // })
+    
+    const errors = Object.values(this.registerForm.controls).filter(key => {
+      console.log(key)
     })
+
+    // this._notificationService.validation(errors)
+    // console.log(errors)
+    return errors
   }
 }
