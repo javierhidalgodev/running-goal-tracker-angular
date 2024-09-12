@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationService, ValidationMessages } from '../../services/notification.service';
+import { NotificationService, ValidationMessages, ValidationMessagesWithExtras } from '../../services/notification.service';
 
 @Component({
   selector: 'app-validation-container',
@@ -7,7 +7,7 @@ import { NotificationService, ValidationMessages } from '../../services/notifica
   styleUrl: './validation-container.component.scss'
 })
 export class ValidationContainerComponent implements OnInit {
-  validationMessages: ValidationMessages | null = null
+  validationMessages: ValidationMessagesWithExtras | null = null
 
   constructor(private _notificationService: NotificationService) { }
 

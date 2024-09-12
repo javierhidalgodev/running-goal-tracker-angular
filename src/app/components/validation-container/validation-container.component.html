@@ -1,3 +1,8 @@
 <div class="validation-container" *ngIf="validationMessages">
-    <mat-error *ngFor="let item of validationMessages.messages">{{ item }}</mat-error>
+    <ng-content *ngFor="let item of validationMessages.messages">
+        <p>{{ item | json }}</p>
+        <mat-error *ngIf="item.validators?.['required']">
+            Enter a fucking valid data
+        </mat-error>
+    </ng-content>
 </div>

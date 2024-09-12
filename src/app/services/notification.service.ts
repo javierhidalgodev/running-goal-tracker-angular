@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ValidationErrors } from '@angular/forms';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -7,7 +8,7 @@ import { Subject } from 'rxjs';
 export class NotificationService {
   // * Un Subject actúa como observable y observer => puede emitir y suscribirse
   private _notification$ = new Subject<NotificationMessage>()
-  private _validation$ = new Subject<ValidationMessages>()
+  private _validation$ = new Subject<ValidationMessagesWithExtras>()
 
   // * Esto impide que el acceso de los componentes emita valores, solo permite la suscripción
   get notification$() {
@@ -27,8 +28,8 @@ export class NotificationService {
     this._notification$.next({ type: 'error', message })
   }
 
-  validation(messages: string[]) {
-    this._validation$.next({ type: 'validation', messages })
+  validation(messages: InputValidators[] | null) {
+    this._validation$.next({ type: 'validation', messages})
   }
 
   clear() {
@@ -45,4 +46,14 @@ export interface NotificationMessage {
 export interface ValidationMessages {
   type: 'validation' | null,
   messages: string[] | null
+}
+
+export interface InputValidators {
+  key: string,
+  validators: ValidationErrors | null
+}
+
+export interface ValidationMessagesWithExtras {
+  type: 'validation' | null,
+  messages: InputValidators[] | null
 }

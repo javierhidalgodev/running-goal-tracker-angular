@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
-import { NotificationService } from '../../../services/notification.service';
+import { InputValidators, NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-register-dbjson-form',
@@ -65,12 +65,24 @@ export class RegisterDbjsonFormComponent implements OnInit {
     //   return control?.invalid && control?.touched
     // })
     
-    const errors = Object.values(this.registerForm.controls).filter(key => {
-      console.log(key)
-    })
-
     // this._notificationService.validation(errors)
     // console.log(errors)
-    return errors
+    if(this.registerForm.invalid && this.registerForm.touched) {
+      const errors = Object.keys(this.registerForm.controls).map<InputValidators | null>(
+        key => {
+          if (this.registerForm.get(key)?.errors && this.registerForm.get(key)?.touched) {
+            return {
+              key,
+              validators: this.registerForm.get(key)?.errors
+            }
+          }
+        }
+      )
+      this._notificationService.validation(errors)
+      console.log(errors);
+      return errors
+    }
+
+    return false
   }
 }
