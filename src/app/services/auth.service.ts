@@ -1,13 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, filter, find, from, map, Observable, of, switchMap, throwError } from 'rxjs';
+import { catchError, from, Observable, switchMap, throwError } from 'rxjs';
 import { DEFAULT_PROFILE_USER_IMG, Login, NewUser, User } from '../models/user.model';
 import { DbServiceService } from './db-service.service';
 import bcrypt from 'bcryptjs'
 
 const API_URL = 'https://reqres.in/api';
 const API_DBJSON_URL = 'http://localhost:3000';
-const JWT_SECRET = 'pikachu'
 
 interface AuthResponse {
   token: string
@@ -101,41 +100,32 @@ export class AuthService {
     )
   }
 
-  // registerDBJSON(user: NewUser): Observable<User> {
-  //   return from(bcrypt.hash(user.password, 10)).pipe(
-  //     switchMap(hash => {
-  //       user.password = hash
+  registerDBJSON(newUser: NewUser): Observable<User> {
+    return this._dbService.getUserByEmail(newUser.email).pipe(
+      switchMap(user => {
+        if (user) {
+          return throwError(() => new Error('This email address already exists'))
+        }
 
-  //       const body: User = {
-  //         ...user,
-  //         registrationDate: new Date(),
-  //         profileIMG: user.profileIMG || DEFAULT_PROFILE_USER_IMG
-  //       }
-
-  //       return this._http.post<User>(`${API_DBJSON_URL}/users`, body)
-  //     }),
-
-  //     catchError(error => {
-  //       console.log('Something went wrong');
-  //       return throwError(() => new Error('Please try again later'))
-  //     })
-  //   )
-
-
-  //   // 1. Creación del objeto
-  //   const body: User = {
-  //     ...user,
-  //     registrationDate: new Date(),
-  //     profileIMG: user.profileIMG || DEFAULT_PROFILE_USER_IMG
-  //   }
-
-  //   // 2. Llamada http a la BBDD
-  //   return this._http.post<User>(`${API_DBJSON_URL}/users`, body).pipe(
-  //     // 3. Con un pipe controlamos el error
-  //     catchError(error => {
-  //       console.log('Registration error:', error)
-  //       return throwError(() => new Error('Failed to registration. Please, try again later.'))
-  //     })
-  //   )
-  // }
+        return from(bcrypt.hash(newUser.password, 10)).pipe(
+          switchMap(hash => {
+            newUser.password = hash
+    
+            const body: User = {
+              ...newUser,
+              registrationDate: new Date(),
+              profileIMG: newUser.profileIMG || DEFAULT_PROFILE_USER_IMG
+            }
+    
+            return this._http.post<User>(`${API_DBJSON_URL}/users`, body)
+          }),
+    
+          catchError(error => {
+            console.log('Something went wrong:', error);
+            return throwError(() => new Error('Please try again later'))
+          })
+        )
+      })
+    )
+  }
 }

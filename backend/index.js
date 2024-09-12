@@ -9,6 +9,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+// * Para el login
 app.post('/login', (req, res) => {
   const { userId, email } = req.body
 
@@ -28,6 +29,7 @@ app.post('/login', (req, res) => {
   res.json(token)
 })
 
+// * Para la verificación del token
 app.get('/login', (req, res) => {
   const token = req.headers.authorization
 
@@ -43,6 +45,8 @@ app.get('/login', (req, res) => {
     res.json({ message: 'Access granted', decoded })
   })
 })
+
+// * Para el registro
 
 app.listen(process.env.PORT || 5002, () => {
   console.log('Server is running!')

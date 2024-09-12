@@ -11,6 +11,7 @@ export class DbServiceService {
 
   constructor(private _http: HttpClient) { }
 
+  // * Recupera todos los usuarios
   getUsers(): Observable<User[]> {
     return this._http.get<User[]>(`${this._DB_URL}/users`).pipe(
       catchError(error => {
@@ -20,6 +21,7 @@ export class DbServiceService {
     )
   }
 
+  // * Recupera un usuario por el email o devuelve null
   getUserByEmail(email: string): Observable<User | null> {
     return this._http.get<User[]>(`${this._DB_URL}/users?email=${email}`).pipe(
       map(users => users.length > 0 ? users[0] : null),

@@ -222,6 +222,20 @@
       "password": "$2a$10$Ls2WDGWqA2Zioy3IXtZwe.JAvNg.wpbdIBgIdqQENo.azl8qi/kAi",
       "registrationDate": "2024-09-10T11:36:30.415Z",
       "profileIMG": "profile-default.png"
+    },
+    {
+      "id": "4b69",
+      "email": "josefa@gmal.com",
+      "password": "$2a$10$Ktl7X7ewR614tewhNvaOF.uJKtWNT.5Fi6.iqFd3j6WSciaj/0lrC",
+      "registrationDate": "2024-09-11T17:18:24.607Z",
+      "profileIMG": "profile-default.png"
+    },
+    {
+      "id": "5179",
+      "email": "eve.holt@gmail.com",
+      "password": "$2a$10$DkgcyFHXWcN8k54IdtudEuPJOtoj7xUSNq7dfzGnWMkmPbEjhKHVO",
+      "registrationDate": "2024-09-11T17:40:36.863Z",
+      "profileIMG": "profile-default.png"
     }
   ]
 }

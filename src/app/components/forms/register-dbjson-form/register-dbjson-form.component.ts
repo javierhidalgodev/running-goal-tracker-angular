@@ -9,9 +9,13 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class RegisterDbjsonFormComponent implements OnInit {
   registerForm: FormGroup = new FormGroup({});
+  successMessage: string | null = null;
   errorMessage: string | null = null;
 
-  constructor(private _formBuilder: FormBuilder, private _authService: AuthService) { }
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.registerForm = this._formBuilder.group({
@@ -34,24 +38,37 @@ export class RegisterDbjsonFormComponent implements OnInit {
   //   return this.registerForm.get('password')
   // }
 
-  getControl (controlName: string) {
+  getControl(controlName: string) {
     return this.registerForm.get(controlName)
   }
 
   register() {
     if (this.registerForm.valid) {
-      // this._authService.registerDBJSON({
-      //   email: this.getControl('email')?.value,
-      //   password: this.getControl('password')?.value
-      // }
-      // ).subscribe({
-      //   next: value => console.log(value),
-      //   error: error => {
-      //     console.log(`Registration failed: `, error);
-      //     this.errorMessage = `Something went wrong during registration process. Please, try again later.`
-      //   },
-      //   complete: () => console.log('Registration attempt completed!')
-      // })
+      this._authService.registerDBJSON(this.registerForm.value).subscribe({
+        next: value => {
+          this.successMessage = 'User registered!'
+  
+          setTimeout(() => {
+            this.successMessage = null
+          }, 5000)
+        },
+        error: error => {
+          console.log(error)
+          this.errorMessage = error
+
+          setTimeout(() => {
+            this.errorMessage = null
+          }, 5000)
+        },
+        complete: () => console.log('Register attempt completed!')
+      })
     }
+  }
+
+  hasErrors() {
+    return Object.keys(this.registerForm.controls).some(key => {
+      const control = this.registerForm.get(key)
+      return control?.invalid && control?.touched
+    })
   }
 }
