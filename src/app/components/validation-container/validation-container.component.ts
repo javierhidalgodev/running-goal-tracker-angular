@@ -9,13 +9,13 @@ import { NotificationService, ValidationMessages, ValidationMessagesWithExtras }
 export class ValidationContainerComponent implements OnInit {
   validationMessages: ValidationMessagesWithExtras | null = null
 
-  constructor(private _notificationService: NotificationService) { }
+  constructor(
+    private _notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this._notificationService.validation$.subscribe({
       next: messages => {
         if (messages) {
-          console.log(messages)
           this.validationMessages = messages
         } else {
           this.validationMessages = null

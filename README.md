@@ -4,6 +4,11 @@
 
 ### Manejador de mensajes
 
+1. La primera vez que entro en un campo y salgo sin escribir no se muestra nada, tantas veces como salga y entre, en cualquiera de los campos.
+2. Si al entrar escribo, y al salir el campo es inválido, entonces se debe mostrar la caja y el mensaje.
+3. Ahora solo se está mostrando la caja cuando interactúo y escribo en campo, salgo y vuelvo a interactuar con él.
+4. Parece ser que no detecta con exactitud el campo tocado hasta que se vuelve a él y se modifica.
+
 Podemos buscar la manera de manejar los mensajes de notificación desde un servicio/componente externo, para simplificar la lógica interna de los componenentes.
 
 - [ ] Tenemos un servicio común con varias funciones que pueden ser emitidas en relación al tipo de mensaje que se quiera emitir. Esto emite un objeto que puede ser utilizado en el componente para renderizar lo que se necesite.

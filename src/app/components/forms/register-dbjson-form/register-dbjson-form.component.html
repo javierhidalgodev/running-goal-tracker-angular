@@ -13,26 +13,6 @@
     </div>
 </form>
 
-<ng-content *ngIf="hasErrors()">
+<ng-content *ngIf="hasFormErrors">
     <app-validation-container/>
 </ng-content>
-
-<!-- <div class="validation-container" *ngIf="hasErrors().length > 0">
-
-    {{ hasErrors() | json }}
-    <mat-error *ngIf="getControl('email')?.errors?.['required'] && getControl('email')?.touched">
-        Email is required
-    </mat-error>
-    <mat-error *ngIf="getControl('email')?.errors?.['email']">
-        Please, enter a valid email address
-    </mat-error>
-    <mat-error *ngIf="getControl('password')?.errors?.['required'] && getControl('password')?.touched">
-        Password is required
-    </mat-error>
-    <mat-error *ngIf="getControl('password')?.errors?.['minlength']">
-        Password must be at least 5 characters
-    </mat-error>
-    <mat-error *ngIf="getControl('password')?.errors?.['pattern'] && getControl('password')?.invalid">
-        Password must contain only letters and numbers
-    </mat-error>
-</div> -->

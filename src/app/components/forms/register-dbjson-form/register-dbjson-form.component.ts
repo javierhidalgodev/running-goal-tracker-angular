@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
-import { InputValidators, NotificationService } from '../../../services/notification.service';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-register-dbjson-form',
@@ -12,11 +12,12 @@ export class RegisterDbjsonFormComponent implements OnInit {
   registerForm: FormGroup = new FormGroup({});
   successMessage: string | null = null;
   errorMessage: string | null = null;
+  hasFormErrors: boolean = false;
 
   constructor(
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
-    private _notificationService: NotificationService
+    private _notificationService: NotificationService,
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +31,10 @@ export class RegisterDbjsonFormComponent implements OnInit {
         Validators.minLength(5),
         Validators.pattern('[a-zA-Z0-9]{1,}')
       ])]
+    })
+
+    this.registerForm.statusChanges.subscribe(status => {
+      this.hasFormErrors = this.registerForm.invalid
     })
   }
 
@@ -58,31 +63,30 @@ export class RegisterDbjsonFormComponent implements OnInit {
     }
   }
 
-  hasErrors() {
-    // const errors = Object.keys(this.registerForm.controls).filter(key => {
-    //   const control = this.registerForm.get(key)
-    //   console.log(control?.errors)
-    //   return control?.invalid && control?.touched
-    // })
-    
-    // this._notificationService.validation(errors)
-    // console.log(errors)
-    if(this.registerForm.invalid && this.registerForm.touched) {
-      const errors = Object.keys(this.registerForm.controls).map<InputValidators | null>(
-        key => {
-          if (this.registerForm.get(key)?.errors && this.registerForm.get(key)?.touched) {
-            return {
-              key,
-              validators: this.registerForm.get(key)?.errors
-            }
-          }
+  getValidationErrors() {
+    console.log('me ejecuto')
+    // * Si entra aquí es porque el formulario ha sido tocado y es inválido (tiene errores)
+    const errors = Object.keys(this.registerForm.controls)
+      .filter(key => this.registerForm.get(key)?.errors && this.registerForm.get(key)?.touched)
+      .map(key => {
+        return {
+          key,
+          validators: this.registerForm.get(key)?.errors
         }
-      )
-      this._notificationService.validation(errors)
-      console.log(errors);
-      return errors
-    }
+      })
 
+    if (errors.length > 0) {
+      console.log(errors)
+      this._notificationService.validation(errors)
+    }
+  }
+
+  hasErrors(): boolean {
+    if (this.registerForm.invalid && this.registerForm.touched) {
+      this.getValidationErrors()
+      return true
+    }
+    
     return false
   }
 }

@@ -28,7 +28,7 @@ export class NotificationService {
     this._notification$.next({ type: 'error', message })
   }
 
-  validation(messages: InputValidators[] | null) {
+  validation(messages: InputValidators[]) {
     this._validation$.next({ type: 'validation', messages})
   }
 
@@ -50,7 +50,7 @@ export interface ValidationMessages {
 
 export interface InputValidators {
   key: string,
-  validators: ValidationErrors | null
+  validators: ValidationErrors | null | undefined
 }
 
 export interface ValidationMessagesWithExtras {
