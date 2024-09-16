@@ -2,7 +2,7 @@
   "goals": [
     {
       "id": "1",
-      "userId": 101,
+      "userId": "bdf0",
       "name": "Run 1000 km",
       "description": "Complete 1000 km by the end of the year",
       "startDate": "2024-01-01T00:00:00.000Z",
@@ -25,7 +25,7 @@
     },
     {
       "id": "2",
-      "userId": 101,
+      "userId": "bdf0",
       "name": "Run 5 marathons",
       "description": "Participate in 5 marathons this year",
       "startDate": "2024-01-15T00:00:00.000Z",
@@ -124,7 +124,7 @@
     },
     {
       "id": "9",
-      "userId": 101,
+      "userId": "bdf0",
       "name": "Complete a marathon",
       "description": "Run a full marathon within the year",
       "startDate": "2024-05-01T00:00:00.000Z",

@@ -11,22 +11,28 @@ import { Goal } from '../../models/goals.model';
 export class GoalsPageComponent implements OnInit {
   isLoading: boolean = true;
   errorMessage: string | null = null; 
-  goals: Goal[] = [];
+  goals: Goal[] | null = null;
 
   constructor(private _goalsService: GoalService) { }
 
   ngOnInit(): void {
-    // ! Hay que proveerle un ID, aquí damos uno de prueba
-    this._goalsService.getGoals(101).pipe(
-      delay(2000)
-    ).subscribe({
-      next: res => {
-        // TODO Eliminar la simulación de retraso
-          this.goals = res
-          this.isLoading = false;
-      },
-      error: error => console.log(error),
-      complete: () => console.log('Get goals attempt completed!')
-    })
+    const userId = localStorage.getItem('userId')
+    console.log(userId)
+    if (userId) {
+      this._goalsService.getGoals(userId).subscribe({
+        next: res => {
+            this.goals = res
+            this.isLoading = false;
+        },
+        error: error => {
+          this.isLoading = false
+          this.errorMessage = error
+        },
+        complete: () => console.log('Get goals attempt completed!')
+      })
+    } else {
+      this.isLoading = false
+      this.errorMessage = 'Connection error'
+    }
   }
 }

@@ -1,26 +1,17 @@
 <form [formGroup]="loginForm" (submit)="login()">
     <mat-form-field>
         <mat-label>Email</mat-label>
-        <input matInput formControlName="email" type="email" placeholder="eve.holt@reqres.in" required
-            aria-required="true" aria-label="Email">
-        <mat-error *ngIf="email?.errors?.['required'] && email?.touched">
-            Email is required
-        </mat-error>
-        <mat-error *ngIf="email?.errors?.['email']">
-            Plase, enter a valid email address
-        </mat-error>
+        <input (blur)="updateValidationErrors()" matInput formControlName="email" type="email" placeholder="eve.holt@reqres.in" required aria-required="true" aria-label="Email">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Password</mat-label>
-        <input matInput formControlName="password" type="password" required aria-required="true" aria-label="Password">
-        <mat-error *ngIf="password?.errors?.['required'] && password?.touched">
-            Password is required
-        </mat-error>
+        <input (blur)="updateValidationErrors()" matInput formControlName="password" type="password" required aria-required="true" aria-label="Password">
     </mat-form-field>
     <div class="button-container" matTooltip="Complete this form to login" [matTooltipDisabled]="loginForm.valid">
         <button mat-flat-button type="submit" [disabled]="loginForm.invalid">LOGIN</button>
     </div>
-
 </form>
 
-<app-notification/>
+<ng-container>
+    <app-validation-container />
+</ng-container>

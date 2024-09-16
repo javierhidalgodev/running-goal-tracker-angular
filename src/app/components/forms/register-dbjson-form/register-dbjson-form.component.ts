@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { InputValidators, NotificationService } from '../../../services/notification.service';
+import { getValidationErrors } from '../../../utils/forms.utils';
 
 @Component({
   selector: 'app-register-dbjson-form',
@@ -33,6 +34,10 @@ export class RegisterDbjsonFormComponent implements OnInit {
         Validators.pattern('[a-zA-Z0-9]{1,}')
       ])]
     })
+
+    this.registerForm.statusChanges.subscribe(status => {
+      this.updateValidationErrors()
+    })
   }
 
   get email() {
@@ -42,21 +47,12 @@ export class RegisterDbjsonFormComponent implements OnInit {
     return this.registerForm.get('password')
   }
 
-  getValidationErrors () {
-    const errors = Object
-      .keys(this.registerForm.controls)
-      .filter(key => {
-        return this.registerForm.get(key)?.errors && this.registerForm.get(key)?.touched
-      })
-      .map(control => {
-        return {
-          key: control,
-          validators: this.registerForm.get(control)?.errors
-        }
-      }) as InputValidators[]
+  updateValidationErrors(): void {
+    this.validationErrors = getValidationErrors(this.registerForm)
 
-    this.validationErrors = errors
-    console.log(errors)
+    if (this.validationErrors) {
+      this._notificationService.validation(this.validationErrors)
+    }
   }
 
   register() {

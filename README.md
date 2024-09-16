@@ -2,6 +2,17 @@
 
 ## TAREAS
 
+### Refactoring para conseguir los objetivos del BACKEND/DBJSON y mostrarlos en la página general de objetivos del usuario
+
+1. Se debe comprobar el estado de la sesión y del token. Esto lo hace el guard.
+2. Se debe recoger el userId de la sesión. **Aquí sería conveniente modificar cómo se guarda el token al iniciar sesión. Debemos mirar si es necesario guardar en el localStorage también el userId y el email, para operaciones cómo esta.**
+3. Se pueden dar hasta tres casos (reconocidos de momento):
+   1. El servidor devuelve una lista de objetivos.
+   2. El servidor no devuelve nada, porque no hay objetivos, y se renderiza una notificación.
+   3. El servidor tiene problemas al recuperar los objetivos y muestra el error en cuestión.
+
+**Nota:** me he dado cuenta que si borro el userId del *localStorage*, y recargo la página, se queda con el *loader*. Esto es porque ahora estoy asignado el usuario desde el guard, y parece ser que el componente se renderiza antes, y al no tener un userId al que acudir no gestiona las operaciones necesarias ni para mostrar el error. Por eso la idea de guardar un objeto de token más complejo, de tal manera que si se borra el token, el usuario sería directamente desconectado.
+
 ### Manejador de mensajes
 
 1. La primera vez que entro en un campo y salgo sin escribir no se muestra nada, tantas veces como salga y entre, en cualquiera de los campos.
@@ -11,19 +22,19 @@
 
 Podemos buscar la manera de manejar los mensajes de notificación desde un servicio/componente externo, para simplificar la lógica interna de los componenentes.
 
-- [ ] Tenemos un servicio común con varias funciones que pueden ser emitidas en relación al tipo de mensaje que se quiera emitir. Esto emite un objeto que puede ser utilizado en el componente para renderizar lo que se necesite.
+- [x] Tenemos un servicio común con varias funciones que pueden ser emitidas en relación al tipo de mensaje que se quiera emitir. Esto emite un objeto que puede ser utilizado en el componente para renderizar lo que se necesite.
 
 **Manejar notificaciones de éxito/error**
-- [ ] Usamos un componente específico, que en el inicio se suscribe al emisor de notificaciones, iguala el mensaje interno a lo que recibe del emisor, y a los 5 segundos vuelve el mensaje a nulo.
+- [x] Usamos un componente específico, que en el inicio se suscribe al emisor de notificaciones, iguala el mensaje interno a lo que recibe del emisor, y a los 5 segundos vuelve el mensaje a nulo.
 
 **Manejar validaciones de formulario**
-- [ ] Tenemos un componente específico, que en el inicio se suscribe al emisor esperando mensajes de validación.
-- [ ] Esto es un array de ninguna/varias posiciones, que determinará si el componente debe renderizarse o no.
-- [ ] Internamente renderizará tantos mensajes de validación (mat-error) cómo tenga el array que recibe.
+- [x] Tenemos un componente específico, que en el inicio se suscribe al emisor esperando mensajes de validación.
+- [x] Esto es un array de ninguna/varias posiciones, que determinará si el componente debe renderizarse o no.
+- [x] Internamente renderizará tantos mensajes de validación (mat-error) cómo tenga el array que recibe.
 
 ### Refactoring del login/register
 
-  - [ ] Crear un servicio especifico para emular el trabajo con una base de datos, que haga referencia a JSON-SERVER.
+  - [x] Crear un servicio especifico para emular el trabajo con una base de datos, que haga referencia a JSON-SERVER.
 
 **Guard**
  - [x] El token debe existir en el localStorage.

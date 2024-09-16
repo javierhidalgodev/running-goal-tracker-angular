@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { mockGoals } from '../mocks/goals.mock';
 import { Goal, GoalActivity, NewGoal } from '../models/goals.model';
+import { DbService } from './db.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,9 @@ export class GoalService {
 
   private goals = mockGoals;
 
-  constructor() { }
+  constructor(
+    private _dbService: DbService
+  ) { }
 
   /**
    * 
@@ -28,9 +31,8 @@ export class GoalService {
    * @param userId ID del usuario para poder filtrar los goals correspondientes
    * @returns Un observable de Goals
    */
-  getGoals(userId: number): Observable<Goal[]> {
-    const filteredGoals = this.goals.filter((g: Goal) => g.userId === userId)
-    return of(filteredGoals)
+  getGoals(userId: string): Observable<Goal[] | null> {
+    return this._dbService.getGoals(userId)
   }
 
   getGoalById(goalId: number): Observable<Goal | null> {

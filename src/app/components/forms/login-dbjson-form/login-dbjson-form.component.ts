@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
-import { NotificationService } from '../../../services/notification.service';
+import { InputValidators, NotificationService } from '../../../services/notification.service';
+import { getValidationErrors } from '../../../utils/forms.utils';
 
 @Component({
   selector: 'app-login-dbjson-form',
@@ -14,6 +15,7 @@ export class LoginDbjsonFormComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({})
   errorMessage: string | null = null
   successMessage: string | null = null
+  validationErrors: InputValidators[] | null = null;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -29,8 +31,11 @@ export class LoginDbjsonFormComponent implements OnInit {
       ])],
       password: ['', Validators.compose([
         Validators.required,
-        Validators.minLength(5)
       ])]
+    })
+
+    this.loginForm.statusChanges.subscribe(status => {
+      this.updateValidationErrors()
     })
   }
 
@@ -39,6 +44,14 @@ export class LoginDbjsonFormComponent implements OnInit {
   }
   get password() {
     return this.loginForm.get('password')
+  }
+
+  updateValidationErrors(): void {
+    this.validationErrors = getValidationErrors(this.loginForm)
+
+    if (this.validationErrors) {
+      this._notificationService.validation(this.validationErrors)
+    }
   }
 
   login() {

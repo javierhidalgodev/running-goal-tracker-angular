@@ -1,40 +1,18 @@
-<form [formGroup]="registerForm" (submit)="register()" (click)="getValidationErrors()">
+<form [formGroup]="registerForm" (submit)="register()">
     <mat-form-field>
         <mat-label>Email</mat-label>
-        <input matInput formControlName="email" type="text" placeholder="eve.holt@reqres.in" required aria-label="Email"
+        <input (blur)="updateValidationErrors()" matInput formControlName="email" type="text" placeholder="eve.holt@reqres.in" required aria-label="Email"
             required aria-required="true">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Password</mat-label>
-        <input matInput formControlName="password" type="password" required aria-label="Password" aria-required="true">
+        <input (blur)="updateValidationErrors()" matInput formControlName="password" type="password" required aria-label="Password" aria-required="true">
     </mat-form-field>
     <div class="button-container" matTooltip="Complete this form to register" [matTooltipDisabled]="registerForm.valid">
         <button mat-flat-button type="submit" [disabled]="registerForm.invalid">REGISTER</button>
     </div>
 </form>
 
-<!-- <ng-container *ngIf="registerForm.invalid && registerForm.touched">
-    <div class="validation-container">
-        <mat-error *ngIf="registerForm.get('email')?.errors?.['required'] && registerForm.get('email')?.touched">
-            Email is required
-        </mat-error>
-        <mat-error *ngIf="registerForm.get('email')?.errors?.['email'] && registerForm.get('email')?.touched">
-            Please, enter a valid email address
-        </mat-error>
-        <mat-error *ngIf="registerForm.get('password')?.errors?.['required'] && registerForm.get('password')?.touched">
-            Password is required
-        </mat-error>
-        <mat-error *ngIf="registerForm.get('password')?.errors?.['minlength'] && registerForm.get('password')?.touched">
-            Password must be at least 5 characters
-        </mat-error>
-        <mat-error *ngIf="registerForm.get('password')?.errors?.['pattern'] && registerForm.get('password')?.touched">
-            Password must be contain only letters and numbers
-        </mat-error>
-    </div>
-</ng-container> -->
-
-<ng-container *ngIf="validationErrors && registerForm.touched">
-    <mat-error *ngFor="let item of validationErrors">
-        {{ item | json }}
-    </mat-error>
+<ng-container>
+    <app-validation-container />
 </ng-container>

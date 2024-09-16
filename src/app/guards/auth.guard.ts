@@ -19,7 +19,9 @@ export const authGuard: CanActivateFn = () => {
         "Authorization": `Bearer ${token}` 
       }
     }).subscribe({
-      next: value => console.log(value),
+      next: (value: any) => {
+        localStorage.setItem('userId', value.decoded.userId)
+      },
       error: error => {
         localStorage.removeItem('token')
         router.navigate(['auth/login']);
