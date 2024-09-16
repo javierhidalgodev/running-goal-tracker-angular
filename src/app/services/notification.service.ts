@@ -50,7 +50,7 @@ export interface ValidationMessages {
 
 export interface InputValidators {
   key: string,
-  validators: ValidationErrors | null | undefined
+  validators: ValidationErrors | null
 }
 
 export interface ValidationMessagesWithExtras {

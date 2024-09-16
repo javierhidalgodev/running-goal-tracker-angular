@@ -1,20 +1,18 @@
 <form [formGroup]="loginForm" (submit)="login()">
     <mat-form-field>
         <mat-label>Username</mat-label>
-        <input matInput formControlName="username" type="text" placeholder="eve.holt@reqres.in" required aria-required="true" aria-label="Username">
-        <mat-error *ngIf="username?.errors?.['required'] && username?.touched">
+        <input matInput formControlName="username" type="text" placeholder="eve.holt@reqres.in" required
+            aria-required="true" aria-label="Username">
+        <!-- <mat-error *ngIf="username?.errors?.['required'] && username?.touched">
             Username is required
         </mat-error>
         <mat-error *ngIf="username?.errors?.['email']">
             Plase, enter a valid email address
-        </mat-error>
+        </mat-error> -->
     </mat-form-field>
     <mat-form-field>
         <mat-label>Password</mat-label>
         <input matInput formControlName="password" type="password" required aria-required="true" aria-label="Password">
-        <mat-error *ngIf="password?.errors?.['required'] && password?.touched">
-            Password is required
-        </mat-error>
     </mat-form-field>
     <div class="button-container" matTooltip="Complete this form to login" [matTooltipDisabled]="loginForm.valid">
         <button mat-flat-button type="submit" [disabled]="loginForm.invalid">LOGIN</button>
@@ -24,3 +22,20 @@
         {{ errorMessage }}
     </mat-error>
 </form>
+
+<ng-container *ngIf="loginForm.invalid && loginForm.touched">
+    <div class="debbuger">
+        <mat-error *ngIf="username?.errors?.['required'] && username?.touched">
+            Username is required
+        </mat-error>
+        <mat-error *ngIf="username?.errors?.['email']">
+            Plase, enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="password?.errors?.['required'] && password?.touched">
+            Password is required
+        </mat-error>
+        <mat-error *ngIf="password?.errors?.['minlength'] && password?.touched">
+            Más largo amigo
+        </mat-error>
+    </div>
+</ng-container>

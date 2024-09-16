@@ -1,4 +1,4 @@
-<div class="validation-container">
+<div class="validation-container" *ngIf="validationMessages">
     <ng-content *ngFor="let item of validationMessages!.messages">
         <mat-error *ngIf="item.validators?.['required']">
             <ng-content *ngIf="item.key === 'email'">

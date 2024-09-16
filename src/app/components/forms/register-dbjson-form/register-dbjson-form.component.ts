@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
-import { NotificationService } from '../../../services/notification.service';
+import { InputValidators, NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-register-dbjson-form',
@@ -12,12 +12,13 @@ export class RegisterDbjsonFormComponent implements OnInit {
   registerForm: FormGroup = new FormGroup({});
   successMessage: string | null = null;
   errorMessage: string | null = null;
-  hasFormErrors: boolean = false;
+  validationErrors: InputValidators[] | null = null;
 
   constructor(
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
     private _notificationService: NotificationService,
+    private _cdRef: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -32,21 +33,30 @@ export class RegisterDbjsonFormComponent implements OnInit {
         Validators.pattern('[a-zA-Z0-9]{1,}')
       ])]
     })
-
-    this.registerForm.statusChanges.subscribe(status => {
-      this.hasFormErrors = this.registerForm.invalid
-    })
   }
 
-  // get email() {
-  //   return this.registerForm.get('email')
-  // }
-  // get password() {
-  //   return this.registerForm.get('password')
-  // }
+  get email() {
+    return this.registerForm.get('email')
+  }
+  get password() {
+    return this.registerForm.get('password')
+  }
 
-  getControl(controlName: string) {
-    return this.registerForm.get(controlName)
+  getValidationErrors () {
+    const errors = Object
+      .keys(this.registerForm.controls)
+      .filter(key => {
+        return this.registerForm.get(key)?.errors && this.registerForm.get(key)?.touched
+      })
+      .map(control => {
+        return {
+          key: control,
+          validators: this.registerForm.get(control)?.errors
+        }
+      }) as InputValidators[]
+
+    this.validationErrors = errors
+    console.log(errors)
   }
 
   register() {
@@ -61,32 +71,5 @@ export class RegisterDbjsonFormComponent implements OnInit {
         complete: () => console.log('Register attempt completed!')
       })
     }
-  }
-
-  getValidationErrors() {
-    console.log('me ejecuto')
-    // * Si entra aquí es porque el formulario ha sido tocado y es inválido (tiene errores)
-    const errors = Object.keys(this.registerForm.controls)
-      .filter(key => this.registerForm.get(key)?.errors && this.registerForm.get(key)?.touched)
-      .map(key => {
-        return {
-          key,
-          validators: this.registerForm.get(key)?.errors
-        }
-      })
-
-    if (errors.length > 0) {
-      console.log(errors)
-      this._notificationService.validation(errors)
-    }
-  }
-
-  hasErrors(): boolean {
-    if (this.registerForm.invalid && this.registerForm.touched) {
-      this.getValidationErrors()
-      return true
-    }
-    
-    return false
   }
 }

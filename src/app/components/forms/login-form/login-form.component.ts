@@ -29,6 +29,10 @@ export class LoginFormComponent implements OnInit {
         Validators.minLength(5)
       ])]
     })
+
+    this.loginForm.valueChanges.subscribe(status => {
+      console.log(status);
+    })
   }
 
   get username() {
