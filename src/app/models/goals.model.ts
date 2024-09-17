@@ -15,8 +15,8 @@ export interface GoalActivity {
 }
 
 export interface Goal {
-    userId: number,
-    id: number,
+    userId: string,
+    id: string,
     name: string,
     description: string,
     startDate: Date,

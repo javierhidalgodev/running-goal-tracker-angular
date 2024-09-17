@@ -23,7 +23,12 @@ mat-spinner {
     margin: 20px auto;
 }
 
-.no-data-yet-message {
+.no-goals-yet {
+    display: flex;
+    flex-direction: column;
+}
+
+.goals-error {
     text-align: center;
     color: rgb(170, 45, 0) !important;
 }

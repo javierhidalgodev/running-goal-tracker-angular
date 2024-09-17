@@ -6,13 +6,18 @@
         <ng-template ngFor let-goal [ngForOf]="goals">
             <app-goal [goalObject]="goal"></app-goal>
         </ng-template>
-        <ng-container *ngIf="goals === null && !errorMessage">
-            <h3 class="no-data-yet-message"> No data yet </h3>
-        </ng-container>
-        <ng-container *ngIf="errorMessage">
-            <h3 class="no-data-yet-message"> {{ errorMessage }}</h3>
-        </ng-container>
     </div>
+    <ng-container *ngIf="goals === null && !errorMessage">
+        <div class="no-goals-yet">
+            <h3>Don't have goals yet?</h3>
+            <a mat-flat-button routerLink="/new-goal">Start here</a>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="errorMessage">
+        <div class="goals-error">
+            <h3> {{ errorMessage }}</h3>
+        </div>
+    </ng-container>
 </ng-container>
 
 <ng-template #noGoals>

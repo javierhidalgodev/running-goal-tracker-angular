@@ -58,7 +58,7 @@ export class LoginDbjsonFormComponent implements OnInit {
     if (this.loginForm.valid) {
       this._authService.loginDBJSON(this.loginForm.value).subscribe({
         next: token => {
-          localStorage.setItem('token', token)
+          localStorage.setItem('token', JSON.stringify(token))
           this._router.navigate(['/home'])
         },
         error: error => {

@@ -2,8 +2,8 @@ import { Goal } from "../models/goals.model";
 
 export const mockGoals: Goal[] = [
     {
-        id: 1,
-        userId: 101,
+        id: "1",
+        userId: "101",
         name: 'Run 1000 km',
         description: 'Complete 1000 km by the end of the year',
         startDate: new Date('2024-01-01'),
@@ -16,8 +16,8 @@ export const mockGoals: Goal[] = [
         ]
     },
     {
-        id: 2,
-        userId: 101,
+        id: "2",
+        userId: "101",
         name: 'Run 5 marathons',
         description: 'Participate in 5 marathons this year',
         startDate: new Date('2024-01-15'),
@@ -27,8 +27,8 @@ export const mockGoals: Goal[] = [
         activities: []
     },
     {
-        id: 3,
-        userId: 102,
+        id: "3",
+        userId: "102",
         name: 'Run 500 km',
         description: 'Achieve 500 km by mid-year',
         startDate: new Date('2024-01-01'),
@@ -38,8 +38,8 @@ export const mockGoals: Goal[] = [
         activities: []
     },
     {
-        id: 4,
-        userId: 103,
+        id: "4",
+        userId: "103",
         name: 'Run 10k every week',
         description: 'Maintain a weekly running habit',
         startDate: new Date('2024-01-01'),
@@ -52,8 +52,8 @@ export const mockGoals: Goal[] = [
         ]
     },
     {
-        id: 5,
-        userId: 104,
+        id: "5",
+        userId: "104",
         name: 'Trail Running Challenge',
         description: 'Participate in 3 trail running events',
         startDate: new Date('2024-03-01'),
@@ -67,8 +67,8 @@ export const mockGoals: Goal[] = [
         ]
     },
     {
-        id: 6,
-        userId: 105,
+        id: "6",
+        userId: "105",
         name: 'Run a Half Marathon',
         description: 'Prepare for and run a half marathon',
         startDate: new Date('2024-01-01'),
@@ -78,8 +78,8 @@ export const mockGoals: Goal[] = [
         activities: []
     },
     {
-        id: 7,
-        userId: 106,
+        id: "7",
+        userId: "106",
         name: 'Run 300 km',
         description: 'Cover 300 km in 3 months',
         startDate: new Date('2024-04-01'),
@@ -89,8 +89,8 @@ export const mockGoals: Goal[] = [
         activities: []
     },
     {
-        id: 8,
-        userId: 107,
+        id: "8",
+        userId: "107",
         name: 'Run a 10k race',
         description: 'Participate in a local 10k race',
         startDate: new Date('2024-02-01'),
@@ -100,8 +100,8 @@ export const mockGoals: Goal[] = [
         activities: []
     },
     {
-        id: 9,
-        userId: 101,
+        id: "9",
+        userId: "101",
         name: 'Complete a marathon',
         description: 'Run a full marathon within the year',
         startDate: new Date('2024-05-01'),
@@ -111,8 +111,8 @@ export const mockGoals: Goal[] = [
         activities: []
     },
     {
-        id: 10,
-        userId: 108,
+        id: "10",
+        userId: "108",
         name: 'Run a 5k with family',
         description: 'Encourage family members to run a 5k together',
         startDate: new Date('2024-03-15'),

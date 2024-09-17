@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
+const authRouter = require('./routers/auth.router')
 dotenv.config()
 
 const app = express()
@@ -9,44 +10,26 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-// * Para el login
-app.post('/login', (req, res) => {
-  const { userId, email } = req.body
+// * Para el login (post) la verificación del token (get)
+app.use('/login', authRouter)
 
-  if (!userId || !email) {
-    return res.status(400).send('Faltan datos')
-  }
-
-  const payload = {
-    userId,
-    email
-  }
-
-  const token = jwt.sign(payload, process.env.JWT_KEY, {
-    expiresIn: '3m'
-  })
-
-  res.json(token)
-})
-
-// * Para la verificación del token
-app.get('/login', (req, res) => {
+app.get('/check_token', (req, res, next) => {
   const token = req.headers.authorization
 
   if (!token || token.substring(0, 7).toLowerCase() !== 'bearer ') {
     return res.status(401).send('A valid token is required!')
   }
 
-  jwt.verify(token.slice(7), process.env.JWT_KEY, (err, decoded) => {
-    if (err) {
-      return res.status(401).send('Invalid token!')
-    }
+  const formattedToken = token.substring(7)
 
-    res.json({ message: 'Access granted', decoded })
-  })
+  try {
+    jwt.verify(formattedToken, process.env.JWT_KEY)
+  } catch (error) {
+    return res.status(401).send('Invalid token')
+  }
+
+  next()
 })
-
-// * Para el registro
 
 app.listen(process.env.PORT || 5002, () => {
   console.log('Server is running!')

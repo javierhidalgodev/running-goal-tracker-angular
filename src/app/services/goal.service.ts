@@ -3,6 +3,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { mockGoals } from '../mocks/goals.mock';
 import { Goal, GoalActivity, NewGoal } from '../models/goals.model';
 import { DbService } from './db.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class GoalService {
   private goals = mockGoals;
 
   constructor(
-    private _dbService: DbService
+    private _dbService: DbService,
+    private _http: HttpClient
   ) { }
 
   /**
@@ -35,17 +37,18 @@ export class GoalService {
     return this._dbService.getGoals(userId)
   }
 
-  getGoalById(goalId: number): Observable<Goal | null> {
-    const selectedGoal = this.goals.find(g => g.id === goalId)
+  getGoalById(goalId: string): Observable<Goal | null> {
+    const selectedGoal = this.goals.find(goal => goal.id === goalId)
 
     if(selectedGoal) {
       return of(selectedGoal)
+    //   return of(selectedGoal)
     }
 
     return throwError(() => new Error('Goal not found!'))
   }
 
-  addActivityToGoal(goalId: number, activity: GoalActivity): Observable<GoalActivity | null> {
+  addActivityToGoal(goalId: string, activity: GoalActivity): Observable<GoalActivity | null> {
     const goal = this.goals.find(g => g.id === goalId)
 
     if(goal) {
@@ -54,4 +57,24 @@ export class GoalService {
 
     return of(null)
   }
+
+  // addActivityToGoal() {
+  //   // ? Aquí debería de ir una llamada al BACKEND, cómo recuperamos directamente de JSONSERVER los datos, y no pasamos por el BACK, vamos a simular al menos la verificación del token, para poder realizar la operación que debería realizarse: comprobación del token/validez => recuperar la entrada => operar sobre la entrada => devolver resultado/error
+
+  //   const token = localStorage.getItem('token')
+
+  //   if(!token) {
+  //     console.log('tus putas ganas')
+  //   }
+
+  //   const decodedToken = JSON.parse(token!)
+
+  //   let res = this._http.get('http://localhost:3000/check_token', {
+  //     headers: {
+  //       "Authorization": `Bearer ${decodedToken.token}`
+  //     }
+  //   })
+
+  //   console.log(res)
+  // }
 }
