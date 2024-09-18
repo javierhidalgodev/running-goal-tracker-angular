@@ -1,20 +1,24 @@
-<ng-container *ngIf="goalWithExtraDetails; else goalNotFound">
-    <app-goal-detail
-        [selectedGoal]="goalWithExtraDetails"
-        (emitOpenModal)="openModal()">
-    </app-goal-detail>
+<ng-container *ngIf="!isLoading; else loading">
+    <ng-container *ngIf="goalWithExtraDetails; else goalNotFound">
+        <app-goal-detail [selectedGoal]="goalWithExtraDetails" (emitOpenModal)="openModal()">
+        </app-goal-detail>
+    </ng-container>
+
+    <ng-template #goalNotFound>
+        <div errorMessage>{{ errorMessage }}</div>
+    </ng-template>
+
+    <a class="go-back-btn" mat-flat-button routerLink="/goals">GO BACK</a>
+
+    <ng-container *ngIf="activeModal">
+        <app-modal (emitCloseEvent)="closeModal()" [ngSwitch]="activeModal">
+            <app-activity *ngSwitchCase="'activityForm'" (emitAddActivity)="activityAdded($event)"
+                [selectedGoal]="goalWithExtraDetails"></app-activity>
+            <app-goal-complete-modal *ngSwitchCase="'goalCompleted'"></app-goal-complete-modal>
+        </app-modal>
+    </ng-container>
 </ng-container>
 
-<ng-template #goalNotFound>
-    <div errorMessage>{{ errorMessage }}</div>
+<ng-template #loading>
+    <mat-spinner></mat-spinner>
 </ng-template>
-
-<a class="go-back-btn" mat-flat-button routerLink="/goals">GO BACK</a>
-
-<ng-container *ngIf="activeModal">
-    <app-modal (emitCloseEvent)="closeModal()" [ngSwitch]="activeModal">
-        <app-activity *ngSwitchCase="'activityForm'" (emitAddActivity)="activityAdded($event)" [selectedGoal]="goalWithExtraDetails"></app-activity>
-        <app-goal-complete-modal *ngSwitchCase="'goalCompleted'"></app-goal-complete-modal>
-        <!-- En principio no necesito manejar un caso de DEFAULT ya que está controlado el valor que puede tomar activeModal -->
-    </app-modal>
-</ng-container>

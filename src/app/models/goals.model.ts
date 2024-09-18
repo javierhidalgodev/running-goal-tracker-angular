@@ -23,6 +23,7 @@ export interface Goal {
     endDate: Date,
     km: number,
     image?: string,
+    completed: boolean,
     activities: GoalActivity[]
 }
 
@@ -30,5 +31,4 @@ export interface GoalWithExtraDetails extends Goal {
     daysToEnd: number;
     goalTotal: number;
     goalProgress: number;
-    complete: boolean
 }

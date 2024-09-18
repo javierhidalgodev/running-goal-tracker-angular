@@ -1,12 +1,16 @@
 export interface NewUser {
+    username: string,
     email: string,
     password: string,
     profileIMG?: string
 }
 
 export interface User extends NewUser {
-    id?: string,
-    registrationDate: Date,
+    registrationDate: Date
+}
+
+export interface UserDBJSON extends User {
+    id: string
 }
 
 export interface Login {

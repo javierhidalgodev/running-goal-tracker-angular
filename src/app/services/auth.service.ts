@@ -112,7 +112,8 @@ export class AuthService {
             const body: User = {
               ...newUser,
               registrationDate: new Date(),
-              profileIMG: newUser.profileIMG || DEFAULT_PROFILE_USER_IMG
+              profileIMG: newUser.profileIMG || DEFAULT_PROFILE_USER_IMG,
+              username: newUser.username || `RGT${newUser.email.split('@')[0]}`
             }
 
             return this._http.post<User>(`${API_DBJSON_URL}/users`, body)

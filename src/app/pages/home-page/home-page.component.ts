@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DbService } from '../../services/db.service';
+import { User } from '../../models/user.model';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Goal, GoalWithExtraDetails } from '../../models/goals.model';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-home-page',
@@ -7,28 +11,38 @@ import { DbService } from '../../services/db.service';
   styleUrl: './home-page.component.scss'
 })
 export class HomePageComponent implements OnInit {
+map(undefined: undefined) {
+throw new Error('Method not implemented.');
+}
+  user: User | null = null;
+  goals: Goal[] | null = [];
+  pendingTasks: number = 0;
+  completedTasks: number = 0;
 
   constructor(
     private _dbService: DbService
   ) { }
 
   ngOnInit(): void {
-    // this._dbService.getUsers().subscribe({
-    //   next: value => console.log(value),
-    //   error: error => console.log(error),
-    //   complete: () => console.log('Get All Users attempt completed!')
-    // })
+    const token = localStorage.getItem('token')
 
-    // this._dbService.getUserByEmail('josefa@gmail.com').subscribe({
-    //   next: value => {
-    //     if(value) {
-    //       console.log(value)
-    //     } else {
-    //       console.log('User not found!')
-    //     }
-    //   },
-    //   error: error => console.log(error),
-    //   complete: () => console.log('Get User By Email attempt completed!')
-    // })
+    if (token) {
+      const { userId } = JSON.parse(token)
+      this._dbService.getUserById(userId).pipe(
+        switchMap(user => {
+          this.user = user
+
+          return this._dbService.getGoals(user?.id!)
+        })
+      ).subscribe({
+        next: goals => {
+          this.goals = goals
+          if (goals) {
+            this.pendingTasks = goals.filter(g => !g.completed).length
+            this.completedTasks = goals.filter(g => g.completed).length
+          }
+        }
+      })
+    }
   }
 }

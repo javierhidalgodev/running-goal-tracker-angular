@@ -12,7 +12,6 @@ export class AuthPageComponent implements OnInit {
   constructor(private _router: Router, private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
-
     this._route.params.subscribe(params => {
       const action = params['action']
 

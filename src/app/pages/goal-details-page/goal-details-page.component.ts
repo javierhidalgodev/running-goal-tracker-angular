@@ -12,6 +12,7 @@ import { calculateDaysToEnd, calculateGoalTotal, calculateProgress } from '../..
 export class GoalDetailsPageComponent implements OnInit {
   id: string | null = null;
   goalWithExtraDetails?: GoalWithExtraDetails;
+  isLoading: boolean = true;
 
   // * Estos datos en principio permanecen, aunque los revisaremos más adelante
   errorMessage?: string
@@ -27,12 +28,9 @@ export class GoalDetailsPageComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.getGoalIdFromRoute()
 
-    if(this.id) {
+    if (this.id) {
       this.fetchGoalById(this.id)
     }
-
-    // ! Obsoleto de momento
-    // this.calculateDaysToEnd()
   }
 
   //  TODO: De momento los datos no persisten porque no está configurado para eso.
@@ -85,23 +83,24 @@ export class GoalDetailsPageComponent implements OnInit {
     this._goalsService.getGoalById(id).subscribe({
       next: res => {
         if (res) {
-          console.log(res)
-
           this.goalWithExtraDetails = {
             ...res,
             daysToEnd: calculateDaysToEnd(res),
             goalTotal: calculateGoalTotal(res),
             goalProgress: calculateProgress(res),
-            complete: false
           }
         } else {
           this.handleErrorMessage('Goal not found!')
         }
       },
       error: error => {
-        this.handleErrorMessage(error.message)
+        this.handleErrorMessage('Lo sentimos pero hubo un error. Por favor, inténtelo de nuevo más tarde.')
+        this.isLoading = false
       },
-      complete: () => console.log('Get goal by id attempt completed!')
+      complete: () => {
+        console.log('Get goal by id attempt completed!')
+        this.isLoading = false
+      }
     })
   }
 
@@ -116,7 +115,7 @@ export class GoalDetailsPageComponent implements OnInit {
       this.goalWithExtraDetails.goalProgress = calculateProgress(this.goalWithExtraDetails)
 
       if (this.goalWithExtraDetails.goalTotal >= this.goalWithExtraDetails.km) {
-        this.goalWithExtraDetails.complete = true
+        this.goalWithExtraDetails.completed = true
         this.activeModal = 'goalCompleted'
       }
     }

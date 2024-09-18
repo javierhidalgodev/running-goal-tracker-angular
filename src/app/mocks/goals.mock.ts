@@ -9,6 +9,7 @@ export const mockGoals: Goal[] = [
         startDate: new Date('2024-01-01'),
         endDate: new Date('2024-12-31'),
         km: 1000,
+        completed: false,
         activities: [
             { date: new Date('2024-01-05'), km: 10 },
             { date: new Date('2024-01-10'), km: 15 },
@@ -24,6 +25,7 @@ export const mockGoals: Goal[] = [
         endDate: new Date('2024-12-31'),
         km: 210,
         image: 'https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg',
+        completed: false,
         activities: []
     },
     {
@@ -35,6 +37,7 @@ export const mockGoals: Goal[] = [
         endDate: new Date('2024-06-30'),
         km: 500,
         image: 'https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg',
+        completed: false,
         activities: []
     },
     {
@@ -46,6 +49,7 @@ export const mockGoals: Goal[] = [
         endDate: new Date('2024-12-31'),
         km: 520, // 10 km * 52 weeks
         image: 'https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg',
+        completed: false,
         activities: [
             { date: new Date('2024-02-03'), km: 5 },
             { date: new Date('2024-02-07'), km: 7 },
@@ -60,6 +64,7 @@ export const mockGoals: Goal[] = [
         endDate: new Date('2024-11-01'),
         km: 120,
         image: 'https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg',
+        completed: false,
         activities: [
             { date: new Date('2024-03-02'), km: 12 },
             { date: new Date('2024-03-05'), km: 18 },
@@ -75,6 +80,7 @@ export const mockGoals: Goal[] = [
         endDate: new Date('2024-04-15'),
         km: 21,
         image: 'https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg',
+        completed: false,
         activities: []
     },
     {
@@ -86,6 +92,7 @@ export const mockGoals: Goal[] = [
         endDate: new Date('2024-06-30'),
         km: 300,
         image: 'https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg',
+        completed: false,
         activities: []
     },
     {
@@ -97,6 +104,7 @@ export const mockGoals: Goal[] = [
         endDate: new Date('2024-04-01'),
         km: 10,
         image: 'https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg',
+        completed: false,
         activities: []
     },
     {
@@ -108,6 +116,7 @@ export const mockGoals: Goal[] = [
         endDate: new Date('2024-12-01'),
         km: 42,
         image: 'https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg',
+        completed: false,
         activities: []
     },
     {
@@ -119,6 +128,7 @@ export const mockGoals: Goal[] = [
         endDate: new Date('2024-06-15'),
         km: 5,
         image: 'https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg',
+        completed: false,
         activities: []
     }
 ];
