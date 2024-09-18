@@ -315,6 +315,30 @@
       "registrationDate": "2024-09-18T12:06:50.092Z",
       "profileIMG": "profile-default.png",
       "username": "RGTjavierhidalgodev"
+    },
+    {
+      "id": "d35a",
+      "email": "emma@stones.com",
+      "password": "$2a$10$t3gh/YsRah4R5Lhw6uI1tu1m5y2F2VxQ2fV9zo08YeQzlUTxGWucG",
+      "registrationDate": "2024-09-18T16:12:33.529Z",
+      "profileIMG": "profile-default.png",
+      "username": "RGTemma"
+    },
+    {
+      "id": "5477",
+      "email": "hermione@granger.com",
+      "password": "$2a$10$vP3C0PwaDRilgP0Y2VpMEOcxpVuDnjDSaF.bJx5qbjsOwGTFGZ9ii",
+      "registrationDate": "2024-09-18T16:13:20.802Z",
+      "profileIMG": "profile-default.png",
+      "username": "RGThermione"
+    },
+    {
+      "id": "fffb",
+      "email": "asd@asd",
+      "password": "$2a$10$x8fEVKLfvnPGd9d5Il4Ue.bNsDV7DCV.GC1ggmv.Q9PZd7o0ySujK",
+      "registrationDate": "2024-09-18T17:02:04.169Z",
+      "profileIMG": "profile-default.png",
+      "username": "RGTasd"
     }
   ]
 }

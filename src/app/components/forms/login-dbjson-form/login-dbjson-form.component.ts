@@ -11,11 +11,11 @@ import { getValidationErrors } from '../../../utils/forms.utils';
   styleUrl: './login-dbjson-form.component.scss'
 })
 export class LoginDbjsonFormComponent implements OnInit {
-
   loginForm: FormGroup = new FormGroup({})
   errorMessage: string | null = null
   successMessage: string | null = null
   validationErrors: InputValidators[] | null = null;
+  isLogin: boolean = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -55,6 +55,8 @@ export class LoginDbjsonFormComponent implements OnInit {
   }
 
   login() {
+    this.isLogin = true
+
     if (this.loginForm.valid) {
       this._authService.loginDBJSON(this.loginForm.value).subscribe({
         next: token => {
@@ -63,8 +65,12 @@ export class LoginDbjsonFormComponent implements OnInit {
         },
         error: error => {
           this._notificationService.error(error)
+          this.isLogin = false
         },
-        complete: () => console.log('Login attempt completed!')
+        complete: () => {
+          console.log('Login attempt completed!')
+          this.isLogin = false
+        }
       })
     }
   }

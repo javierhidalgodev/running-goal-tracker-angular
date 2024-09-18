@@ -54,7 +54,6 @@ export class DbService {
     )
   }
 
-  // TODO: Añadir spinner
   getGoalById(goalId: string): Observable<Goal | null> {
     return this._http.get<Goal[]>(`${this._DB_URL}/goals?id=${goalId}`).pipe(
       map(goals => goals.length > 0 ? goals[0] : null),

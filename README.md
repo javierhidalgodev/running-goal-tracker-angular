@@ -2,14 +2,24 @@
 
 ## TAREAS
 
+### Notification Component
+- [ ] Eliminar logs para mensajes de éxito y revisar lo de error/validación.
+
+### Add Activity Form
+- [x] Refactorizar la manera en que se graban las actividades y hacerlo persistente (`JSON SERVER`).
+
+### Dar vida a la HOME
+- [x] Añadir algunos mensajes personalizados en relación a los objetivos grabados, los pendientes y los completos.
+- [ ] Seguir dando vida a la HOME con un diseño más "chulo", y otros datos como los KM recorridos en total.
+
 ### Refactoring para conseguir los objetivos del BACKEND/DBJSON y mostrarlos en la página general de objetivos del usuario
 
-1. Se debe comprobar el estado de la sesión y del token. Esto lo hace el guard.
-2. Se debe recoger el userId de la sesión. **Aquí sería conveniente modificar cómo se guarda el token al iniciar sesión. Debemos mirar si es necesario guardar en el localStorage también el userId y el email, para operaciones cómo esta.**
-3. Se pueden dar hasta tres casos (reconocidos de momento):
-   1. El servidor devuelve una lista de objetivos.
-   2. El servidor no devuelve nada, porque no hay objetivos, y se renderiza una notificación.
-   3. El servidor tiene problemas al recuperar los objetivos y muestra el error en cuestión.
+- [x] Se debe comprobar el estado de la sesión y del token. Esto lo hace el guard.
+- [x] Se debe recoger el userId de la sesión. **Aquí sería conveniente modificar cómo se guarda el token al iniciar sesión. Debemos mirar si es necesario guardar en el localStorage también el userId y el email, para operaciones cómo esta.**
+1. Se pueden dar hasta tres casos (reconocidos de momento):
+   - [x] El servidor devuelve una lista de objetivos.
+   - [x] El servidor no devuelve nada, porque no hay objetivos, y se renderiza una notificación.
+   - [x] El servidor tiene problemas al recuperar los objetivos y muestra el error en cuestión.
 
 **Nota:** me he dado cuenta que si borro el userId del *localStorage*, y recargo la página, se queda con el *loader*. Esto es porque ahora estoy asignado el usuario desde el guard, y parece ser que el componente se renderiza antes, y al no tener un userId al que acudir no gestiona las operaciones necesarias ni para mostrar el error. Por eso la idea de guardar un objeto de token más complejo, de tal manera que si se borra el token, el usuario sería directamente desconectado.
 
@@ -33,7 +43,6 @@ Podemos buscar la manera de manejar los mensajes de notificación desde un servi
 - [x] Internamente renderizará tantos mensajes de validación (mat-error) cómo tenga el array que recibe.
 
 ### Refactoring del login/register
-
   - [x] Crear un servicio especifico para emular el trabajo con una base de datos, que haga referencia a JSON-SERVER.
 
 **Guard**
@@ -49,6 +58,7 @@ De esta manera las rutas protegidas lo estarán por el token verificado.
 **Nota:** cabe destacar que si dotamos el token de un tiempo de expiración, al hacer la verificación dará error si el tiempo de expiración ha pasado.
 
 **Login**
+  - [ ] Spinner en el botón para mostrar que se está haciendo login o esperar errores.
   - [x] Recibir los datos del fomulario.
   - [x] Pedir al servicio que nos devuelva el usuario solicitado por email, manejar el error si no lo encuentra o si el servicio no está disponible.
   - [x] Usar también el servicio para, una vez recuperado el usuario, comprobar (con `bcrypt`) que la password es correcta.
@@ -56,6 +66,8 @@ De esta manera las rutas protegidas lo estarán por el token verificado.
   - [x] Guardar el `token` en `localStorage` para a partir de aquí permitir el resto de operaciones (`guard`).
 
 **Register**
+  - [ ] Spinner en el botón para mostrar que se está haciendo register o esperar errores.
+  - [ ] Doble verificación de password.
   - [x] Recibir los datos del fomulario.
   - [x] Pedir al servicio que compruebe la posible existencia de un usuario ya creado con el mismo email.
   - [x] Si no existe el usuario, crearlo y notificarlo.
@@ -86,25 +98,25 @@ De esta manera las rutas protegidas lo estarán por el token verificado.
 
 ### Goal Service
 **Conectar la Lógica de Objetivos**:
-  - [ ] Actualizar el servicio para manejar objetivos.
-  - [ ] Integrar el componente Goal con datos reales.
+  - [x] Actualizar el servicio para manejar objetivos.
+  - [x] Integrar el componente Goal con datos reales.
 
 **Actualizar el Objeto Goal**:
   - [x] Añadir el campo `activities` al objeto `Goal` para almacenar el progreso del objetivo.
   - [x] Definir el objeto `Activity` con los campos `date` y `km`.
   - Al añadir correctamente una actividad hay que manejar dos casuísticas.
-    - [ ] Añadir una notificación temporal que indique que la actividad se ha añadido.
-    - [ ] Si el objetivo ha sido cumplido, además de notificar la actividad añadida, mostrar una notificación del logro, y... :
-      - [ ] Manejar la indicación de los KM que quedan a 0 (y que no indique un número negativo).
+    - [x] Añadir una notificación temporal que indique que la actividad se ha añadido.
+    - [x] Si el objetivo ha sido cumplido, además de notificar la actividad añadida, mostrar una notificación del logro, y... :
+      - [x] Manejar la indicación de los KM que quedan a 0 (y que no indique un número negativo).
 
 ### Goals Page Component
-**Ajustar ID Dinámico**:
-  - [ ] Implementar lógica para utilizar un ID de usuario dinámico al obtener objetivos.
+  - [ ] Squeleton para la carga de imágenes/datos.
+  - [x] Implementar lógica para utilizar un ID de usuario dinámico al obtener objetivos.
 
 ### Gestión de Errores
 **Mejorar Manejo de Errores**:
-  - [ ] Implementar lógica para manejar errores en la carga de objetivos.
-  - [ ] Visualizar los errores en la plantilla si ocurren.
+  - [x] Implementar lógica para manejar errores en la carga de objetivos.
+  - [x] Visualizar los errores en la plantilla si ocurren.
 
 ### Toolbar
 **Mejorar el Tool-Bar**:

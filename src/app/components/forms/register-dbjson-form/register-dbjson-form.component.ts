@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { InputValidators, NotificationService } from '../../../services/notification.service';
 import { getValidationErrors } from '../../../utils/forms.utils';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-dbjson-form',
@@ -19,7 +20,7 @@ export class RegisterDbjsonFormComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
     private _notificationService: NotificationService,
-    private _cdRef: ChangeDetectorRef
+    private _router: Router
   ) { }
 
   ngOnInit(): void {
@@ -60,6 +61,7 @@ export class RegisterDbjsonFormComponent implements OnInit {
       this._authService.registerDBJSON(this.registerForm.value).subscribe({
         next: value => {
           this._notificationService.success('User registered!')
+          setTimeout(() => this._router.navigate(['/auth/login']), 5500)
         },
         error: error => {
           this._notificationService.error(error)
