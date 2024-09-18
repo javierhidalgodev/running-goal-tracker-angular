@@ -16,7 +16,9 @@ export const authGuard: CanActivateFn = () => {
   const token = localStorage.getItem('token');
   // ? Si no compruebas la validez del token desde el BACKEND, cualquiera puede falsear el token introduciéndolo manualmente. El contenido no se mostraría, pero la ruta sí estaría activa
   if(token) {
+    // ? Si el token no puede ser parseado da error, y la aplicación se queda frita...
     let decodedToken: Token = JSON.parse(token)
+
     http.get('http://localhost:5000/login', {
       headers: {
         "Authorization": `Bearer ${decodedToken.token}` 

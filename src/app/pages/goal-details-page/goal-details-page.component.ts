@@ -10,7 +10,7 @@ import { calculateDaysToEnd, calculateGoalTotal, calculateProgress } from '../..
   styleUrl: './goal-details-page.component.scss'
 })
 export class GoalDetailsPageComponent implements OnInit {
-  id: number = 0;
+  id: string | null = null;
   goalWithExtraDetails?: GoalWithExtraDetails;
 
   // * Estos datos en principio permanecen, aunque los revisaremos más adelante
@@ -26,7 +26,10 @@ export class GoalDetailsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.getGoalIdFromRoute()
-    this.fetchGoalById(this.id)
+
+    if(this.id) {
+      this.fetchGoalById(this.id)
+    }
 
     // ! Obsoleto de momento
     // this.calculateDaysToEnd()
@@ -74,14 +77,16 @@ export class GoalDetailsPageComponent implements OnInit {
     // })
   }
 
-  private getGoalIdFromRoute(): number {
-    return Number(this._route.snapshot.paramMap.get('id'))
+  private getGoalIdFromRoute(): string | null {
+    return this._route.snapshot.paramMap.get('id')
   }
 
-  private fetchGoalById(id: number) {
+  private fetchGoalById(id: string) {
     this._goalsService.getGoalById(id).subscribe({
       next: res => {
         if (res) {
+          console.log(res)
+
           this.goalWithExtraDetails = {
             ...res,
             daysToEnd: calculateDaysToEnd(res),
@@ -89,10 +94,12 @@ export class GoalDetailsPageComponent implements OnInit {
             goalProgress: calculateProgress(res),
             complete: false
           }
+        } else {
+          this.handleErrorMessage('Goal not found!')
         }
       },
       error: error => {
-        this.handleErrorMessage('Goal not found!')
+        this.handleErrorMessage(error.message)
       },
       complete: () => console.log('Get goal by id attempt completed!')
     })

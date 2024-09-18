@@ -4,11 +4,13 @@
             <mat-card-title>
                 <h3>{{ selectedGoal.name }}</h3>
             </mat-card-title>
+            <small> {{ selectedGoal.startDate | date }} | {{ selectedGoal.endDate | date }}</small>
         </mat-card-header>
         <mat-card-content>
             <mat-progress-bar mode="determinate" color="tertiary" [value]="this.selectedGoal.goalProgress"></mat-progress-bar>
             <p><strong>Objetivo:</strong> {{ selectedGoal.km | kMtoEnd }}</p>
             <p><strong>KM para finalizar:</strong> {{ selectedGoal.km | kMtoEnd: this.selectedGoal.goalTotal }}</p>
+            <p><strong>Días para finalizar:</strong> {{ selectedGoal.daysToEnd }}</p>
             <p><strong>Descripción:</strong> {{ selectedGoal.description }}</p>
     
             <p><strong>Actividades registradas:</strong></p>

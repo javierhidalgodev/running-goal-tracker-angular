@@ -29,9 +29,9 @@ export class DbService {
       catchError(error => {
         console.log(error)
         return throwError(() => new Error('Something went wrong. Please try again later.'))
-        })
-        )
-        }
+      })
+    )
+  }
 
   getGoals(userId: string): Observable<Goal[] | null> {
     return this._http.get<Goal[]>(`${this._DB_URL}/goals?userId=${userId}`).pipe(
@@ -39,6 +39,16 @@ export class DbService {
       catchError(error => {
         console.log(error)
         return throwError(() => new Error('Something went wrong. Please try again later.'))
+      })
+    )
+  }
+
+  // TODO: Añadir spinner
+  getGoalById(goalId: string): Observable<Goal | null> {
+    return this._http.get<Goal[]>(`${this._DB_URL}/goals?id=${goalId}`).pipe(
+      map(goals => goals.length > 0 ? goals[0] : null),
+      catchError(error => {
+        return throwError(() => new Error('Get goal by id error'))
       })
     )
   }

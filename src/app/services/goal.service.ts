@@ -37,15 +37,19 @@ export class GoalService {
     return this._dbService.getGoals(userId)
   }
 
+  // getGoalById(goalId: string): Observable<Goal | null> {
+  //   const selectedGoal = this.goals.find(goal => goal.id === goalId)
+
+  //   if(selectedGoal) {
+  //     return of(selectedGoal)
+  //   //   return of(selectedGoal)
+  //   }
+
+  //   return throwError(() => new Error('Goal not found!'))
+  // }
+
   getGoalById(goalId: string): Observable<Goal | null> {
-    const selectedGoal = this.goals.find(goal => goal.id === goalId)
-
-    if(selectedGoal) {
-      return of(selectedGoal)
-    //   return of(selectedGoal)
-    }
-
-    return throwError(() => new Error('Goal not found!'))
+    return this._dbService.getGoalById(goalId)
   }
 
   addActivityToGoal(goalId: string, activity: GoalActivity): Observable<GoalActivity | null> {

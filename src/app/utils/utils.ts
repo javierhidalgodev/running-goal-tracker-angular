@@ -19,5 +19,5 @@ export const calculateProgress = (goal: Goal | GoalWithExtraDetails) => {
 }
 
 export const calculateDaysToEnd = (goal: Goal): number => {
-  return Number(((new Date().getTime() - goal.startDate.getTime())/(1000*60*60*24)).toFixed())
+  return Number(((new Date(goal.endDate).getTime() - new Date().getTime())/(1000*60*60*24)).toFixed())
 }
