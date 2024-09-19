@@ -109,11 +109,13 @@ export class AuthService {
           switchMap(hash => {
             newUser.password = hash
 
+            newUser.username = newUser.username.trim().replace('  ', ' ')
+
             const body: User = {
               ...newUser,
               registrationDate: new Date(),
               profileIMG: newUser.profileIMG || DEFAULT_PROFILE_USER_IMG,
-              username: newUser.username || `RGT${newUser.email.split('@')[0]}`
+              username: newUser.username
             }
 
             return this._http.post<User>(`${API_DBJSON_URL}/users`, body)

@@ -1,15 +1,27 @@
 <form [formGroup]="registerForm" (submit)="register()">
     <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input (blur)="updateValidationErrors()" matInput formControlName="username" type="text" placeholder="Eve Holt" required aria-label="Username" aria-required="true">
+    </mat-form-field>
+    <mat-form-field>
         <mat-label>Email</mat-label>
-        <input (blur)="updateValidationErrors()" matInput formControlName="email" type="text" placeholder="eve.holt@reqres.in" required aria-label="Email"
-            required aria-required="true">
+        <input (blur)="updateValidationErrors()" matInput formControlName="email" type="text" placeholder="eve.holt@reqres.in" required aria-label="Email" aria-required="true">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Password</mat-label>
         <input (blur)="updateValidationErrors()" matInput formControlName="password" type="password" required aria-label="Password" aria-required="true">
     </mat-form-field>
+    <mat-form-field>
+        <mat-label>Repeat your password</mat-label>
+        <input (blur)="updateValidationErrors()" matInput formControlName="confirmPassword" type="password" required aria-label="Repeat your password" aria-required="true">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Choose your profile image</mat-label>
+        <input (blur)="updateValidationErrors()" matInput formControlName="file" type="file" required aria-required="true">
+    </mat-form-field>
     <div class="button-container" matTooltip="Complete this form to register" [matTooltipDisabled]="registerForm.valid">
-        <button mat-flat-button type="submit" [disabled]="registerForm.invalid">REGISTER</button>
+        <mat-spinner *ngIf="isRegistering" onButtonSpinner diameter="20"></mat-spinner>
+        <button mat-flat-button type="submit" [disabled]="registerForm.invalid || isRegistering">REGISTER</button>
     </div>
 </form>
 

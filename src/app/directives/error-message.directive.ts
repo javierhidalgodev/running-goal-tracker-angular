@@ -5,8 +5,8 @@ import { Directive, ElementRef } from '@angular/core';
 })
 export class ErrorMessageDirective {
 
-  constructor(private elemetRef: ElementRef) {
-    elemetRef.nativeElement.style.cssText = `
+  constructor(private elementRef: ElementRef) {
+    elementRef.nativeElement.style.cssText = `
       text-align: center;
       color: rgb(170, 45, 0) !important;
       font-weight: bold;

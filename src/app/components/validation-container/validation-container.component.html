@@ -1,24 +1,41 @@
 <div class="validation-container" *ngIf="validationMessages">
     <ng-content *ngFor="let item of validationMessages!.messages">
         <mat-error *ngIf="item.validators?.['required']">
+            <ng-content *ngIf="item.key === 'username'">
+                Please, enter a valid username
+            </ng-content>
             <ng-content *ngIf="item.key === 'email'">
                 Please, enter a valid email
             </ng-content>
             <ng-content *ngIf="item.key === 'password'">
                 Please, enter a valid password
             </ng-content>
+            <ng-content *ngIf="item.key === 'confirmPassword'">
+                Please, confirm the password
+            </ng-content>
+        </mat-error>
+        <mat-error *ngIf="item.validators?.['isEqual']">
+            <ng-content *ngIf="item.key === 'form'">
+                Passwords must match
+            </ng-content>
         </mat-error>
         <mat-error *ngIf="item.validators?.['email']">
             <ng-content *ngIf="item.key === 'email'">
                 Please, enter a valid email
             </ng-content>
-         </mat-error>
+        </mat-error>
         <mat-error *ngIf="item.validators?.['minlength']">
+            <ng-content *ngIf="item.key === 'username'">
+                Username must be at least 5 characters
+            </ng-content>
             <ng-content *ngIf="item.key === 'password'">
                 Password must be at least 5 characters
             </ng-content>
         </mat-error>
         <mat-error *ngIf="item.validators?.['pattern']">
+            <ng-content *ngIf="item.key === 'username'">
+                Password must containt only letters
+            </ng-content>
             <ng-content *ngIf="item.key === 'password'">
                 Password must containt only letters and numbers
             </ng-content>

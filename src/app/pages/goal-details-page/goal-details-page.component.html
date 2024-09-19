@@ -1,4 +1,5 @@
 <ng-container *ngIf="!isLoading; else loading">
+    <a class="go-back-btn" mat-flat-button routerLink="/goals">GO BACK</a>
     <ng-container *ngIf="goalWithExtraDetails; else goalNotFound">
         <app-goal-detail [selectedGoal]="goalWithExtraDetails" (emitOpenModal)="openModal()">
         </app-goal-detail>
@@ -7,8 +8,6 @@
     <ng-template #goalNotFound>
         <div errorMessage>{{ errorMessage }}</div>
     </ng-template>
-
-    <a class="go-back-btn" mat-flat-button routerLink="/goals">GO BACK</a>
 
     <ng-container *ngIf="activeModal">
         <app-modal (emitCloseEvent)="closeModal()" [ngSwitch]="activeModal">

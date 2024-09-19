@@ -10,6 +10,20 @@ export function dateValidatorFn(): ValidatorFn {
   }
 }
 
+export function isEqualFn(): ValidatorFn {
+  return (formGroup: AbstractControl): ValidationErrors | null => {
+    const password = formGroup.get('password')?.value
+    const confirmPassword = formGroup.get('confirmPassword')?.value
+
+    if(!password || !confirmPassword) {
+      return null
+    } 
+    console.log(password === confirmPassword);
+    
+    return password !== confirmPassword ? { isEqual: true } : null
+  }
+}
+
 export function calculateGoalTotal(goal: Goal | GoalWithExtraDetails) {
   return goal.activities.reduce((prev, curr) => prev + curr.km, 0)
 }

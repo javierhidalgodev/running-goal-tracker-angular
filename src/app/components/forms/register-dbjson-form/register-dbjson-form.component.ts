@@ -1,9 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { InputValidators, NotificationService } from '../../../services/notification.service';
 import { getValidationErrors } from '../../../utils/forms.utils';
 import { Router } from '@angular/router';
+import { isEqualFn } from '../../../utils/utils';
 
 @Component({
   selector: 'app-register-dbjson-form',
@@ -15,6 +16,7 @@ export class RegisterDbjsonFormComponent implements OnInit {
   successMessage: string | null = null;
   errorMessage: string | null = null;
   validationErrors: InputValidators[] | null = null;
+  isRegistering: boolean = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -25,6 +27,11 @@ export class RegisterDbjsonFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = this._formBuilder.group({
+      username: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(5),
+        Validators.pattern('[a-zA-Z ]{1,}')
+      ])],
       email: ['', Validators.compose([
         Validators.required,
         Validators.email
@@ -33,8 +40,9 @@ export class RegisterDbjsonFormComponent implements OnInit {
         Validators.required,
         Validators.minLength(5),
         Validators.pattern('[a-zA-Z0-9]{1,}')
-      ])]
-    })
+      ])],
+      confirmPassword: ['', Validators.required,]
+    }, { validators: isEqualFn() })
 
     this.registerForm.statusChanges.subscribe(status => {
       this.updateValidationErrors()
@@ -47,9 +55,26 @@ export class RegisterDbjsonFormComponent implements OnInit {
   get password() {
     return this.registerForm.get('password')
   }
+  get confirmPassword() {
+    return this.registerForm.get('confirmPassword')
+  }
 
   updateValidationErrors(): void {
     this.validationErrors = getValidationErrors(this.registerForm)
+
+    if (this.registerForm.errors) {
+      const formErrors = Object.keys(this.registerForm.errors).map(error => {
+        return {
+          key: 'form',
+          validators: this.registerForm.errors
+        }
+      }) as InputValidators[]
+
+      this.validationErrors = [
+        ...this.validationErrors,
+        ...formErrors
+      ] as InputValidators[]
+    }
 
     if (this.validationErrors) {
       this._notificationService.validation(this.validationErrors)
@@ -57,6 +82,8 @@ export class RegisterDbjsonFormComponent implements OnInit {
   }
 
   register() {
+    this.isRegistering = true
+
     if (this.registerForm.valid) {
       this._authService.registerDBJSON(this.registerForm.value).subscribe({
         next: value => {
@@ -65,8 +92,12 @@ export class RegisterDbjsonFormComponent implements OnInit {
         },
         error: error => {
           this._notificationService.error(error)
+          this.isRegistering = false
         },
-        complete: () => console.log('Register attempt completed!')
+        complete: () => {
+          console.log('Register attempt completed!')
+          this.isRegistering = false
+        }
       })
     }
   }

@@ -19,6 +19,8 @@ form {
 }
 
 .button-container {
+    position: relative;
+
     button[type=submit] {
         width: 100%;
     }

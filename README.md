@@ -2,6 +2,9 @@
 
 ## TAREAS
 
+### Estilos
+- [ ] Crear inputs personalizados con opción de label y directivas que permitan estilizar.
+
 ### Notification Component
 - [ ] Eliminar logs para mensajes de éxito y revisar lo de error/validación.
 
@@ -58,7 +61,7 @@ De esta manera las rutas protegidas lo estarán por el token verificado.
 **Nota:** cabe destacar que si dotamos el token de un tiempo de expiración, al hacer la verificación dará error si el tiempo de expiración ha pasado.
 
 **Login**
-  - [ ] Spinner en el botón para mostrar que se está haciendo login o esperar errores.
+  - [x] Spinner en el botón para mostrar que se está haciendo login o esperar errores.
   - [x] Recibir los datos del fomulario.
   - [x] Pedir al servicio que nos devuelva el usuario solicitado por email, manejar el error si no lo encuentra o si el servicio no está disponible.
   - [x] Usar también el servicio para, una vez recuperado el usuario, comprobar (con `bcrypt`) que la password es correcta.
@@ -66,7 +69,7 @@ De esta manera las rutas protegidas lo estarán por el token verificado.
   - [x] Guardar el `token` en `localStorage` para a partir de aquí permitir el resto de operaciones (`guard`).
 
 **Register**
-  - [ ] Spinner en el botón para mostrar que se está haciendo register o esperar errores.
+  - [x] Spinner en el botón para mostrar que se está haciendo register o esperar errores.
   - [ ] Doble verificación de password.
   - [x] Recibir los datos del fomulario.
   - [x] Pedir al servicio que compruebe la posible existencia de un usuario ya creado con el mismo email.

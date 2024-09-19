@@ -339,6 +339,23 @@
       "registrationDate": "2024-09-18T17:02:04.169Z",
       "profileIMG": "profile-default.png",
       "username": "RGTasd"
+    },
+    {
+      "id": "ccaf",
+      "email": "elsa@pataki.com",
+      "password": "$2a$10$10JvHiSdln8rNeb3.dHh8.dEH3Qg3At/kB8sOhT1RANM6P3lTyywu",
+      "registrationDate": "2024-09-19T08:46:29.907Z",
+      "profileIMG": "profile-default.png",
+      "username": "RGTelsa"
+    },
+    {
+      "id": "2f36",
+      "username": "Ana Mena",
+      "email": "ana@mena.com",
+      "password": "$2a$10$cFIInOal9qp.v6h2YhN56OjudI15qhGQlXa7G2eISS7GheTyJa3gO",
+      "confirmPassword": "loquesea",
+      "registrationDate": "2024-09-19T12:43:15.884Z",
+      "profileIMG": "profile-default.png"
     }
   ]
 }

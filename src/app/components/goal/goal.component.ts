@@ -9,6 +9,7 @@ import { Goal } from '../../models/goals.model';
 })
 export class GoalComponent implements OnInit {
   @Input() goalObject?: Goal;
+  isImageLoading: boolean = true;
 
   constructor (private _route: Router) { }
 
@@ -17,6 +18,11 @@ export class GoalComponent implements OnInit {
     if (!this.goalObject) {
       console.warn('Something went wrong with data source!')
     }
+  }
+
+  onImageLoad() {
+    // TODO: quitar la simulación de retraso
+    setTimeout(() => this.isImageLoading = false,2000)
   }
 
   navigateTo(url: string): void {

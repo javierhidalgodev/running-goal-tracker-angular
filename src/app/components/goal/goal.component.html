@@ -9,9 +9,10 @@
         </mat-card-header>
         <!-- TODO aquí podemos cargar un gráfico con el progreso -->
         <!-- Ahora estamos cargando una imágen que viene del usuario, o por defecto una propia del sistema -->
-        <img mat-card-image
-            [src]="goalObject.image || 'https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg'"
-            alt="Goal's image description">
+         <div class="mat-card-img">
+             <div class="skeleton" *ngIf="isImageLoading"></div>
+             <img (load)="onImageLoad()" [class.hidden]="isImageLoading" mat-card-image [src]="goalObject.image || 'https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg'" alt="Goal's image description">
+         </div>
         <!-- <mat-card-content>
                 <p>{{ goalObject.description }}</p>
             </mat-card-content> -->

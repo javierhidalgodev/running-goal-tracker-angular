@@ -45,6 +45,8 @@ import { RegisterDbjsonFormComponent } from './components/forms/register-dbjson-
 import { LoginDbjsonFormComponent } from './components/forms/login-dbjson-form/login-dbjson-form.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { ValidationContainerComponent } from './components/validation-container/validation-container.component';
+import { OnButtonSpinnerDirective } from './directives/on-button-spinner.directive';
+import { InputStylesDirective } from './directives/input-styles.directive';
 
 @NgModule({
   declarations: [
@@ -71,7 +73,9 @@ import { ValidationContainerComponent } from './components/validation-container/
     RegisterDbjsonFormComponent,
     LoginDbjsonFormComponent,
     NotificationComponent,
-    ValidationContainerComponent
+    ValidationContainerComponent,
+    OnButtonSpinnerDirective,
+    InputStylesDirective
   ],
   imports: [
     BrowserModule,
