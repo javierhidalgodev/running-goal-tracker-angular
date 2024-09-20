@@ -356,6 +356,15 @@
       "confirmPassword": "loquesea",
       "registrationDate": "2024-09-19T12:43:15.884Z",
       "profileIMG": "profile-default.png"
+    },
+    {
+      "id": "f8dc",
+      "username": "Elsa Pataky",
+      "email": "elsa@pataky.com",
+      "password": "$2a$10$lCZacYFdeesqwMOStPRe3OfESk8K/CQeY4a8tMMRey9rQG10YIKQC",
+      "confirmPassword": "loquesea",
+      "registrationDate": "2024-09-19T16:47:39.734Z",
+      "profileIMG": "profile-default.png"
     }
   ]
 }

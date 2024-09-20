@@ -17,6 +17,8 @@ export class RegisterDbjsonFormComponent implements OnInit {
   errorMessage: string | null = null;
   validationErrors: InputValidators[] | null = null;
   isRegistering: boolean = false;
+  
+  selectedFile: File | null = null;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -99,6 +101,15 @@ export class RegisterDbjsonFormComponent implements OnInit {
           this.isRegistering = false
         }
       })
+    }
+  }
+
+  onFileSelected(event: Event) {
+    const file = event.target as HTMLInputElement
+
+    if(file && file.files) {
+      console.log(file.files[0])
+      this.selectedFile = file.files[0]
     }
   }
 }

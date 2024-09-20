@@ -25,3 +25,27 @@ form {
         width: 100%;
     }
 }
+
+#input-file {
+    display: none;
+}
+
+mat-card {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+
+    mat-card-content {
+        width: 100%;
+        padding: 10px;
+    }
+    button {
+        width: 100px;
+        border: none;
+        background-color: orange;
+        font-weight: bold;
+    }
+
+    overflow: hidden;
+}
