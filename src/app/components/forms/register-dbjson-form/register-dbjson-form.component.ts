@@ -5,6 +5,9 @@ import { InputValidators, NotificationService } from '../../../services/notifica
 import { getValidationErrors } from '../../../utils/forms.utils';
 import { Router } from '@angular/router';
 import { isEqualFn } from '../../../utils/utils';
+import { HttpClient } from '@angular/common/http';
+import { Observable, switchMap } from 'rxjs';
+import { NewUser, User } from '../../../models/user.model';
 
 @Component({
   selector: 'app-register-dbjson-form',
@@ -17,14 +20,16 @@ export class RegisterDbjsonFormComponent implements OnInit {
   errorMessage: string | null = null;
   validationErrors: InputValidators[] | null = null;
   isRegistering: boolean = false;
-  
+
   selectedFile: File | null = null;
+  imgURL: string | null = null
 
   constructor(
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
     private _notificationService: NotificationService,
-    private _router: Router
+    private _router: Router,
+    private _http: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -83,31 +88,54 @@ export class RegisterDbjsonFormComponent implements OnInit {
     }
   }
 
-  register() {
+  uploadImage(): Observable<{ filePath: string }> {
+    const formData = new FormData()
+    formData.append('image', this.selectedFile as File)
+
+    return this._http.post<{ filePath: string }>('http://localhost:5000/upload', formData)
+  }
+
+  async register() {
     this.isRegistering = true
 
     if (this.registerForm.valid) {
-      this._authService.registerDBJSON(this.registerForm.value).subscribe({
-        next: value => {
-          this._notificationService.success('User registered!')
-          setTimeout(() => this._router.navigate(['/auth/login']), 5500)
+      await this.uploadImage().subscribe({
+        next: res => {
+          this.imgURL = res.filePath
+          
+          const newUser: NewUser = {
+            ...this.registerForm.value,
+            profileIMG: this.imgURL
+          }
+    
+          console.log(newUser)
         },
-        error: error => {
-          this._notificationService.error(error)
-          this.isRegistering = false
-        },
-        complete: () => {
-          console.log('Register attempt completed!')
-          this.isRegistering = false
-        }
+        error: error => console.log(error),
+        complete: () => console.log('Hecho')
       })
+
+      // this._authService.registerDBJSON(formData)
+      // .subscribe({
+      //   next: value => {
+      //     this._notificationService.success('User registered!')
+      //     setTimeout(() => this._router.navigate(['/auth/login']), 5500)
+      //   },
+      //   error: error => {
+      //     this._notificationService.error(error)
+      //     this.isRegistering = false
+      //   },
+      //   complete: () => {
+      //     console.log('Register attempt completed!')
+      //     this.isRegistering = false
+      //   }
+      // })
     }
   }
 
   onFileSelected(event: Event) {
     const file = event.target as HTMLInputElement
 
-    if(file && file.files) {
+    if (file && file.files) {
       console.log(file.files[0])
       this.selectedFile = file.files[0]
     }

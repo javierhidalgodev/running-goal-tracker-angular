@@ -28,7 +28,7 @@
         <mat-card-content>
             <span> {{ selectedFile ? selectedFile.name  : 'Please, upload an profile image' }}</span>
         </mat-card-content>
-        <button (click)="inputFile.click()">UPLOAD</button>
+        <button (click)="inputFile.click()" type="button">UPLOAD</button>
     </mat-card>
     <div class="button-container" matTooltip="Complete this form to register" [matTooltipDisabled]="registerForm.valid">
         <mat-spinner *ngIf="isRegistering" onButtonSpinner diameter="20"></mat-spinner>

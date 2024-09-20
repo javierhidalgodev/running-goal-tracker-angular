@@ -98,36 +98,46 @@ export class AuthService {
     )
   }
 
-  registerDBJSON(newUser: NewUser): Observable<User> {
-    return this._dbService.getUserByEmail(newUser.email).pipe(
-      switchMap(user => {
-        if (user) {
-          return throwError(() => new Error('This email address already exists'))
-        }
+  registerDBJSON(formData: NewUser) {
 
-        return from(bcrypt.hash(newUser.password, 10)).pipe(
-          switchMap(hash => {
-            newUser.password = hash
+    // const body: User = {
+    //   username,
+    //   email,
+    //   password,
+    //   registrationDate: new Date(),
+    //   profileIMG: image || DEFAULT_PROFILE_USER_IMG,
+    // }
 
-            newUser.username = newUser.username.trim().replace('  ', ' ')
 
-            const body: User = {
-              ...newUser,
-              registrationDate: new Date(),
-              profileIMG: newUser.profileIMG || DEFAULT_PROFILE_USER_IMG,
-              username: newUser.username
-            }
+    // return this._dbService.getUserByEmail(newUser.email).pipe(
+    //   switchMap(user => {
+    //     if (user) {
+    //       return throwError(() => new Error('This email address already exists'))
+    //     }
 
-            return this._http.post<User>(`${API_DBJSON_URL}/users`, body)
-          }),
+    //     return from(bcrypt.hash(newUser.password, 10)).pipe(
+    //       switchMap(hash => {
+    //         newUser.password = hash
 
-          // ? A este nivel nunca llego porque no sé cómo generar un problema con el hash
-          catchError(error => {
-            console.log('Something went wrong:', error);
-            return throwError(() => new Error('Please try again later'))
-          })
-        )
-      })
-    )
+    //         newUser.username = newUser.username.trim().replace('  ', ' ')
+
+    //         const body: User = {
+    //           ...newUser,
+    //           registrationDate: new Date(),
+    //           profileIMG: newUser.profileIMG || DEFAULT_PROFILE_USER_IMG,
+    //           username: newUser.username
+    //         }
+
+    //         return this._http.post<User>(`${API_DBJSON_URL}/users`, body)
+    //       }),
+
+    //       // ? A este nivel nunca llego porque no sé cómo generar un problema con el hash
+    //       catchError(error => {
+    //         console.log('Something went wrong:', error);
+    //         return throwError(() => new Error('Please try again later'))
+    //       })
+    //     )
+    //   })
+    // )
   }
 }
