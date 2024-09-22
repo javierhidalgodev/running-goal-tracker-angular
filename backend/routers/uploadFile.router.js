@@ -33,7 +33,7 @@ uploadFileRouter.post('/', upload.single('image'), (req, res) => {
   console.log(req.file)
 
   if (!req.file) {
-    return res.status(400).send('Something went wrong. No file uploaded.')
+    return res.status(200).send('No file selected')
   }
 
   res.status(200).send({ filePath: `/uploads/${req.file.filename}` })

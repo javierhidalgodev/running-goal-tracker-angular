@@ -13,4 +13,6 @@
     <p>¡Empieza ya a cumplir con tus metas de running!</p>
 </ng-template>
 
+<img [src]="'http://localhost:5000' + user?.profileIMG" width="100" [ngStyle]="{'display': 'block', 'padding': '20px'}" />
+
 <a mat-flat-button routerLink="/new-goal">ADD NEW GOAL</a>

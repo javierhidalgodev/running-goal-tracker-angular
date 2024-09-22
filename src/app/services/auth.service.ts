@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, from, Observable, switchMap, throwError } from 'rxjs';
+import { catchError, from, Observable, of, switchMap, throwError } from 'rxjs';
 import { DEFAULT_PROFILE_USER_IMG, Login, NewUser, User } from '../models/user.model';
 import { DbService } from './db.service';
 import bcrypt from 'bcryptjs'
@@ -98,46 +98,59 @@ export class AuthService {
     )
   }
 
-  registerDBJSON(formData: NewUser) {
+  uploadImage(selectedFile: File | null): Observable<{ filePath: string } | null> {
+    if (selectedFile) {
+      const formData = new FormData()
+      formData.append('image', selectedFile as File)
+      return this._http.post<{ filePath: string }>('http://localhost:5000/upload', formData)
+    }
+    
+    return of(null)
+  }
 
-    // const body: User = {
-    //   username,
-    //   email,
-    //   password,
-    //   registrationDate: new Date(),
-    //   profileIMG: image || DEFAULT_PROFILE_USER_IMG,
-    // }
+  registerDBJSON(newUser: NewUser, selectedFile: File | null) {
+    return this._dbService.getUserByEmail(newUser.email).pipe(
+      switchMap(user => {
+        if (user) {
+          return throwError(() => new Error('This email address already exists'))
+        }
 
+        return from(bcrypt.hash(newUser.password, 10)).pipe(
+          switchMap(hash => {
+            newUser.password = hash
+            newUser.username = newUser.username.trim().replace('  ', ' ')
 
-    // return this._dbService.getUserByEmail(newUser.email).pipe(
-    //   switchMap(user => {
-    //     if (user) {
-    //       return throwError(() => new Error('This email address already exists'))
-    //     }
+            return this.uploadImage(selectedFile).pipe(
+              switchMap(imgURL => {
+                console.log(imgURL)
+                const body: User = {
+                  email: newUser.email,
+                  password: newUser.password,
+                  username: newUser.username,
+                  profileIMG: imgURL?.filePath || DEFAULT_PROFILE_USER_IMG,
+                  registrationDate: new Date()
+                }
 
-    //     return from(bcrypt.hash(newUser.password, 10)).pipe(
-    //       switchMap(hash => {
-    //         newUser.password = hash
+                return this._http.post<User>(`${API_DBJSON_URL}/users`, body)
+              })
+            )
+            // const body: User = {
+            //   ...newUser,
+            //   registrationDate: new Date(),
+            //   profileIMG: newUser.profileIMG || DEFAULT_PROFILE_USER_IMG,
+            //   username: newUser.username
+            // }
 
-    //         newUser.username = newUser.username.trim().replace('  ', ' ')
+            // return this._http.post<User>(`${API_DBJSON_URL}/users`, body)
+          }),
 
-    //         const body: User = {
-    //           ...newUser,
-    //           registrationDate: new Date(),
-    //           profileIMG: newUser.profileIMG || DEFAULT_PROFILE_USER_IMG,
-    //           username: newUser.username
-    //         }
-
-    //         return this._http.post<User>(`${API_DBJSON_URL}/users`, body)
-    //       }),
-
-    //       // ? A este nivel nunca llego porque no sé cómo generar un problema con el hash
-    //       catchError(error => {
-    //         console.log('Something went wrong:', error);
-    //         return throwError(() => new Error('Please try again later'))
-    //       })
-    //     )
-    //   })
-    // )
+          // ? A este nivel nunca llego porque no sé cómo generar un problema con el hash
+          catchError(error => {
+            console.log('Something went wrong:', error);
+            return throwError(() => new Error('Please try again later'))
+          })
+        )
+      })
+    )
   }
 }

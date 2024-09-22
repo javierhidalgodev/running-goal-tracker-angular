@@ -88,47 +88,18 @@ export class RegisterDbjsonFormComponent implements OnInit {
     }
   }
 
-  uploadImage(): Observable<{ filePath: string }> {
-    const formData = new FormData()
-    formData.append('image', this.selectedFile as File)
-
-    return this._http.post<{ filePath: string }>('http://localhost:5000/upload', formData)
-  }
-
-  async register() {
+  register() {
     this.isRegistering = true
-
     if (this.registerForm.valid) {
-      await this.uploadImage().subscribe({
-        next: res => {
-          this.imgURL = res.filePath
-          
-          const newUser: NewUser = {
-            ...this.registerForm.value,
-            profileIMG: this.imgURL
-          }
-    
-          console.log(newUser)
-        },
-        error: error => console.log(error),
-        complete: () => console.log('Hecho')
-      })
+      const newUserData: NewUser = {
+        email: this.registerForm.get('email')?.value,
+        password: this.registerForm.get('password')?.value,
+        username: this.registerForm.get('username')?.value,
+      }
 
-      // this._authService.registerDBJSON(formData)
-      // .subscribe({
-      //   next: value => {
-      //     this._notificationService.success('User registered!')
-      //     setTimeout(() => this._router.navigate(['/auth/login']), 5500)
-      //   },
-      //   error: error => {
-      //     this._notificationService.error(error)
-      //     this.isRegistering = false
-      //   },
-      //   complete: () => {
-      //     console.log('Register attempt completed!')
-      //     this.isRegistering = false
-      //   }
-      // })
+      this._authService.registerDBJSON(newUserData, this.selectedFile).subscribe(value => console.log(value))
+
+      this.isRegistering = false
     }
   }
 

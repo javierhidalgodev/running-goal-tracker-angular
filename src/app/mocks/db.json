@@ -365,6 +365,58 @@
       "confirmPassword": "loquesea",
       "registrationDate": "2024-09-19T16:47:39.734Z",
       "profileIMG": "profile-default.png"
+    },
+    {
+      "id": "c012",
+      "email": "eve@holt",
+      "password": "$2a$10$GjB4BLkBarkSwILOk28dbu2dMCsh38QlhpdpGFrYt9kI6wcqoSBIu",
+      "username": "Eve Holt",
+      "profileIMG": "profile-default.png",
+      "registrationDate": "2024-09-20T17:38:49.025Z"
+    },
+    {
+      "id": "2d77",
+      "email": "eva@holt",
+      "password": "$2a$10$6q1Ml8N7gFTUq6stFQrcuuu3K2h8TdQkPVb0dwqlhds/P/QrS1o1O",
+      "username": "Eve Holt",
+      "profileIMG": {
+        "filePath": "/uploads/1726853961819-profile-ia-2.jpg"
+      },
+      "registrationDate": "2024-09-20T17:39:21.831Z"
+    },
+    {
+      "id": "3509",
+      "email": "eva@holta",
+      "password": "$2a$10$o1phjSa8kAk3GcppTSqJ2u1KPHO52IEkzdr/HGmyr/US1wJ/ry38a",
+      "username": "Eve Holt",
+      "profileIMG": {
+        "filePath": "/uploads/1726854002284-profile-ia-2.jpg"
+      },
+      "registrationDate": "2024-09-20T17:40:02.305Z"
+    },
+    {
+      "id": "36e2",
+      "email": "eve@holtesrt",
+      "password": "$2a$10$d8lTVOd1vSnbnUJPgJNTo.EkxxLb1D7wkOYFH8/peXKeyfyWeGzQO",
+      "username": "Eve Holt",
+      "profileIMG": "profile-default.png",
+      "registrationDate": "2024-09-20T17:47:22.614Z"
+    },
+    {
+      "id": "4d81",
+      "email": "eve@holtasdw",
+      "password": "$2a$10$Jc2sFpUF/2h4tn2k01.0Z.7g8frQ5p915naE9QmOl0DaC68I6A1G6",
+      "username": "Eve holt",
+      "profileIMG": "/uploads/1726854797442-profile-ia-2.jpg",
+      "registrationDate": "2024-09-20T17:53:17.468Z"
+    },
+    {
+      "id": "8748",
+      "email": "javi@hidalgo.com",
+      "password": "$2a$10$T3zjZtOqWGJpuYMSTh/DAObIDcx9H50WOBdH9W/O7VCPPIh4r9u4m",
+      "username": "Javi Hidalgo",
+      "profileIMG": "/uploads/1726854934663-profile-ia-2.jpg",
+      "registrationDate": "2024-09-20T17:55:34.675Z"
     }
   ]
 }
