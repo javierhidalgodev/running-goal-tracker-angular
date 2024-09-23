@@ -48,7 +48,7 @@ export class GoalDetailsPageComponent implements OnInit {
       this.complete = false
     }
   }
-
+  
   activityAdded(event: GoalActivity) {
     if (event && this.goalWithExtraDetails) {
       this.goalWithExtraDetails = {

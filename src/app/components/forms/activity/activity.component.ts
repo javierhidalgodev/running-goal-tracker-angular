@@ -38,13 +38,16 @@ export class ActivityComponent implements OnInit {
 
   addActivity() {
     if(this.selectedGoal) {
-      this._goalService.addActivityToGoal(this.selectedGoal.id, this.activityForm.value).subscribe({
-        next: value => {
-          this.emitAddActivity.emit(this.activityForm.value)
-        },
-        error: error => console.log('Something went wrong!'),
-        complete: () => console.log('Add activity to goal attempt completed!')
-      })
+      const activityToAdd = this.activityForm.value
+
+      this._goalService.addActivityToGoalDBJSON(this.selectedGoal.id, activityToAdd)
+      // this._goalService.addActivityToGoal(this.selectedGoal.id, this.activityForm.value).subscribe({
+      //   next: value => {
+      //     this.emitAddActivity.emit(this.activityForm.value)
+      //   },
+      //   error: error => console.log('Something went wrong!'),
+      //   complete: () => console.log('Add activity to goal attempt completed!')
+      // })
     }
 
     this.activityForm.reset()

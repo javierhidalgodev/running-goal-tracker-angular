@@ -4,15 +4,19 @@
 <h4>!Bienvenid&#64; de nuevo {{ user?.username }}!</h4>
 
 <ng-container *ngIf="goals; else noGoalsYet">
-    <p>Desde que estás con nosotros has registrado {{ goals ? goals.length : 0 }} objetivos.</p>
-    <p>Has completado {{ completedTasks }}.</p>
-    <p>Estás trabajando en {{ pendingTasks }}.</p>
+    <div class="profile-container">
+        <img [src]="user?.profileIMG" width="100" [ngStyle]="{'display': 'block', 'padding': '20px', 'border-radius': '100%'}" />
+        <div class="profile-resume">
+            <p>Desde que estás con nosotros has registrado {{ goals ? goals.length : 0 }} objetivos.</p>
+            <p>Has completado {{ completedTasks }}.</p>
+            <p>Estás trabajando en {{ pendingTasks }}.</p>
+        </div>
+    </div>
 </ng-container>
 
 <ng-template #noGoalsYet>
     <p>¡Empieza ya a cumplir con tus metas de running!</p>
-</ng-template>
-
-<img [src]="'http://localhost:5000' + user?.profileIMG" width="100" [ngStyle]="{'display': 'block', 'padding': '20px'}" />
+    </ng-template>
+    
 
 <a mat-flat-button routerLink="/new-goal">ADD NEW GOAL</a>

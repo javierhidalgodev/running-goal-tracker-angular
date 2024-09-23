@@ -3,11 +3,12 @@
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
+      <h4>Running Goal Tracker</h4>
     <mat-nav-list>
-      <a mat-list-item me routerLink="home">HOME</a>
-      <a mat-list-item routerLink="new-goal">NEW GOAL</a>
-      <a mat-list-item routerLink="goals">GOALS</a>
-      <button mat-button (click)="logout()">LOGOUT</button>
+      <a mat-list-item me routerLink="home" routerLinkActive="selected">HOME</a>
+      <a mat-list-item routerLink="new-goal" routerLinkActive="selected">NEW GOAL</a>
+      <a mat-list-item routerLink="goals" routerLinkActive="selected">GOALS</a>
+      <button mat-list-item (click)="openLogoutDialog('500', '500')">LOGOUT</button>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -20,6 +21,7 @@
           (click)="drawer.toggle()">
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
+        <h2>RUNNING GOAL TRACKER</h2>
       }
     </mat-toolbar>
     <div class="content">

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, switchMap, throwError } from 'rxjs';
 import { mockGoals } from '../mocks/goals.mock';
 import { Goal, GoalActivity, NewGoal } from '../models/goals.model';
 import { DbService } from './db.service';
@@ -52,6 +52,15 @@ export class GoalService {
     return this._dbService.getGoalById(goalId)
   }
 
+  addActivityToGoalDBJSON(goalId: string, activity: GoalActivity): void {
+    const updatedGoal = this._dbService.addActivityToGoal(goalId, activity)
+
+    // if(goal) {
+    //   return of(activity)
+    // }
+
+    // return of(null)
+  }
   addActivityToGoal(goalId: string, activity: GoalActivity): Observable<GoalActivity | null> {
     const goal = this.goals.find(g => g.id === goalId)
 
@@ -61,24 +70,4 @@ export class GoalService {
 
     return of(null)
   }
-
-  // addActivityToGoal() {
-  //   // ? Aquí debería de ir una llamada al BACKEND, cómo recuperamos directamente de JSONSERVER los datos, y no pasamos por el BACK, vamos a simular al menos la verificación del token, para poder realizar la operación que debería realizarse: comprobación del token/validez => recuperar la entrada => operar sobre la entrada => devolver resultado/error
-
-  //   const token = localStorage.getItem('token')
-
-  //   if(!token) {
-  //     console.log('tus putas ganas')
-  //   }
-
-  //   const decodedToken = JSON.parse(token!)
-
-  //   let res = this._http.get('http://localhost:3000/check_token', {
-  //     headers: {
-  //       "Authorization": `Bearer ${decodedToken.token}`
-  //     }
-  //   })
-
-  //   console.log(res)
-  // }
 }

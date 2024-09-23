@@ -47,6 +47,8 @@ import { NotificationComponent } from './components/notification/notification.co
 import { ValidationContainerComponent } from './components/validation-container/validation-container.component';
 import { OnButtonSpinnerDirective } from './directives/on-button-spinner.directive';
 import { InputStylesDirective } from './directives/input-styles.directive';
+import { DialogComponent } from './components/dialog/dialog.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,8 @@ import { InputStylesDirective } from './directives/input-styles.directive';
     NotificationComponent,
     ValidationContainerComponent,
     OnButtonSpinnerDirective,
-    InputStylesDirective
+    InputStylesDirective,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,7 +99,8 @@ import { InputStylesDirective } from './directives/input-styles.directive';
     MatProgressSpinnerModule,
     MatTableModule,
     MatProgressBarModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule
   ],
   exports: [
     KMtoEndPipe

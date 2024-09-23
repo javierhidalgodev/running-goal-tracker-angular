@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { User, UserDBJSON } from '../models/user.model';
-import { Goal } from '../models/goals.model';
+import { Goal, GoalActivity, GoalWithExtraDetails, NewGoal } from '../models/goals.model';
 
 @Injectable({
   providedIn: 'root'
@@ -61,5 +61,27 @@ export class DbService {
         return throwError(() => new Error('Get goal by id error'))
       })
     )
+  }
+
+  addActivityToGoal(goalId: string, activity: GoalActivity): Observable<Goal | null> {
+    this.getGoalById(goalId).subscribe({
+      next: goal => {
+        if (goal) {
+          const updatedGoal: Goal = {
+            ...goal,
+            activities: [
+              ...goal.activities,
+              activity
+            ]
+          }
+
+          return this._http.put(`${this._DB_URL}/goals/${goalId}`, updatedGoal)
+        }
+
+        return of(null)
+      },
+      error: error => of(null),
+      complete: () => console.log('Complete')
+    })
   }
 }
