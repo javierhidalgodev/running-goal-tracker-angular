@@ -12,16 +12,20 @@ export class NewGoalPageComponent {
 
   constructor(private _http: GoalService) { }
 
-  addGoal(newGoal: NewGoal) {
-    this._http.createGoal(newGoal).subscribe({
-      next: goal => {
-        console.log('Goal created: ', goal),
-
-        this.successMessage = 'Goal added';
-        // setTimeout(() => { this.successMessage = null }, 5000)
-      },
-      error: error => console.log('Error: ', error),
-      complete: () => console.log('Create goal attempt finished')
-    })
+  goalAdded() {
+    this.successMessage = 'Goal added';
+    setTimeout(() => { this.successMessage = null }, 5000)
   }
+  // addGoal(newGoal: NewGoal) {
+  //   this._http.createGoal(newGoal).subscribe({
+  //     next: goal => {
+  //       console.log('Goal created: ', goal),
+
+  //       this.successMessage = 'Goal added';
+  //       // setTimeout(() => { this.successMessage = null }, 5000)
+  //     },
+  //     error: error => console.log('Error: ', error),
+  //     complete: () => console.log('Create goal attempt finished')
+  //   })
+  // }
 }

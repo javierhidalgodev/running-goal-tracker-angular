@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, switchMap, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { mockGoals } from '../mocks/goals.mock';
-import { Goal, GoalActivity, NewGoal } from '../models/goals.model';
+import { Goal, GoalActivity } from '../models/goals.model';
 import { DbService } from './db.service';
 import { HttpClient } from '@angular/common/http';
+import { FormGroup } from '@angular/forms';
+
+const DEFAULT_IMAGE = 'https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg'
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +25,22 @@ export class GoalService {
    * @param goal Objetivo recibido del formulario
    * @returns Retornamos un observable a partir del objetivo recibido, para poder visualizarlo en la interfaz
    */
-  createGoal(newGoal: NewGoal): Observable<any> {
-    console.log('Goal created');
+  createGoal(goalFormData: FormGroup): Observable<Goal> {
+    const token = localStorage.getItem('token')
 
-    return of(newGoal)
+    if(token) {
+      const { userId } = JSON.parse(token)
+      const newGoal: Goal = {
+        ...goalFormData.value,
+        image: goalFormData.get('image') || DEFAULT_IMAGE,
+        activities: [],
+        completed: false,
+        userId
+      }
+      return this._dbService.addNewGoal(newGoal)
+    }
+
+    return throwError(() => new Error('Something went wrong during token verification'))
   }
 
   /**

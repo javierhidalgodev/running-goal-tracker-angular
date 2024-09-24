@@ -14,7 +14,10 @@ export class GoalFormComponent implements OnInit {
 
   goalForm: FormGroup = new FormGroup({})
 
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _goalService: GoalService
+  ) { }
 
   ngOnInit(): void {
     this.goalForm = this._formBuilder.group({
@@ -54,16 +57,42 @@ export class GoalFormComponent implements OnInit {
   }
 
   addGoal() {
-    // ? Es una validación más, aunque en principio el formulario no puede enviarse si no es correcto
-    if (this.goalForm.valid) {
-      const newGoal: NewGoal = {
-        ...this.goalForm.value,
-        // TODO: Esto en realidad debería gestionarse con la opción de subir una imagen, y si no establecer una por defecto
-        image: 'https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg'
+    this._goalService.createGoal(this.goalForm).subscribe({
+      next: goal => {
+        console.log(goal)
+      },
+      error: error => {
+        console.error(error)
+      },
+      complete: () => {
+        this.emitAddGoal.emit()
+        this.goalForm.reset({
+          description: '',
+          endDate: '',
+          km: '',
+          name: '',
+          startDate: ''
+        }, {emitEvent: false})
+        this.goalForm.markAsPristine()
+        this.goalForm.markAsUntouched()
+        this.goalForm.updateValueAndValidity()
       }
-
-      this.emitAddGoal.emit(newGoal)
-      this.goalForm.reset()
     }
+
+    )
+    //   this.emitAddGoal.emit(newGoal)
+    //   this.goalForm.reset()
+
+    // // ? Es una validación más, aunque en principio el formulario no puede enviarse si no es correcto
+    // if (this.goalForm.valid) {
+    //   const newGoal: NewGoal = {
+    //     ...this.goalForm.value,
+    //     // TODO: Esto en realidad debería gestionarse con la opción de subir una imagen, y si no establecer una por defecto
+    //     image: DEFAULT_IMAGE
+    //   }
+
+    //   this.emitAddGoal.emit(newGoal)
+    //   this.goalForm.reset()
+    // }
   }
 }

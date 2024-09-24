@@ -63,6 +63,10 @@ export class DbService {
     )
   }
 
+  addNewGoal(newGoal: NewGoal): Observable<Goal> {
+    return this._http.post<Goal>(`${this._DB_URL}/goals`, newGoal)
+  }
+
   addActivityToGoal(goalId: string, activity: GoalActivity): Observable<Goal> {
     // * Un pipe siempre debe devolver un valor
     return this.getGoalById(goalId).pipe(

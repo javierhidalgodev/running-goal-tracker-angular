@@ -70,7 +70,7 @@ De esta manera las rutas protegidas lo estarán por el token verificado.
 
 **Register**
   - [x] Spinner en el botón para mostrar que se está haciendo register o esperar errores.
-  - [ ] Doble verificación de password.
+  - [x] Doble verificación de password.
   - [x] Recibir los datos del fomulario.
   - [x] Pedir al servicio que compruebe la posible existencia de un usuario ya creado con el mismo email.
   - [x] Si no existe el usuario, crearlo y notificarlo.
@@ -90,6 +90,7 @@ De esta manera las rutas protegidas lo estarán por el token verificado.
 
 
 ### Goals Form Component
+- [ ] Refactorizar la manera en que se graban los objetivos atacando a JSON SERVER.
 - [x] La comprobación del campo KM no está del todo perfilada. Debéria de mostrar error con campo vacío, con campo inferior a 1, y con campo con valores alfabéticos. Este último no lo muestra, y en su lugar muestra el de requerido. **Tiramos de required para pedir un valor válido siempre que este sea vacío o contenga letras.**
 
 - [x] Añadir al botón ***Go For It!*** el tooltip.****
@@ -113,7 +114,8 @@ De esta manera las rutas protegidas lo estarán por el token verificado.
       - [x] Manejar la indicación de los KM que quedan a 0 (y que no indique un número negativo).
 
 ### Goals Page Component
-  - [ ] Squeleton para la carga de imágenes/datos.
+  - [x] Refactorización de la lógica para atacar a JSON SERVER + gestión de errores (notificaciones)
+  - [x] Squeleton para la carga de imágenes/datos.
   - [x] Implementar lógica para utilizar un ID de usuario dinámico al obtener objetivos.
 
 ### Gestión de Errores

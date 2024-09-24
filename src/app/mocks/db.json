@@ -1,192 +1,33 @@
 {
   "goals": [
     {
-      "id": "1",
-      "userId": "bdf0",
-      "name": "Run 1000 km",
-      "description": "Complete 1000 km by the end of the year",
-      "startDate": "2024-01-01T00:00:00.000Z",
-      "endDate": "2024-12-31T00:00:00.000Z",
-      "km": 1000,
-      "completed": true,
+      "id": "7f96",
+      "name": "Correr una Marathon",
+      "description": "Correr mi primera Marathon en 2024!",
+      "startDate": "2024-09-27T22:00:00.000Z",
+      "endDate": "2024-09-27T22:00:00.000Z",
+      "km": 42.195,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
       "activities": [
         {
-          "date": "2024-01-05T00:00:00.000Z",
-          "km": 10
-        },
-        {
-          "date": "2024-01-10T00:00:00.000Z",
-          "km": 15
-        },
-        {
-          "date": "2024-01-15T00:00:00.000Z",
-          "km": 20
-        },
-        {
-          "km": 123,
-          "date": "2024-09-04T22:00:00.000Z"
-        },
-        {
-          "km": 123,
-          "date": "2024-09-03T22:00:00.000Z"
-        },
-        {
-          "km": 1234,
-          "date": "2024-09-24T22:00:00.000Z"
+          "km": 12,
+          "date": "2024-09-27T22:00:00.000Z"
         }
-      ]
+      ],
+      "completed": false,
+      "userId": "bdf0"
     },
     {
-      "id": "2",
-      "userId": "bdf0",
-      "name": "Run 5 marathons",
-      "description": "Participate in 5 marathons this year",
-      "startDate": "2024-01-15T00:00:00.000Z",
-      "endDate": "2024-12-31T00:00:00.000Z",
-      "km": 210,
+      "id": "3f1a",
+      "name": "Correr 2 maratones",
+      "description": "En el año 2024",
+      "startDate": "2024-08-31T22:00:00.000Z",
+      "endDate": "2024-09-29T22:00:00.000Z",
+      "km": 12345,
       "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": [],
       "completed": false,
-      "activities": [
-        {
-          "km": 10,
-          "date": "2024-09-23T22:00:00.000Z"
-        },
-        {
-          "km": 50,
-          "date": "2024-09-16T22:00:00.000Z"
-        }
-      ]
-    },
-    {
-      "id": "3",
-      "userId": "102",
-      "name": "Run 500 km",
-      "description": "Achieve 500 km by mid-year",
-      "startDate": "2024-01-01T00:00:00.000Z",
-      "endDate": "2024-06-30T00:00:00.000Z",
-      "km": 500,
-      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
-      "completed": false,
-      "activities": []
-    },
-    {
-      "id": "4",
-      "userId": "103",
-      "name": "Run 10k every week",
-      "description": "Maintain a weekly running habit",
-      "startDate": "2024-01-01T00:00:00.000Z",
-      "endDate": "2024-12-31T00:00:00.000Z",
-      "km": 520,
-      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
-      "completed": false,
-      "activities": [
-        {
-          "date": "2024-02-03T00:00:00.000Z",
-          "km": 5
-        },
-        {
-          "date": "2024-02-07T00:00:00.000Z",
-          "km": 7
-        }
-      ]
-    },
-    {
-      "id": "5",
-      "userId": "104",
-      "name": "Trail Running Challenge",
-      "description": "Participate in 3 trail running events",
-      "startDate": "2024-03-01T00:00:00.000Z",
-      "endDate": "2024-11-01T00:00:00.000Z",
-      "km": 120,
-      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
-      "completed": false,
-      "activities": [
-        {
-          "date": "2024-03-02T00:00:00.000Z",
-          "km": 12
-        },
-        {
-          "date": "2024-03-05T00:00:00.000Z",
-          "km": 18
-        },
-        {
-          "date": "2024-03-08T00:00:00.000Z",
-          "km": 10
-        }
-      ]
-    },
-    {
-      "id": "6",
-      "userId": "105",
-      "name": "Run a Half Marathon",
-      "description": "Prepare for and run a half marathon",
-      "startDate": "2024-01-01T00:00:00.000Z",
-      "endDate": "2024-04-15T00:00:00.000Z",
-      "km": 21,
-      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
-      "completed": false,
-      "activities": []
-    },
-    {
-      "id": "7",
-      "userId": "106",
-      "name": "Run 300 km",
-      "description": "Cover 300 km in 3 months",
-      "startDate": "2024-04-01T00:00:00.000Z",
-      "endDate": "2024-06-30T00:00:00.000Z",
-      "km": 300,
-      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
-      "completed": false,
-      "activities": []
-    },
-    {
-      "id": "8",
-      "userId": "107",
-      "name": "Run a 10k race",
-      "description": "Participate in a local 10k race",
-      "startDate": "2024-02-01T00:00:00.000Z",
-      "endDate": "2024-04-01T00:00:00.000Z",
-      "km": 10,
-      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
-      "completed": false,
-      "activities": []
-    },
-    {
-      "id": "9",
-      "userId": "bdf0",
-      "name": "Complete a marathon",
-      "description": "Run a full marathon within the year",
-      "startDate": "2024-05-01T00:00:00.000Z",
-      "endDate": "2024-12-01T00:00:00.000Z",
-      "km": 42,
-      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
-      "completed": false,
-      "activities": [
-        {
-          "km": 1,
-          "date": "2024-09-23T22:00:00.000Z"
-        },
-        {
-          "km": 1,
-          "date": "2024-09-16T22:00:00.000Z"
-        },
-        {
-          "km": 123,
-          "date": "2024-09-10T22:00:00.000Z"
-        }
-      ]
-    },
-    {
-      "id": "10",
-      "userId": "108",
-      "name": "Run a 5k with family",
-      "description": "Encourage family members to run a 5k together",
-      "startDate": "2024-03-15T00:00:00.000Z",
-      "endDate": "2024-06-15T00:00:00.000Z",
-      "km": 5,
-      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
-      "completed": false,
-      "activities": []
+      "userId": "f8dc"
     }
   ],
   "users": [
