@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GoalService } from '../../services/goal.service';
-import { ActiveModal, GoalActivity, GoalWithExtraDetails } from '../../models/goals.model';
+import { ActiveModal, Goal, GoalActivity, GoalWithExtraDetails } from '../../models/goals.model';
 import { calculateDaysToEnd, calculateGoalTotal, calculateProgress } from '../../utils/utils';
 
 @Component({
@@ -48,22 +48,22 @@ export class GoalDetailsPageComponent implements OnInit {
       this.complete = false
     }
   }
-  
-  activityAdded(event: GoalActivity) {
-    if (event && this.goalWithExtraDetails) {
-      this.goalWithExtraDetails = {
-        ...this.goalWithExtraDetails,
-        activities: [
-          ...this.goalWithExtraDetails.activities,
-          event
-        ]
-      }
-    }
 
-    this.activeModal = null
+  activityAdded(event: Goal) {
+    // if (event && this.goalWithExtraDetails) {
+    //   this.goalWithExtraDetails = {
+    //     ...this.goalWithExtraDetails,
+    //     activities: [
+    //       ...this.goalWithExtraDetails.activities,
+    //       event
+    //     ]
+    //   }
+    // }
+
+    // this.activeModal = null
 
     if (this.goalWithExtraDetails) {
-      this.recalculateAfterAdd(this.goalWithExtraDetails)
+      this.recalculateAfterAdd(event)
     }
 
     // this.activitySuccessMessage = 'Activity added successfully!'
@@ -109,15 +109,17 @@ export class GoalDetailsPageComponent implements OnInit {
     this.errorMessage = message
   }
 
-  private recalculateAfterAdd(goal: GoalWithExtraDetails) {
-    if (this.goalWithExtraDetails) {
-      this.goalWithExtraDetails.goalTotal = calculateGoalTotal(this.goalWithExtraDetails)
-      this.goalWithExtraDetails.goalProgress = calculateProgress(this.goalWithExtraDetails)
+  private recalculateAfterAdd(goal: Goal) {
+    this.goalWithExtraDetails = {
+      ...goal,
+      goalTotal: calculateGoalTotal(goal),
+      goalProgress: calculateProgress(goal),
+      daysToEnd: calculateDaysToEnd(goal),
+    }
 
-      if (this.goalWithExtraDetails.goalTotal >= this.goalWithExtraDetails.km) {
-        this.goalWithExtraDetails.completed = true
-        this.activeModal = 'goalCompleted'
-      }
+    if (this.goalWithExtraDetails.goalTotal >= this.goalWithExtraDetails.km) {
+      this.goalWithExtraDetails.completed = true
+      this.activeModal = 'goalCompleted'
     }
   }
 }

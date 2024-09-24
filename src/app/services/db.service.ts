@@ -63,9 +63,10 @@ export class DbService {
     )
   }
 
-  addActivityToGoal(goalId: string, activity: GoalActivity): Observable<Goal | null> {
-    this.getGoalById(goalId).subscribe({
-      next: goal => {
+  addActivityToGoal(goalId: string, activity: GoalActivity): Observable<Goal> {
+    // * Un pipe siempre debe devolver un valor
+    return this.getGoalById(goalId).pipe(
+      switchMap(goal => {
         if (goal) {
           const updatedGoal: Goal = {
             ...goal,
@@ -75,13 +76,14 @@ export class DbService {
             ]
           }
 
-          return this._http.put(`${this._DB_URL}/goals/${goalId}`, updatedGoal)
+          return this._http.put<Goal>(`${this._DB_URL}/goals/${goalId}`, updatedGoal)
         }
 
-        return of(null)
-      },
-      error: error => of(null),
-      complete: () => console.log('Complete')
-    })
+        return throwError(() => new Error('Something went wrong during add activity process'))
+      }),
+      catchError(error => {
+        return throwError(() => new Error(error))
+      })
+    )
   }
 }

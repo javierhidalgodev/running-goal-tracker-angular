@@ -52,19 +52,14 @@ export class GoalService {
     return this._dbService.getGoalById(goalId)
   }
 
-  addActivityToGoalDBJSON(goalId: string, activity: GoalActivity): void {
-    const updatedGoal = this._dbService.addActivityToGoal(goalId, activity)
-
-    // if(goal) {
-    //   return of(activity)
-    // }
-
-    // return of(null)
+  addActivityToGoalDBJSON(goalId: string, activity: GoalActivity) {
+    return this._dbService.addActivityToGoal(goalId, activity)
   }
+
   addActivityToGoal(goalId: string, activity: GoalActivity): Observable<GoalActivity | null> {
     const goal = this.goals.find(g => g.id === goalId)
 
-    if(goal) {
+    if (goal) {
       return of(activity)
     }
 

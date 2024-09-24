@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { dateValidatorFn } from '../../../utils/utils';
 import { ActivatedRoute } from '@angular/router';
-import { GoalActivity, GoalWithExtraDetails } from '../../../models/goals.model';
+import { Goal, GoalActivity, GoalWithExtraDetails } from '../../../models/goals.model';
 import { GoalService } from '../../../services/goal.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { GoalService } from '../../../services/goal.service';
 })
 export class ActivityComponent implements OnInit {
   @Input() selectedGoal?: GoalWithExtraDetails;
-  @Output() emitAddActivity = new EventEmitter<GoalActivity>()
+  @Output() emitAddActivity = new EventEmitter<Goal>()
   activityForm: FormGroup = new FormGroup([])
 
   constructor(
@@ -40,14 +40,13 @@ export class ActivityComponent implements OnInit {
     if(this.selectedGoal) {
       const activityToAdd = this.activityForm.value
 
-      this._goalService.addActivityToGoalDBJSON(this.selectedGoal.id, activityToAdd)
-      // this._goalService.addActivityToGoal(this.selectedGoal.id, this.activityForm.value).subscribe({
-      //   next: value => {
-      //     this.emitAddActivity.emit(this.activityForm.value)
-      //   },
-      //   error: error => console.log('Something went wrong!'),
-      //   complete: () => console.log('Add activity to goal attempt completed!')
-      // })
+      this._goalService.addActivityToGoalDBJSON(this.selectedGoal.id, activityToAdd).subscribe({
+        next: goal => {
+          this.emitAddActivity.emit(goal)
+        },
+        error: error => console.log('Something went wrong!'),
+        complete: () => console.log('Add activity to goal attempt completed!')
+      })
     }
 
     this.activityForm.reset()
