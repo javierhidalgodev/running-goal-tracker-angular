@@ -13,15 +13,31 @@
             <ng-content *ngIf="item.key === 'confirmPassword'">
                 Please, confirm the password
             </ng-content>
+            <ng-content *ngIf="item.key === 'km'">
+                Please, enter KM value
+            </ng-content>
+            <ng-content *ngIf="item.key === 'date'">
+                Please, enter a valid date
+            </ng-content>
         </mat-error>
         <mat-error *ngIf="item.validators?.['isEqual']">
             <ng-content *ngIf="item.key === 'form'">
                 Passwords must match
             </ng-content>
         </mat-error>
+        <mat-error *ngIf="item.validators?.['isDate']">
+            <ng-content *ngIf="item.key === 'date'">
+                Please, enter a valid date format: MM/DD/YYYY
+            </ng-content>
+        </mat-error>
         <mat-error *ngIf="item.validators?.['email']">
             <ng-content *ngIf="item.key === 'email'">
                 Please, enter a valid email
+            </ng-content>
+        </mat-error>
+        <mat-error *ngIf="item.validators?.['matDatepickerMin']">
+            <ng-content *ngIf="item.key === 'date'">
+                Please, select a date within the goal's date range.
             </ng-content>
         </mat-error>
         <mat-error *ngIf="item.validators?.['minlength']">

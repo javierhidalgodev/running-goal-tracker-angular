@@ -38,6 +38,7 @@ throw new Error('Method not implemented.');
         next: goals => {
           this.goals = goals
           if (goals) {
+            console.log(goals)
             this.pendingTasks = goals.filter(g => !g.completed).length
             this.completedTasks = goals.filter(g => g.completed).length
           }

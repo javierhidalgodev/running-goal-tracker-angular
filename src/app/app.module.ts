@@ -49,6 +49,7 @@ import { OnButtonSpinnerDirective } from './directives/on-button-spinner.directi
 import { InputStylesDirective } from './directives/input-styles.directive';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { GoalPercentagePipe } from './pipes/goal-percentage.pipe';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
     OnButtonSpinnerDirective,
     InputStylesDirective,
     DialogComponent,
+    GoalPercentagePipe,
   ],
   imports: [
     BrowserModule,

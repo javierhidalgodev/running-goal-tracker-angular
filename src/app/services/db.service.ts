@@ -68,21 +68,29 @@ export class DbService {
     return this.getGoalById(goalId).pipe(
       switchMap(goal => {
         if (goal) {
+          const goalTotal = goal.activities.reduce((prev, curr) => curr.km + prev, 0)
+          const completed = goalTotal + activity.km > goal.km
+
           const updatedGoal: Goal = {
             ...goal,
             activities: [
               ...goal.activities,
               activity
-            ]
+            ],
+            completed
           }
 
-          return this._http.put<Goal>(`${this._DB_URL}/goals/${goalId}`, updatedGoal)
+          return this._http.put<Goal>(`${this._DB_URL}/goals/${goalId}`, updatedGoal).pipe(
+            catchError(error => {
+              return throwError(() => new Error('Error updating goal. Please, try again later.'))
+            })
+          )
         }
 
-        return throwError(() => new Error('Something went wrong during add activity process'))
+        return throwError(() => new Error('Goal not found!'))
       }),
       catchError(error => {
-        return throwError(() => new Error(error))
+        return throwError(() => new Error('Error adding activity to goal. Please, try again later.'))
       })
     )
   }

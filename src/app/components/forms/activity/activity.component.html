@@ -16,10 +16,14 @@
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-    <mat-error *ngIf="activityForm.get('km')?.errors?.['required'] && activityForm.get('km')?.touched">Please, enter a valid KM value</mat-error>
-    <mat-error *ngIf="activityForm.get('km')?.errors?.['min']">Value must be greater than 0.99</mat-error>
-    <mat-error *ngIf="activityForm.get('date')?.errors?.['isDate']&& activityForm.get('date')?.touched">Please, enter a valid date</mat-error>
-    <mat-error *ngIf="activityForm.get('date')?.errors?.['matDatepickerMin']&& activityForm.get('date')?.touched">Please, select date from the goal date range</mat-error>
-    <mat-error *ngIf="activityForm.get('date')?.errors?.['matDatepickerMax']&& activityForm.get('date')?.touched">Please, select date from the goal date range</mat-error>
-    <button mat-flat-button type="submit" [disabled]="activityForm.invalid">ADD</button>
+
+    <div class="button-container" matTooltip="Complete this form to register" [matTooltipDisabled]="activityForm.valid">
+        <mat-spinner *ngIf="isAdding" onButtonSpinner diameter="20"></mat-spinner>
+        <button mat-flat-button type="submit" [disabled]="activityForm.invalid || isAdding">ADD</button>
+    </div>
+
+    <ng-container>
+        <app-notification />
+        <app-validation-container />
+    </ng-container>
 </form>

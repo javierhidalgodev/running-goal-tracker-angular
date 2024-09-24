@@ -34,9 +34,7 @@ export class LoginDbjsonFormComponent implements OnInit {
       ])]
     })
 
-    this.loginForm.statusChanges.subscribe(status => {
-      this.updateValidationErrors()
-    })
+    this.loginForm.statusChanges.subscribe(status => this.updateValidationErrors())
   }
 
   get email() {

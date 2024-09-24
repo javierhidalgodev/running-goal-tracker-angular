@@ -33,11 +33,6 @@ export class GoalDetailsPageComponent implements OnInit {
     }
   }
 
-  //  TODO: De momento los datos no persisten porque no está configurado para eso.
-  // handleModal() {
-  //   this.activeModal = !this.activeModal
-  // }
-
   openModal() {
     this.activeModal = 'activityForm'
   }
@@ -50,29 +45,16 @@ export class GoalDetailsPageComponent implements OnInit {
   }
 
   activityAdded(event: Goal) {
-    // if (event && this.goalWithExtraDetails) {
-    //   this.goalWithExtraDetails = {
-    //     ...this.goalWithExtraDetails,
-    //     activities: [
-    //       ...this.goalWithExtraDetails.activities,
-    //       event
-    //     ]
-    //   }
-    // }
-
-    // this.activeModal = null
+    this.activeModal = null
 
     if (this.goalWithExtraDetails) {
       this.recalculateAfterAdd(event)
     }
 
-    // this.activitySuccessMessage = 'Activity added successfully!'
-    // setTimeout(() => {
-    //   this.activitySuccessMessage = undefined
-    // }, 5000)
-    // this._snackbar.open('Activity added successfully!', 'Close', {
-    //   duration: 5000
-    // })
+    this.activitySuccessMessage = 'Activity added successfully!'
+    setTimeout(() => {
+      this.activitySuccessMessage = undefined
+    }, 5000)
   }
 
   private getGoalIdFromRoute(): string | null {

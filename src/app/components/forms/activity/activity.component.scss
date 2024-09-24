@@ -3,3 +3,11 @@ form {
     flex-direction: column;
     gap: 10px;
 }
+
+.button-container {
+    position: relative;
+
+    button[type=submit] {
+        width: 100%;
+    }
+}

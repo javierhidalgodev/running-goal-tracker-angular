@@ -8,7 +8,7 @@
       "startDate": "2024-01-01T00:00:00.000Z",
       "endDate": "2024-12-31T00:00:00.000Z",
       "km": 1000,
-      "completed": false,
+      "completed": true,
       "activities": [
         {
           "date": "2024-01-05T00:00:00.000Z",
@@ -31,12 +31,8 @@
           "date": "2024-09-03T22:00:00.000Z"
         },
         {
-          "km": 124,
-          "date": "2024-08-31T22:00:00.000Z"
-        },
-        {
-          "km": 12345,
-          "date": "2024-09-11T22:00:00.000Z"
+          "km": 1234,
+          "date": "2024-09-24T22:00:00.000Z"
         }
       ]
     },
@@ -50,7 +46,16 @@
       "km": 210,
       "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
       "completed": false,
-      "activities": []
+      "activities": [
+        {
+          "km": 10,
+          "date": "2024-09-23T22:00:00.000Z"
+        },
+        {
+          "km": 50,
+          "date": "2024-09-16T22:00:00.000Z"
+        }
+      ]
     },
     {
       "id": "3",
@@ -156,7 +161,20 @@
       "km": 42,
       "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
       "completed": false,
-      "activities": []
+      "activities": [
+        {
+          "km": 1,
+          "date": "2024-09-23T22:00:00.000Z"
+        },
+        {
+          "km": 1,
+          "date": "2024-09-16T22:00:00.000Z"
+        },
+        {
+          "km": 123,
+          "date": "2024-09-10T22:00:00.000Z"
+        }
+      ]
     },
     {
       "id": "10",

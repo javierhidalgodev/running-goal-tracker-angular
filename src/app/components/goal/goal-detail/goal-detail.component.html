@@ -22,7 +22,7 @@
             </ng-template>
     
             <mat-card-actions>
-                <button mat-flat-button (click)="openModal()" [disabled]="this.selectedGoal.goalTotal >= selectedGoal.km">ADD KMs</button>
+                <button mat-flat-button (click)="openModal()" [disabled]="this.selectedGoal.goalTotal >= selectedGoal.km"> {{ selectedGoal.completed ? 'COMPLETED' : 'ADD KMs' }} </button>
             </mat-card-actions>
         </mat-card-content>
     </mat-card>
