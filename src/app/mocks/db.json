@@ -12,6 +12,14 @@
         {
           "km": 12,
           "date": "2024-09-27T22:00:00.000Z"
+        },
+        {
+          "km": 12,
+          "date": "2024-09-27T22:00:00.000Z"
+        },
+        {
+          "km": 13,
+          "date": "2024-09-27T22:00:00.000Z"
         }
       ],
       "completed": false,
@@ -25,9 +33,50 @@
       "endDate": "2024-09-29T22:00:00.000Z",
       "km": 12345,
       "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
-      "activities": [],
+      "activities": [
+        {
+          "km": 123,
+          "date": "2024-08-31T22:00:00.000Z"
+        }
+      ],
       "completed": false,
       "userId": "f8dc"
+    },
+    {
+      "id": "b9b8",
+      "name": "Primeros 200k",
+      "description": "Correr en el mes de septiembre mis primeros 200km en total.",
+      "startDate": "2024-08-31T22:00:00.000Z",
+      "endDate": "2024-09-29T22:00:00.000Z",
+      "km": 200,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": [],
+      "completed": false,
+      "userId": "bdf0"
+    },
+    {
+      "id": "3454",
+      "name": "Que te voy a decir...",
+      "description": "...si yo acabo de llegar",
+      "startDate": "2024-09-21T22:00:00.000Z",
+      "endDate": "2024-09-27T22:00:00.000Z",
+      "km": 987,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": [],
+      "completed": false,
+      "userId": "bdf0"
+    },
+    {
+      "id": "a806",
+      "name": "",
+      "description": "",
+      "startDate": "",
+      "endDate": "",
+      "km": "",
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": [],
+      "completed": false,
+      "userId": "bdf0"
     }
   ],
   "users": [

@@ -1,6 +1,11 @@
 <h1>YOUR NEXT GOAL!</h1>
-<app-goal-form (emitAddGoal)="goalAdded()"></app-goal-form>
+<app-goal-form (emitAddGoal)="goalAdded($event)"></app-goal-form>
 
-<div class="success-notification" *ngIf="successMessage">
-    <mat-icon [ngStyle]="{'font-size': '1rem', 'width': 'auto', 'height': 'auto'}">check_circle</mat-icon> {{ successMessage }}
-</div>
+<ng-container *ngIf="errorMessage || successMessage">
+    <div class="success-notification" *ngIf="successMessage">
+        <mat-icon [ngStyle]="{'font-size': '1rem', 'width': 'auto', 'height': 'auto'}">check_circle</mat-icon> {{ successMessage }}
+    </div>
+    <div class="error-notification" *ngIf="errorMessage">
+        <mat-icon [ngStyle]="{'font-size': '1rem', 'width': 'auto', 'height': 'auto'}">cancel</mat-icon> {{ errorMessage }}
+    </div>
+</ng-container>

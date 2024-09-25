@@ -2,7 +2,9 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GoalService } from '../../../services/goal.service';
 import { dateValidatorFn } from '../../../utils/utils';
-import { NewGoal } from '../../../models/goals.model';
+import { hasErrors } from '../../../utils/forms.utils'
+import { Notification } from '../../../pages/new-goal-page/new-goal-page.component';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-goal-form',
@@ -10,13 +12,16 @@ import { NewGoal } from '../../../models/goals.model';
   styleUrl: './goal-form.component.scss'
 })
 export class GoalFormComponent implements OnInit {
-  @Output() emitAddGoal = new EventEmitter<NewGoal>()
+  @Output() emitAddGoal = new EventEmitter<Notification>()
 
-  goalForm: FormGroup = new FormGroup({})
+  goalForm: FormGroup = new FormGroup({});
+  isAdding: boolean = false;
+  hasErrors = hasErrors;
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _goalService: GoalService
+    private _goalService: GoalService,
+    private _notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -43,13 +48,10 @@ export class GoalFormComponent implements OnInit {
         Validators.min(1)
       ]]
     })
-  }
 
-  hasErrors() {
-    return Object.keys(this.goalForm.controls).some(key => {
-      const control = this.goalForm.get(key)
-      return control?.invalid && control?.touched
-    })
+    // this.goalForm.statusChanges.subscribe(
+    // status => // Función que actualiza las validaciones
+    // )
   }
 
   getControl(control: string) {
@@ -57,42 +59,28 @@ export class GoalFormComponent implements OnInit {
   }
 
   addGoal() {
+    this.isAdding = true
+
     this._goalService.createGoal(this.goalForm).subscribe({
-      next: goal => {
-        console.log(goal)
-      },
+      // next: goal => console.log(goal), // En principio no necesito recibir nada, solo emitir un evento cuando la operación es exitosa
       error: error => {
-        console.error(error)
+        this.isAdding = false
+        this._notificationService.error(error.message)
       },
       complete: () => {
-        this.emitAddGoal.emit()
+        this.isAdding = false
+        this._notificationService.success('Goal added!')
         this.goalForm.reset({
           description: '',
           endDate: '',
           km: '',
           name: '',
           startDate: ''
-        }, {emitEvent: false})
+        }, { emitEvent: false })
         this.goalForm.markAsPristine()
         this.goalForm.markAsUntouched()
         this.goalForm.updateValueAndValidity()
       }
-    }
-
-    )
-    //   this.emitAddGoal.emit(newGoal)
-    //   this.goalForm.reset()
-
-    // // ? Es una validación más, aunque en principio el formulario no puede enviarse si no es correcto
-    // if (this.goalForm.valid) {
-    //   const newGoal: NewGoal = {
-    //     ...this.goalForm.value,
-    //     // TODO: Esto en realidad debería gestionarse con la opción de subir una imagen, y si no establecer una por defecto
-    //     image: DEFAULT_IMAGE
-    //   }
-
-    //   this.emitAddGoal.emit(newGoal)
-    //   this.goalForm.reset()
-    // }
+    })
   }
 }

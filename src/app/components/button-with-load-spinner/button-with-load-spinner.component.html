@@ -1,0 +1,6 @@
+<div class="button-container" [matTooltip] [matTooltipDisabled]="isValidForm">
+    <mat-spinner onButtonSpinner *ngIf="isAdding" diameter="20"></mat-spinner>
+    <button mat-flat-button type="submit" [disabled]="!isValidForm || isAdding">
+        <ng-content></ng-content>
+    </button>
+</div>

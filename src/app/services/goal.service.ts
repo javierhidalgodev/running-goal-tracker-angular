@@ -21,11 +21,15 @@ export class GoalService {
   ) { }
 
   /**
+   * Método del servicio de objetivos que crea el nuevo objetivo y lo envía a la base de datos para que sea guardado.
    * 
-   * @param goal Objetivo recibido del formulario
-   * @returns Retornamos un observable a partir del objetivo recibido, para poder visualizarlo en la interfaz
+   * 1. Verifica la existencia y validez del token.
+   * 2. Crea, a partir del objeto que viene por parámetro, el nuevo objetivo. La imagen se inicializa con el valor que viene en el objeto, y de ser 'null', se usa una por defecto. Las actividades se inicializan como array vacío, el estado de completo como falso, y se añade el 'userId' que viene de la verificación del token, para poder grabar la actividad en relación al usuario que hace la petición.
+   * 
+   * @param goal Formulario con los datos del nuevo objetivo.
+   * @returns Retornamos un observable a partir del objetivo recibido, para poder visualizarlo en la interfaz.
    */
-  createGoal(goalFormData: FormGroup): Observable<Goal> {
+  createGoal(goalFormData: FormGroup): Observable<void> {
     const token = localStorage.getItem('token')
 
     if(token) {
@@ -44,33 +48,47 @@ export class GoalService {
   }
 
   /**
+   * Método del servicio de objetivos que envía al servicio de base de datos un 'userId' para obtener todos sus objetivos.
    * 
-   * @param userId ID del usuario para poder filtrar los goals correspondientes
-   * @returns Un observable de Goals
+   * @param userId ID del usuario para poder filtrar los goals correspondientes.
+   * @returns Un observable de Goals del usuario, o 'null' en caso de que este no tenga.
    */
   getGoals(userId: string): Observable<Goal[] | null> {
     return this._dbService.getGoals(userId)
   }
 
-  // getGoalById(goalId: string): Observable<Goal | null> {
-  //   const selectedGoal = this.goals.find(goal => goal.id === goalId)
-
-  //   if(selectedGoal) {
-  //     return of(selectedGoal)
-  //   //   return of(selectedGoal)
-  //   }
-
-  //   return throwError(() => new Error('Goal not found!'))
-  // }
-
+  /**
+   * Método del servicio de objetivos envía el ID de un objetivo al servicio de base de datos, el cual devuelve el objetivo requerido con toda su información referente, o 'null' si no encuentra nada.
+   * 
+   * @param goalId ID del objetivo a recuperar.
+   * @returns Un observable con el objetivo específico o vacío.
+   */
   getGoalById(goalId: string): Observable<Goal | null> {
     return this._dbService.getGoalById(goalId)
   }
 
-  addActivityToGoalDBJSON(goalId: string, activity: GoalActivity) {
-    return this._dbService.addActivityToGoal(goalId, activity)
+  /**
+   * Método del servicio de objetivos que envía una petición al servicio de base de datos con el ID del objetivo donde se guardará la nueva actividad, además del formulario que contiene los datos de la nueva actividad.
+   * 
+   * @param goalId 
+   * @param activityFormData 
+   * @returns 
+   */
+  addActivityToGoalDBJSON(goalId: string, activityFormData: FormGroup) {
+    // TODO: Verificar el token
+
+    const newActivity: GoalActivity = {
+      ...activityFormData.value
+    }
+
+    return this._dbService.addActivityToGoal(goalId, newActivity)
   }
 
+  /**
+   * @deprecated
+   * 
+   * Primera versión del método encargado de añadir actividades a un objetivo. Usaba un mock personalizado para poder hacer las primeras pruebas.
+   */
   addActivityToGoal(goalId: string, activity: GoalActivity): Observable<GoalActivity | null> {
     const goal = this.goals.find(g => g.id === goalId)
 

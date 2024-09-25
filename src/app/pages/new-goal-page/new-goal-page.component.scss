@@ -7,14 +7,22 @@
     color: #fff;
 }
 
-.success-notification {
+.success-notification,
+.error-notification {
     width: 100%;
 	padding: 10px 16px;
     box-sizing: border-box;
     margin-top: 20px;
-
+}
+.success-notification {
 	background: #a9eea9;
 	border-radius: 11px;
 	color: green;
 	border: 1px solid green;
+}
+.error-notification {
+	background: #eea9a9;
+	border-radius: 11px;
+	color: rgb(128, 0, 0);
+	border: 1px solid rgb(128, 0, 0);
 }

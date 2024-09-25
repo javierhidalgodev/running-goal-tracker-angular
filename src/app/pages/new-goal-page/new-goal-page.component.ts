@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { NewGoal } from '../../models/goals.model';
-import { GoalService } from '../../services/goal.service';
+
+export type Notification = {
+  type: 'success' | 'error',
+  message: string
+}
 
 @Component({
   selector: 'app-new-goal-page',
@@ -9,23 +12,22 @@ import { GoalService } from '../../services/goal.service';
 })
 export class NewGoalPageComponent {
   successMessage: string | null = null;
+  errorMessage: string | null = null;
 
-  constructor(private _http: GoalService) { }
+  /**
+   * Esta función se llama desde el hijo, cuando el objetivo
+   * ha sido grabado y emite el evento para poder mostrar
+   * el mensaje de éxito.
+   */
+  goalAdded(event: Notification) {
+    if (event.type === 'success') {
+      this.successMessage = event.message;
+      setTimeout(() => { this.successMessage = null }, 5000)
+    }
 
-  goalAdded() {
-    this.successMessage = 'Goal added';
-    setTimeout(() => { this.successMessage = null }, 5000)
+    if (event.type === 'error') {
+      this.errorMessage = event.message;
+      setTimeout(() => { this.errorMessage = null }, 5000)
+    }
   }
-  // addGoal(newGoal: NewGoal) {
-  //   this._http.createGoal(newGoal).subscribe({
-  //     next: goal => {
-  //       console.log('Goal created: ', goal),
-
-  //       this.successMessage = 'Goal added';
-  //       // setTimeout(() => { this.successMessage = null }, 5000)
-  //     },
-  //     error: error => console.log('Error: ', error),
-  //     complete: () => console.log('Create goal attempt finished')
-  //   })
-  // }
 }

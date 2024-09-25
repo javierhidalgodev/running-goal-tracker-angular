@@ -20,12 +20,13 @@
         <mat-label>KM</mat-label>
         <input matInput formControlName="km" step="5" type="number" required>
     </mat-form-field>
-    <div class="button-container" matTooltip="Complete this form to submit" [matTooltipDisabled]="goalForm.valid">
+    <app-button-with-load-spinner matTooltip="Complete el formulario para grabar el nuevo objetivo" [isValidForm]="goalForm.valid" [isAdding]="isAdding">GO FOR IT!</app-button-with-load-spinner>
+    <!-- <div class="button-container" matTooltip="Complete this form to submit" [matTooltipDisabled]="goalForm.valid">
         <button mat-flat-button type="submit" [disabled]="goalForm.invalid">Go For It!</button>
-    </div>
+    </div> -->
 </form>
 
-<div class="error-container" *ngIf="hasErrors()">
+<div class="error-container" *ngIf="hasErrors(goalForm)">
     <mat-error *ngIf="getControl('name')?.errors?.['required'] && getControl('name')?.touched">
         - Name is required
     </mat-error>
@@ -60,3 +61,5 @@
         - Please enter a valid number
     </mat-error> -->
 </div>
+
+<app-notification />
