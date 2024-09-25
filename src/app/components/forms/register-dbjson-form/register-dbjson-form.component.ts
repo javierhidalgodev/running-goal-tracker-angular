@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { InputValidators, NotificationService } from '../../../services/notification.service';
 import { getValidationErrors } from '../../../utils/forms.utils';
@@ -16,8 +16,6 @@ import { NewUser, User } from '../../../models/user.model';
 })
 export class RegisterDbjsonFormComponent implements OnInit {
   registerForm: FormGroup = new FormGroup({});
-  successMessage: string | null = null;
-  errorMessage: string | null = null;
   validationErrors: InputValidators[] | null = null;
   isRegistering: boolean = false;
 
@@ -27,9 +25,7 @@ export class RegisterDbjsonFormComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
-    private _notificationService: NotificationService,
-    private _router: Router,
-    private _http: HttpClient
+    private _notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -90,16 +86,27 @@ export class RegisterDbjsonFormComponent implements OnInit {
 
   register() {
     this.isRegistering = true
+
     if (this.registerForm.valid) {
-      const newUserData: NewUser = {
-        email: this.registerForm.get('email')?.value,
-        password: this.registerForm.get('password')?.value,
-        username: this.registerForm.get('username')?.value,
-      }
+      const { confirmPassword, ...userData } = this.registerForm.value
 
-      this._authService.registerDBJSON(newUserData, this.selectedFile).subscribe(value => console.log(value))
-
-      this.isRegistering = false
+      // TODO: Deberíamos pasar la imagen más adelante
+      this._authService.registerDBJSON(userData).subscribe({
+        next: value => {
+          console.log(value)
+        },
+        error: error => {
+          this.isRegistering = false
+          this._notificationService.error(error.message)
+        },
+        complete: () => {
+          this.isRegistering = false
+          this._notificationService.success('User registered!')
+          console.log('Registration complete')
+          this.registerForm.reset()
+          Object.keys(this.registerForm.controls).forEach(control => this.registerForm.get(control)?.setErrors(null))
+        }
+      })
     }
   }
 

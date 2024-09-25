@@ -4,6 +4,7 @@ import { catchError, from, Observable, of, switchMap, throwError } from 'rxjs';
 import { DEFAULT_PROFILE_USER_IMG, Login, NewUser, User } from '../models/user.model';
 import { DbService } from './db.service';
 import bcrypt from 'bcryptjs'
+import { FormGroup } from '@angular/forms';
 
 const API_URL = 'https://reqres.in/api';
 const API_DBJSON_URL = 'http://localhost:3000';
@@ -77,6 +78,17 @@ export class AuthService {
     })
   }
 
+  private hashPassword(password: string): Observable<string> {
+    return new Observable<string>(observer => {
+      bcrypt.hash(password, 12, (err, res) => {
+        if(err) observer.error(err)
+
+        observer.next(res)
+        observer.complete()
+      })
+    })
+  }
+
   private generateToken(userId: string, email: string): Observable<string> {
     return this._http.post<string>('http://localhost:5000/login', {
       userId,
@@ -108,48 +120,31 @@ export class AuthService {
     return of(null)
   }
 
-  registerDBJSON(newUser: NewUser, selectedFile: File | null) {
-    return this._dbService.getUserByEmail(newUser.email).pipe(
+  registerDBJSON(userData: NewUser, selectedFile?: File) {
+    // 1. Comprobar si existe el usuario
+    return this._dbService.getUserByEmail(userData.email).pipe(
       switchMap(user => {
-        if (user) {
-          return throwError(() => new Error('This email address already exists'))
+        if (!user) {
+          return this.hashPassword(userData.password).pipe(
+            switchMap(hash => {
+              const newUser: User = {
+                ...userData,
+                password: hash,
+                registrationDate: new Date(),
+              }
+
+              return this._http.post<User>(`${API_DBJSON_URL}/users`, newUser)
+            }),
+            catchError(error => {
+              return throwError(() => new Error('Algo va mal al grabar el usuario o hashear el password', error.message))
+            })
+          )
         }
 
-        return from(bcrypt.hash(newUser.password, 10)).pipe(
-          switchMap(hash => {
-            newUser.password = hash
-            newUser.username = newUser.username.trim().replace('  ', ' ')
-
-            return this.uploadImage(selectedFile).pipe(
-              switchMap(imgURL => {
-                console.log(imgURL)
-                const body: User = {
-                  email: newUser.email,
-                  password: newUser.password,
-                  username: newUser.username,
-                  profileIMG: imgURL?.filePath || DEFAULT_PROFILE_USER_IMG,
-                  registrationDate: new Date()
-                }
-
-                return this._http.post<User>(`${API_DBJSON_URL}/users`, body)
-              })
-            )
-            // const body: User = {
-            //   ...newUser,
-            //   registrationDate: new Date(),
-            //   profileIMG: newUser.profileIMG || DEFAULT_PROFILE_USER_IMG,
-            //   username: newUser.username
-            // }
-
-            // return this._http.post<User>(`${API_DBJSON_URL}/users`, body)
-          }),
-
-          // ? A este nivel nunca llego porque no sé cómo generar un problema con el hash
-          catchError(error => {
-            console.log('Something went wrong:', error);
-            return throwError(() => new Error('Please try again later'))
-          })
-        )
+        return throwError(() => new Error('usuario ya registrado!'))
+      }),
+      catchError(error => {
+        return throwError(() => new Error('Algo va mal al recuperar el usuario', error.message))
       })
     )
   }

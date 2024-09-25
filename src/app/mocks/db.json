@@ -67,16 +67,16 @@
       "userId": "bdf0"
     },
     {
-      "id": "a806",
-      "name": "",
-      "description": "",
-      "startDate": "",
-      "endDate": "",
-      "km": "",
+      "id": "8219",
+      "name": "Pues eso",
+      "description": "amigos míos",
+      "startDate": "2024-08-31T22:00:00.000Z",
+      "endDate": "2024-09-20T22:00:00.000Z",
+      "km": 1234,
       "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
       "activities": [],
       "completed": false,
-      "userId": "bdf0"
+      "userId": "f8dc"
     }
   ],
   "users": [
@@ -341,6 +341,56 @@
       "username": "Javi Hidalgo",
       "profileIMG": "/uploads/1726854934663-profile-ia-2.jpg",
       "registrationDate": "2024-09-20T17:55:34.675Z"
+    },
+    {
+      "id": "0bd0",
+      "email": "hermione@granger.how",
+      "password": "$2a$10$CVtvuY7XwoiAldk2mjGYx.ayhQwOEgJPTuQjzzk0v5CnBygJHBSLC",
+      "username": "Hermione",
+      "profileIMG": "profile-default.png",
+      "registrationDate": "2024-09-25T13:06:01.215Z"
+    },
+    {
+      "id": "034f",
+      "username": "Bruce Wayne",
+      "email": "bruce@wayne.dc",
+      "password": "$2a$12$gzml.KoysJGSXUKqATobcOf.XvLqxZ5QPm5ulmUPD1qe4WyY5XPcC",
+      "registrationDate": "2024-09-25T17:23:22.438Z"
+    },
+    {
+      "id": "429c",
+      "username": "Logan Paul",
+      "email": "logan@paul.yt",
+      "password": "$2a$12$Zdf5kZHdPHiAfGRQ.iNB/O38/IwidTvs4hJKjj6hnCFlmDmijhaLS",
+      "registrationDate": "2024-09-25T17:35:48.324Z"
+    },
+    {
+      "id": "cbdd",
+      "username": "Kevin Durant",
+      "email": "kevin@durant.nba",
+      "password": "$2a$12$4I1dIkB0mxCaug6YVfcB/.ulaTiEh9ipC9G30vSvUpoWEI2/yU9ua",
+      "registrationDate": "2024-09-25T17:37:47.884Z"
+    },
+    {
+      "id": "7e51",
+      "username": "Pau Gasol",
+      "email": "pau@gasol.nba",
+      "password": "$2a$12$pH.ugQhyJmakkpsftQKEu.7UV8U4/DPexxjfX0NAguIFSQjHTTGne",
+      "registrationDate": "2024-09-25T17:43:57.731Z"
+    },
+    {
+      "id": "5f63",
+      "username": "Kevin Garnett",
+      "email": "kevin@garnett.nba",
+      "password": "$2a$12$xMJWzHfves53zus28OrJzuRHpIXWTjql.mRGjSG05Zb8eujMrroYq",
+      "registrationDate": "2024-09-25T17:46:24.312Z"
+    },
+    {
+      "id": "92a8",
+      "username": "Michael Jordan",
+      "email": "jorda@air.goat",
+      "password": "$2a$12$v0PASSqGl9667icNUXzYwOfwpqc5twYxSmzuQvd5APepN0lNeCIl.",
+      "registrationDate": "2024-09-25T17:57:31.923Z"
     }
   ]
 }

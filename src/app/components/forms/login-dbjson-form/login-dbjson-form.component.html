@@ -7,10 +7,15 @@
         <mat-label>Password</mat-label>
         <input (blur)="updateValidationErrors()" matInput formControlName="password" type="password" required aria-required="true" aria-label="Password">
     </mat-form-field>
-    <div class="button-container" matTooltip="Complete this form to login" [matTooltipDisabled]="loginForm.valid">
+    <app-button-with-load-spinner
+        matTooltip="Complete form to login"
+        [isAdding]="isLogin"
+        [isValidForm]="loginForm.valid"
+    >LOGIN</app-button-with-load-spinner>
+    <!-- <div class="button-container" matTooltip="Complete this form to login" [matTooltipDisabled]="loginForm.valid">
         <mat-spinner onButtonSpinner *ngIf="isLogin" diameter="20"></mat-spinner>
         <button mat-flat-button type="submit" [disabled]="loginForm.invalid || isLogin">LOGIN</button>
-    </div>
+    </div> -->
 </form>
 
 <ng-container>
