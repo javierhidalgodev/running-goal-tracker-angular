@@ -1,11 +1,11 @@
 <form [formGroup]="loginForm" (submit)="login()">
     <mat-form-field>
         <mat-label>Email</mat-label>
-        <input (blur)="updateValidationErrors()" matInput formControlName="email" type="email" placeholder="eve.holt@reqres.in" required aria-required="true" aria-label="Email">
+        <input (blur)="checkValidators()" matInput formControlName="email" type="email" placeholder="eve.holt@reqres.in" required aria-required="true" aria-label="Email">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Password</mat-label>
-        <input (blur)="updateValidationErrors()" matInput formControlName="password" type="password" required aria-required="true" aria-label="Password">
+        <input (blur)="checkValidators()" matInput formControlName="password" type="password" required aria-required="true" aria-label="Password">
     </mat-form-field>
     <app-button-with-load-spinner
         matTooltip="Complete form to login"

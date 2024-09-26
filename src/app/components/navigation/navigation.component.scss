@@ -21,7 +21,6 @@ mat-sidenav {
 }
 
 mat-toolbar {
-
   h2 {
     width: 100%;
     text-align: center;
@@ -50,20 +49,44 @@ mat-nav-list>* {
 }
 
 mat-sidenav-content {
+  position: relative;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: start;
   background-color: orangered;
-
+  
   .content {
     height: auto;
     display: flex;
     padding: 20px;
     place-content: center;
 
+    margin-top: 20px;
     margin-bottom: 0;
   }
+}
+
+.spacer {
+  flex: 1 1 auto
+}
+
+.connection-info {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+
+  margin: 0 auto;
+  padding: 4px 8px;
+  width: max-content;
+
+  border-radius: 9999px;
+  background-color: #fff;
+  color: darkblue;
+  font-weight: bold;
+  font-size: .8rem;
+  user-select: none;
 }
 
 @media (min-width: 600px) {

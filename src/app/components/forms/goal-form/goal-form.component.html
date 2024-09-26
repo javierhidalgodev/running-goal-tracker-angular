@@ -1,7 +1,7 @@
 <form [formGroup]="goalForm" (submit)="addGoal()">
     <mat-form-field>
         <mat-label>Name</mat-label>
-        <input matInput formControlName="name" type="text" placeholder="2024km" required />
+        <input (blur)="checkValidators()" matInput formControlName="name" type="text" placeholder="2024km" required />
     </mat-form-field>
     <mat-form-field>
         <mat-label>Description</mat-label>
@@ -10,15 +10,15 @@
     <mat-form-field>
         <mat-label>MM/DD/YYYY - MM/DD/YYYY</mat-label>
         <mat-date-range-input [rangePicker]="picker" required>
-            <input matStartDate formControlName="startDate" placeholder="Start Date" type="text">
-            <input matEndDate formControlName="endDate" placeholder="End Date">
+            <input (blur)="checkValidators()" matStartDate formControlName="startDate" placeholder="Start Date" type="text">
+            <input (blur)="checkValidators()" matEndDate formControlName="endDate" placeholder="End Date">
         </mat-date-range-input>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
     </mat-form-field>
     <mat-form-field>
         <mat-label>KM</mat-label>
-        <input matInput formControlName="km" step="5" type="number" required>
+        <input (blur)="checkValidators()" matInput formControlName="km" step="5" type="number" required>
     </mat-form-field>
     <app-button-with-load-spinner matTooltip="Complete el formulario para grabar el nuevo objetivo" [isValidForm]="goalForm.valid" [isAdding]="isAdding">GO FOR IT!</app-button-with-load-spinner>
     <!-- <div class="button-container" matTooltip="Complete this form to submit" [matTooltipDisabled]="goalForm.valid">
@@ -26,7 +26,7 @@
     </div> -->
 </form>
 
-<div class="error-container" *ngIf="hasErrors(goalForm)">
+<!-- <div class="error-container" *ngIf="hasErrors(goalForm)">
     <mat-error *ngIf="getControl('name')?.errors?.['required'] && getControl('name')?.touched">
         - Name is required
     </mat-error>
@@ -57,9 +57,12 @@
     <mat-error *ngIf="goalForm.get('km')?.errors?.['min']">
         - Goal KM must be greater than or equal to 1
     </mat-error>
-    <!-- <mat-error *ngIf="goalForm.get('km')?.errors?.['pattern']">
+    <mat-error *ngIf="goalForm.get('km')?.errors?.['pattern']">
         - Please enter a valid number
-    </mat-error> -->
-</div>
+    </mat-error>
+</div> -->
 
-<app-notification />
+<ng-container>
+    <app-validation-container />
+    <app-notification />
+</ng-container>

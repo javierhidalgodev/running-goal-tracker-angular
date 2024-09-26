@@ -8,6 +8,7 @@
       <a mat-list-item me routerLink="home" routerLinkActive="selected">HOME</a>
       <a mat-list-item routerLink="new-goal" routerLinkActive="selected">NEW GOAL</a>
       <a mat-list-item routerLink="goals" routerLinkActive="selected">GOALS</a>
+      <span class="spacer"></span>
       <button mat-list-item (click)="openLogoutDialog('500', '500')">LOGOUT</button>
     </mat-nav-list>
   </mat-sidenav>
@@ -27,5 +28,6 @@
     <div class="content">
       <router-outlet></router-outlet>
     </div>
+    <p class="connection-info">Connected like {{ user }}</p>
   </mat-sidenav-content>
 </mat-sidenav-container>

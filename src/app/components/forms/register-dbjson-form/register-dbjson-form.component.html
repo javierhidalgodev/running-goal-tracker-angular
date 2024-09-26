@@ -26,19 +26,11 @@
         </mat-card-content>
         <button (click)="inputFile.click()" type="button">UPLOAD</button>
     </mat-card> -->
-    <app-button-with-load-spinner
-        matTooltip="Complete form to register" 
-        [isAdding]="isRegistering"
+    <app-button-with-load-spinner matTooltip="Complete form to register" [isAdding]="isRegistering"
         [isValidForm]="registerForm.valid">
         REGISTER
     </app-button-with-load-spinner>
-    <!-- <div class="button-container" matTooltip="Complete this form to register" [matTooltipDisabled]="registerForm.valid">
-        <mat-spinner *ngIf="isRegistering" onButtonSpinner diameter="20"></mat-spinner>
-        <button mat-flat-button type="submit" [disabled]="registerForm.invalid || isRegistering">REGISTER</button>
-    </div> -->
 </form>
 
-<ng-container>
-    <app-validation-container />
-    <app-notification />
-</ng-container>
+<app-validation-container />
+<app-notification />

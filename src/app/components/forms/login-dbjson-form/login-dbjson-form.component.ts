@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
-import { InputValidators, NotificationService } from '../../../services/notification.service';
-import { getValidationErrors } from '../../../utils/forms.utils';
+import { NotificationService } from '../../../services/notification.service';
+import { updateValidationErrors } from '../../../utils/goals.utils'
 
 @Component({
   selector: 'app-login-dbjson-form',
@@ -12,9 +12,6 @@ import { getValidationErrors } from '../../../utils/forms.utils';
 })
 export class LoginDbjsonFormComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({})
-  errorMessage: string | null = null
-  successMessage: string | null = null
-  validationErrors: InputValidators[] | null = null;
   isLogin: boolean = false;
 
   constructor(
@@ -34,7 +31,9 @@ export class LoginDbjsonFormComponent implements OnInit {
       ])]
     })
 
-    this.loginForm.statusChanges.subscribe(status => this.updateValidationErrors())
+    this.loginForm.statusChanges.subscribe(status => {
+      this.checkValidators()
+    })
   }
 
   get email() {
@@ -44,12 +43,10 @@ export class LoginDbjsonFormComponent implements OnInit {
     return this.loginForm.get('password')
   }
 
-  updateValidationErrors(): void {
-    this.validationErrors = getValidationErrors(this.loginForm)
+  checkValidators() {
+    const errors = updateValidationErrors(this.loginForm)
 
-    if (this.validationErrors) {
-      this._notificationService.validation(this.validationErrors)
-    }
+    errors && this._notificationService.validation(errors)
   }
 
   login() {

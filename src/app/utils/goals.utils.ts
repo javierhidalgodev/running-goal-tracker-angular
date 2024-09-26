@@ -1,6 +1,8 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms"
+import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from "@angular/forms"
 import { isValidDate } from "rxjs/internal/util/isDate"
 import { Goal, GoalWithExtraDetails } from "../models/goals.model"
+import { getValidationErrors } from "./forms.utils"
+import { NotificationService } from '../services/notification.service'
 
 export function dateValidatorFn(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -15,11 +17,11 @@ export function isEqualFn(): ValidatorFn {
     const password = formGroup.get('password')?.value
     const confirmPassword = formGroup.get('confirmPassword')?.value
 
-    if(!password || !confirmPassword) {
+    if (!password || !confirmPassword) {
       return null
-    } 
+    }
     console.log(password === confirmPassword);
-    
+
     return password !== confirmPassword ? { isEqual: true } : null
   }
 }
@@ -33,5 +35,9 @@ export const calculateProgress = (goal: Goal | GoalWithExtraDetails) => {
 }
 
 export const calculateDaysToEnd = (goal: Goal): number => {
-  return Number(((new Date(goal.endDate).getTime() - new Date().getTime())/(1000*60*60*24)).toFixed())
+  return Number(((new Date(goal.endDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)).toFixed())
+}
+
+export const updateValidationErrors = (formToCheck: FormGroup) => {
+  return getValidationErrors(formToCheck)
 }

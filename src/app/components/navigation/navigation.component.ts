@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -11,9 +11,19 @@ import { DialogComponent } from '../dialog/dialog.component';
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss'
 })
-export class NavigationComponent {
+export class NavigationComponent implements OnInit {
   readonly dialog = inject(MatDialog)
   private breakpointObserver = inject(BreakpointObserver);
+  user: string | null = null;
+ 
+  ngOnInit(): void {
+    const token = localStorage.getItem('token')
+
+    if(token) {
+      const { email } = JSON.parse(token)
+      this.user = email
+    }
+  }
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.HandsetPortrait)
     .pipe(

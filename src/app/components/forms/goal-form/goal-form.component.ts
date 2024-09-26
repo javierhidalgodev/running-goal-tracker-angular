@@ -1,8 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GoalService } from '../../../services/goal.service';
-import { dateValidatorFn } from '../../../utils/utils';
-import { hasErrors } from '../../../utils/forms.utils'
+import { dateValidatorFn, updateValidationErrors } from '../../../utils/goals.utils';
 import { Notification } from '../../../pages/new-goal-page/new-goal-page.component';
 import { NotificationService } from '../../../services/notification.service';
 
@@ -16,7 +15,6 @@ export class GoalFormComponent implements OnInit {
 
   goalForm: FormGroup = new FormGroup({});
   isAdding: boolean = false;
-  hasErrors = hasErrors;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -49,13 +47,19 @@ export class GoalFormComponent implements OnInit {
       ]]
     })
 
-    // this.goalForm.statusChanges.subscribe(
-    // status => // Función que actualiza las validaciones
-    // )
+    this.goalForm.statusChanges.subscribe(status => {
+      this.checkValidators()
+    })
   }
 
   getControl(control: string) {
     return this.goalForm.get(control)
+  }
+
+  checkValidators() {
+    const errors = updateValidationErrors(this.goalForm)
+
+    errors && this._notificationService.validation(errors)
   }
 
   addGoal() {
@@ -70,16 +74,11 @@ export class GoalFormComponent implements OnInit {
       complete: () => {
         this.isAdding = false
         this._notificationService.success('Goal added!')
-        this.goalForm.reset({
-          description: '',
-          endDate: '',
-          km: '',
-          name: '',
-          startDate: ''
-        }, { emitEvent: false })
-        this.goalForm.markAsPristine()
-        this.goalForm.markAsUntouched()
-        this.goalForm.updateValueAndValidity()
+        this.goalForm.reset()
+        
+        Object.keys(this.goalForm.controls).forEach(control => {
+          this.goalForm.get(control)?.setErrors(null)
+        })
       }
     })
   }

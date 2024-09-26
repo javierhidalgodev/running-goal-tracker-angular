@@ -24,6 +24,7 @@ export function getValidationErrors(form: FormGroup) {
             if (control && control.touched && control.pristine) control.markAsUntouched()
 
             if (control && control.errors && control.touched && control.dirty) {
+                console.log('loco')
                 return {
                     key,
                     validators: control.errors

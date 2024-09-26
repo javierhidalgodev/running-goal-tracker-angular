@@ -1,8 +1,13 @@
 <div class="validation-container" *ngIf="validationMessages">
     <ng-content *ngFor="let item of validationMessages!.messages">
+
+        <!-- * REQUIRED -->
         <mat-error *ngIf="item.validators?.['required']">
             <ng-content *ngIf="item.key === 'username'">
                 Please, enter a valid username
+            </ng-content>
+            <ng-content *ngIf="item.key === 'name'">
+                Please, enter a goal name
             </ng-content>
             <ng-content *ngIf="item.key === 'email'">
                 Please, enter a valid email
@@ -19,38 +24,106 @@
             <ng-content *ngIf="item.key === 'date'">
                 Please, enter a valid date
             </ng-content>
+            <ng-content *ngIf="item.key === 'startDate'">
+                Start date is required
+            </ng-content>
+            <ng-content *ngIf="item.key === 'endDate'">
+                End date is required
+            </ng-content>
+            <ng-content *ngIf="item.key === 'description'">
+                Description is required
+            </ng-content>
         </mat-error>
+
+        <!-- * IS EQUAL -->
         <mat-error *ngIf="item.validators?.['isEqual']">
             <ng-content *ngIf="item.key === 'form'">
                 Passwords must match
             </ng-content>
         </mat-error>
+
+        <!-- * IS DATE -->
         <mat-error *ngIf="item.validators?.['isDate']">
             <ng-content *ngIf="item.key === 'date'">
                 Please, enter a valid date format: MM/DD/YYYY
             </ng-content>
+            <ng-content *ngIf="item.key === 'startDate'">
+                Please, enter a valid start date
+            </ng-content>
+            <ng-content *ngIf="item.key === 'endDate'">
+                Please, enter a valid end date
+            </ng-content>
         </mat-error>
+
+        <!-- * EMAIL -->
         <mat-error *ngIf="item.validators?.['email']">
             <ng-content *ngIf="item.key === 'email'">
                 Please, enter a valid email
             </ng-content>
         </mat-error>
+
+        <!-- * MAT DATEPICKER MIN -->
         <mat-error *ngIf="item.validators?.['matDatepickerMin']">
             <ng-content *ngIf="item.key === 'date'">
                 Please, select a date within the goal's date range.
             </ng-content>
         </mat-error>
+        
+        <!-- * MAT END DATE INVALID -->
+        <mat-error *ngIf="item.validators?.['matEndDateInvalid']">
+            <ng-content *ngIf="item.key === 'endDate'">
+                End date must be after start date.
+            </ng-content>
+        </mat-error>
+
+
+
+        <!-- * MINLENGTH -->
         <mat-error *ngIf="item.validators?.['minlength']">
             <ng-content *ngIf="item.key === 'username'">
                 Username must be at least 5 characters
+            </ng-content>
+            <ng-content *ngIf="item.key === 'name'">
+                Goal name must be at least 5 characters
+            </ng-content>
+            <ng-content *ngIf="item.key === 'description'">
+                Goal description is required
             </ng-content>
             <ng-content *ngIf="item.key === 'password'">
                 Password must be at least 5 characters
             </ng-content>
         </mat-error>
+
+        <!-- * MIN NUMBER -->
+        <mat-error *ngIf="item.validators?.['min']">
+            <ng-content *ngIf="item.key === 'km'">
+                C'mon, run at least 1 km!
+            </ng-content>
+            <ng-content *ngIf="item.key === 'name'">
+                Goal name must be at least 5 characters
+            </ng-content>
+            <ng-content *ngIf="item.key === 'description'">
+                Goal description is required
+            </ng-content>
+            <ng-content *ngIf="item.key === 'password'">
+                Password must be at least 5 characters
+            </ng-content>
+        </mat-error>
+
+        <!-- * MAXLENGTH -->
+        <mat-error *ngIf="item.validators?.['maxlength']">
+            <ng-content *ngIf="item.key === 'name'">
+                Name can't be greater than 30 characters
+            </ng-content>
+            <ng-content *ngIf="item.key === 'description'">
+                Goal description can't be greater than 100 characters
+            </ng-content>
+        </mat-error>
+
+        <!-- * PATTERN -->
         <mat-error *ngIf="item.validators?.['pattern']">
             <ng-content *ngIf="item.key === 'username'">
-                Password must containt only letters
+                Username must containt only letters
             </ng-content>
             <ng-content *ngIf="item.key === 'password'">
                 Password must containt only letters and numbers

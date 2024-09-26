@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { dateValidatorFn } from '../../../utils/utils';
+import { dateValidatorFn } from '../../../utils/goals.utils';
 import { ActivatedRoute } from '@angular/router';
 import { Goal, GoalActivity, GoalWithExtraDetails } from '../../../models/goals.model';
 import { GoalService } from '../../../services/goal.service';
