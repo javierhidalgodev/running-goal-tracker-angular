@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { NotificationMessage, NotificationService } from '../../services/notification.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NotificationMessage, NotificationService } from '@services/notification.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.component.html',
   styleUrl: './notification.component.scss'
 })
-export class NotificationComponent implements OnInit {
+export class NotificationComponent implements OnInit, OnDestroy {
+  suscription$: Subscription;
   notificationMessage: NotificationMessage | null = null
 
   constructor (private _notificationService: NotificationService) { }
 
   ngOnInit(): void {
-    this._notificationService.notification$.subscribe({
+    this.suscription$ = this._notificationService.notification$.subscribe({
       next: message => {
         if(message) {
           console.log(message)
@@ -23,5 +25,9 @@ export class NotificationComponent implements OnInit {
         }
       }
     })
+  }
+
+  ngOnDestroy(): void {
+    this.suscription$.unsubscribe()
   }
 }
