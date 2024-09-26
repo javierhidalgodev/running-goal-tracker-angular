@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Goal } from '../models/goals.model';
+import { Goal } from '@models/goals.model';
 
 @Pipe({
   name: 'goalPercentage'

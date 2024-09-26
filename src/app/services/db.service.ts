@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
-import { User, UserDBJSON } from '../models/user.model';
-import { Goal, GoalActivity, GoalWithExtraDetails, NewGoal } from '../models/goals.model';
+import { User, UserDBJSON } from '@models/user.model';
+import { Goal, GoalActivity, NewGoal } from '@models/goals.model';
 import { environment } from '../../environments/environment'
 
 @Injectable({

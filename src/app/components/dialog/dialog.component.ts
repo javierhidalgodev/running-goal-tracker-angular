@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { NavigationComponent } from '../navigation/navigation.component';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dialog',

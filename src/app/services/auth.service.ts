@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, from, Observable, of, switchMap, throwError } from 'rxjs';
-import { DEFAULT_PROFILE_USER_IMG, Login, NewUser, User } from '../models/user.model';
+import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
+import { Login, NewUser, User } from '@models/user.model';
 import { DbService } from './db.service';
 import bcrypt from 'bcryptjs'
-import { FormGroup } from '@angular/forms';
 
 const API_URL = 'https://reqres.in/api';
 const API_DBJSON_URL = 'http://localhost:3000';

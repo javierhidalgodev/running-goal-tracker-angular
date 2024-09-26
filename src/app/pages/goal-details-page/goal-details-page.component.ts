@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GoalService } from '../../services/goal.service';
-import { ActiveModal, Goal, GoalActivity, GoalWithExtraDetails } from '../../models/goals.model';
-import { calculateDaysToEnd, calculateGoalTotal, calculateProgress } from '../../utils/goals.utils';
+import { GoalService } from '@services/goal.service';
+import { ActiveModal, Goal, GoalWithExtraDetails } from '@models/goals.model';
+import { calculateDaysToEnd, calculateGoalTotal, calculateProgress } from '@utils/goals.utils';
 
 @Component({
   selector: 'app-goal-details-page',

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { GoalService } from '../../services/goal.service';
+import { GoalService } from '@services/goal.service';
 import { delay } from 'rxjs';
-import { Goal } from '../../models/goals.model';
-import { Token } from '../../guards/auth.guard';
+import { Goal } from '@models/goals.model';
+import { Token } from '@guards/auth.guard';
 
 @Component({
   selector: 'app-goals-page',

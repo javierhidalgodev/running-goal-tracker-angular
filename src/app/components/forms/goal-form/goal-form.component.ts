@@ -1,9 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { GoalService } from '../../../services/goal.service';
-import { dateValidatorFn, updateValidationErrors } from '../../../utils/goals.utils';
-import { Notification } from '../../../pages/new-goal-page/new-goal-page.component';
-import { NotificationService } from '../../../services/notification.service';
+import { GoalService } from '@services/goal.service';
+import { dateValidatorFn, updateValidationErrors } from '@utils/goals.utils';
+import { Notification } from '@pages/new-goal-page/new-goal-page.component';
+import { NotificationService } from '@services/notification.service';
 
 @Component({
   selector: 'app-goal-form',

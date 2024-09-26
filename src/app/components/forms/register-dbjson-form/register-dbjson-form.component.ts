@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../../services/auth.service';
-import { InputValidators, NotificationService } from '../../../services/notification.service';
-import { getValidationErrors } from '../../../utils/forms.utils';
-import { Router } from '@angular/router';
-import { isEqualFn } from '../../../utils/goals.utils';
-import { HttpClient } from '@angular/common/http';
-import { Observable, switchMap } from 'rxjs';
-import { NewUser, User } from '../../../models/user.model';
+import { AuthService } from '@services/auth.service';
+import { InputValidators, NotificationService } from '@services/notification.service';
+import { getValidationErrors } from '@utils/forms.utils';
+import { isEqualFn } from '@utils/goals.utils';
 
 @Component({
   selector: 'app-register-dbjson-form',

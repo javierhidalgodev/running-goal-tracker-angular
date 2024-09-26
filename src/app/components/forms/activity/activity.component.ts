@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { dateValidatorFn } from '../../../utils/goals.utils';
+import { dateValidatorFn } from '@utils/goals.utils';
 import { ActivatedRoute } from '@angular/router';
-import { Goal, GoalActivity, GoalWithExtraDetails } from '../../../models/goals.model';
-import { GoalService } from '../../../services/goal.service';
-import { InputValidators, NotificationService } from '../../../services/notification.service';
-import { getValidationErrors } from '../../../utils/forms.utils';
+import { Goal, GoalActivity, GoalWithExtraDetails } from '@models/goals.model';
+import { GoalService } from '@services/goal.service';
+import { InputValidators, NotificationService } from '@services/notification.service';
+import { getValidationErrors } from '@utils/forms.utils';
 
 @Component({
   selector: 'app-activity',

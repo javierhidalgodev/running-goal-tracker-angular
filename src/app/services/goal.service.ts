@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
-import { mockGoals } from '../mocks/goals.mock';
-import { Goal, GoalActivity } from '../models/goals.model';
+import { mockGoals } from '@mocks/goals.mock';
+import { Goal, GoalActivity } from '@models/goals.model';
 import { DbService } from './db.service';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';

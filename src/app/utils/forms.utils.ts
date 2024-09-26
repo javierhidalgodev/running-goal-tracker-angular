@@ -1,5 +1,5 @@
 import { FormGroup } from "@angular/forms"
-import { InputValidators, NotificationService } from "../services/notification.service"
+import { InputValidators, NotificationService } from "@services/notification.service"
 
 const notificationService = new NotificationService()
 

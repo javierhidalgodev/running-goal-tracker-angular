@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { DbService } from '../../services/db.service';
+import { DbService } from '@services/db.service';
 import { User } from '../../models/user.model';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { Goal, GoalWithExtraDetails } from '../../models/goals.model';
+import { Goal, GoalWithExtraDetails } from '@models/goals.model';
 import { switchMap } from 'rxjs';
 
 @Component({

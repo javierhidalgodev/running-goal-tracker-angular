@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
-import { NotificationService } from '../../../services/notification.service';
-import { updateValidationErrors } from '../../../utils/goals.utils'
+import { NotificationService } from '@services/notification.service';
+import { updateValidationErrors } from '@utils/goals.utils'
 
 @Component({
   selector: 'app-login-dbjson-form',

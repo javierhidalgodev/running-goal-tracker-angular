@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Goal } from '../../models/goals.model';
+import { Goal } from '@models/goals.model';
 
 @Component({
   selector: 'app-goal',

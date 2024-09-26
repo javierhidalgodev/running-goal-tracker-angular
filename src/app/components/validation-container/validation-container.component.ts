@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationService, ValidationMessages, ValidationMessagesWithExtras } from '../../services/notification.service';
+import { NotificationService, ValidationMessages, ValidationMessagesWithExtras } from '@services/notification.service';
 
 @Component({
   selector: 'app-validation-container',
