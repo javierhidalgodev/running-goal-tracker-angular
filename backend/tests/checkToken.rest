@@ -1,0 +1,2 @@
+GET http://localhost:5000/login/check
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmOGRjIiwiZW1haWwiOiJlbHNhQHBhdGFreS5jb20iLCJpYXQiOjE3MjczNTIzOTYsImV4cCI6MTcyNzM1Mjk5Nn0.uMnK0KBcgjPpfP-autb84FzK2rlKem8Kztxbh-VDvAU

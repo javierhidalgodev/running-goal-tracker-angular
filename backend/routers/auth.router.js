@@ -40,4 +40,17 @@ authRouter.post('/', (req, res) => {
   })
 })
 
+authRouter.get('/check', (req, res) => {
+  const authorization = req.headers.authorization
+
+  if (authorization) {
+    try {
+      const token = jwt.verify(authorization, process.env.JWT_KEY)
+      res.status(200).send('ok')
+    } catch (error) {
+      res.status(400).send('nada')
+    }
+  }
+})
+
 module.exports = authRouter
