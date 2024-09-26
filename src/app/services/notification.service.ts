@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 })
 export class NotificationService {
   // * Un Subject actúa como observable y observer => puede emitir y suscribirse
-  private _notification$ = new Subject<NotificationMessage>()
+  private _notification$ = new Subject<NotificationMessage | null>()
   private _validation$ = new Subject<ValidationMessagesWithExtras | null>()
 
   // * Esto impide que el acceso de los componentes emita valores, solo permite la suscripción
@@ -21,11 +21,19 @@ export class NotificationService {
 
   // * Cada uno de las funciones aquí emite valores de un tipo y con un mensaje
   success(message: string) {
-    this._notification$.next({ type: 'success', message })
+    if (message) {
+      this._notification$.next({ type: 'success', message })
+    } else {
+      this._notification$.next(null)
+    }
   }
-
+  
   error(message: string) {
-    this._notification$.next({ type: 'error', message })
+    if (message) {
+      this._notification$.next({ type: 'error', message })
+    } else {
+      this._notification$.next(null)
+    }
   }
 
   validation(messages: InputValidators[]) {

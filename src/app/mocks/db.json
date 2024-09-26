@@ -391,6 +391,20 @@
       "email": "jorda@air.goat",
       "password": "$2a$12$v0PASSqGl9667icNUXzYwOfwpqc5twYxSmzuQvd5APepN0lNeCIl.",
       "registrationDate": "2024-09-25T17:57:31.923Z"
+    },
+    {
+      "id": "92fb",
+      "username": "Luzuss",
+      "email": "luzu@vlogs.yt",
+      "password": "$2a$12$BTO9U2fjQpzOUxD4RWrVOugp5HCi5alTa9MsIJg3.SD52RDz2vss.",
+      "registrationDate": "2024-09-26T16:08:00.586Z"
+    },
+    {
+      "id": "2147",
+      "username": "Batman",
+      "email": "batman@robin.dc",
+      "password": "$2a$12$V8nPFhDDnYnbd/Ybwo/k9urP/j4zYZttAanlz433R2MntOloWn3pu",
+      "registrationDate": "2024-09-26T16:18:09.242Z"
     }
   ]
 }
