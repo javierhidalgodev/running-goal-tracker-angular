@@ -34,7 +34,7 @@ authRouter.post('/', (req, res) => {
   }
 
   const token = jwt.sign(payload, process.env.JWT_KEY, {
-    expiresIn: '30s'
+    expiresIn: '30m'
   })
 
   res.json({

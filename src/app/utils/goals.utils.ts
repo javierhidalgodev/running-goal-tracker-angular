@@ -19,7 +19,6 @@ export function isEqualFn(): ValidatorFn {
     if (!password || !confirmPassword) {
       return null
     }
-    console.log(password === confirmPassword);
 
     return password !== confirmPassword ? { isEqual: true } : null
   }

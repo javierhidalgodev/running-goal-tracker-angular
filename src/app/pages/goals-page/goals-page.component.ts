@@ -31,7 +31,7 @@ export class GoalsPageComponent implements OnInit {
           this.isLoading = false
           this.errorMessage = error.message
         },
-        complete: () => console.log('Get goals attempt completed!')
+        // complete: () => console.log('Get goals attempt completed!')
       })
     } else {
       this.isLoading = false

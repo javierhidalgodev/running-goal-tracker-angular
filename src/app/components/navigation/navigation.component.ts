@@ -28,7 +28,6 @@ export class NavigationComponent implements OnInit {
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.HandsetPortrait)
     .pipe(
       map(result => {
-        console.log(result.breakpoints)
         return result.matches
       } 
     ),

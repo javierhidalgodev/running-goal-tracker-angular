@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GoalService } from '@services/goal.service';
 import { ActiveModal, Goal, GoalWithExtraDetails } from '@models/goals.model';
 import { calculateDaysToEnd, calculateGoalTotal, calculateProgress } from '@utils/goals.utils';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-goal-details-page',
   templateUrl: './goal-details-page.component.html',
   styleUrl: './goal-details-page.component.scss'
 })
-export class GoalDetailsPageComponent implements OnInit {
+export class GoalDetailsPageComponent implements OnInit, OnDestroy {
   id: string | null = null;
   goalWithExtraDetails?: GoalWithExtraDetails;
   isLoading: boolean = true;
@@ -19,6 +20,8 @@ export class GoalDetailsPageComponent implements OnInit {
   activitySuccessMessage?: string;
   complete: boolean = false;
   activeModal: ActiveModal = null;
+
+  private fetchGoalByIdSubscription$: Subscription = new Subscription();
 
   constructor(
     private _route: ActivatedRoute,
@@ -62,28 +65,29 @@ export class GoalDetailsPageComponent implements OnInit {
   }
 
   private fetchGoalById(id: string) {
-    this._goalsService.getGoalById(id).subscribe({
-      next: res => {
-        if (res) {
-          this.goalWithExtraDetails = {
-            ...res,
-            daysToEnd: calculateDaysToEnd(res),
-            goalTotal: calculateGoalTotal(res),
-            goalProgress: calculateProgress(res),
+    this.fetchGoalByIdSubscription$ =
+      this._goalsService.getGoalById(id).subscribe({
+        next: res => {
+          if (res) {
+            this.goalWithExtraDetails = {
+              ...res,
+              daysToEnd: calculateDaysToEnd(res),
+              goalTotal: calculateGoalTotal(res),
+              goalProgress: calculateProgress(res),
+            }
+          } else {
+            this.handleErrorMessage('Goal not found!')
           }
-        } else {
-          this.handleErrorMessage('Goal not found!')
+        },
+        error: error => {
+          this.handleErrorMessage('Lo sentimos pero hubo un error. Por favor, inténtelo de nuevo más tarde.')
+          this.isLoading = false
+        },
+        complete: () => {
+          // console.log('Get goal by id attempt completed!')
+          this.isLoading = false
         }
-      },
-      error: error => {
-        this.handleErrorMessage('Lo sentimos pero hubo un error. Por favor, inténtelo de nuevo más tarde.')
-        this.isLoading = false
-      },
-      complete: () => {
-        console.log('Get goal by id attempt completed!')
-        this.isLoading = false
-      }
-    })
+      })
   }
 
   private handleErrorMessage(message: string) {
@@ -103,5 +107,9 @@ export class GoalDetailsPageComponent implements OnInit {
       this.goalWithExtraDetails.completed = true
       this.activeModal = 'goalCompleted'
     }
+  }
+
+  ngOnDestroy(): void {
+    this.fetchGoalByIdSubscription$.unsubscribe()
   }
 }

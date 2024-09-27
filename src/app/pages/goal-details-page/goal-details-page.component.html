@@ -11,8 +11,8 @@
 
     <ng-container *ngIf="activeModal">
         <app-modal (emitCloseEvent)="closeModal()" [ngSwitch]="activeModal">
-            <app-activity *ngSwitchCase="'activityForm'" (emitAddActivity)="activityAdded($event)"
-                [selectedGoal]="goalWithExtraDetails"></app-activity>
+            <app-activity-form *ngSwitchCase="'activityForm'" (emitAddActivity)="activityAdded($event)"
+                [selectedGoal]="goalWithExtraDetails"></app-activity-form>
             <app-goal-complete-modal *ngSwitchCase="'goalCompleted'"></app-goal-complete-modal>
         </app-modal>
     </ng-container>

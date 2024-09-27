@@ -1,21 +1,23 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GoalService } from '@services/goal.service';
 import { dateValidatorFn, updateValidationErrors } from '@utils/goals.utils';
 import { Notification } from '@pages/new-goal-page/new-goal-page.component';
 import { NotificationService } from '@services/notification.service';
-import { Router } from '@angular/router';
+import { Subscription, tap } from 'rxjs';
 
 @Component({
   selector: 'app-goal-form',
   templateUrl: './goal-form.component.html',
   styleUrl: './goal-form.component.scss'
 })
-export class GoalFormComponent implements OnInit {
+export class GoalFormComponent implements OnInit, OnDestroy {
   @Output() emitAddGoal = new EventEmitter<Notification>()
 
   goalForm: FormGroup = new FormGroup({});
   isAdding: boolean = false;
+
+  private subscriptions$: Subscription = new Subscription();
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -48,9 +50,11 @@ export class GoalFormComponent implements OnInit {
       ]]
     })
 
-    this.goalForm.statusChanges.subscribe(status => {
-      this.checkValidators()
-    })
+    this.subscriptions$.add(
+      this.goalForm.statusChanges.subscribe(status => {
+        this.checkValidators()
+      })
+    )
   }
 
   getControl(control: string) {
@@ -66,21 +70,27 @@ export class GoalFormComponent implements OnInit {
   addGoal() {
     this.isAdding = true
 
-    this._goalService.createGoal(this.goalForm).subscribe({
-      // next: goal => console.log(goal), // En principio no necesito recibir nada, solo emitir un evento cuando la operación es exitosa
-      error: error => {
-        this.isAdding = false
-        this._notificationService.error('Something went wrong')
-      },
-      complete: () => {
-        this.isAdding = false
-        this._notificationService.success('Goal added!')
-        this.goalForm.reset()
-        
-        Object.keys(this.goalForm.controls).forEach(control => {
-          this.goalForm.get(control)?.setErrors(null)
-        })
-      }
-    })
+    this.subscriptions$.add(
+      this._goalService.createGoal(this.goalForm).subscribe({
+        // next: goal => console.log(goal), // En principio no necesito recibir nada, solo emitir un evento cuando la operación es exitosa
+        error: error => {
+          this.isAdding = false
+          this._notificationService.error('Something went wrong')
+        },
+        complete: () => {
+          this.isAdding = false
+          this._notificationService.success('Goal added!')
+          this.goalForm.reset()
+
+          Object.keys(this.goalForm.controls).forEach(control => {
+            this.goalForm.get(control)?.setErrors(null)
+          })
+        }
+      })
+    )
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions$.unsubscribe()
   }
 }

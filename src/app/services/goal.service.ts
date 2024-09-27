@@ -36,14 +36,12 @@ export class GoalService {
 
     if (tok) {
       const { userId, token } = JSON.parse(tok)
-      console.log('entro dentro paco', userId, token)
       return this._http.get('http://localhost:5000/login/check-token', {
         headers: new HttpHeaders({
           'Authorization': `Bearer ${token}`
         })
       }).pipe(
         switchMap(() => {
-          console.log('maríaaaaaa')
           const newGoal: Goal = {
             ...goalFormData.value,
             image: goalFormData.get('image') || DEFAULT_IMAGE,
@@ -94,7 +92,6 @@ export class GoalService {
 
     if (tok) {
       const { userId, token } = JSON.parse(tok)
-      console.log('entro dentro paco', userId, token)
       return this._http.get('http://localhost:5000/login/check-token', {
         headers: new HttpHeaders({
           'Authorization': `Bearer ${token}`
@@ -104,7 +101,6 @@ export class GoalService {
           const newActivity = {
             ...activityFormData.value
           }
-          console.log(activityFormData, activityFormData.value)
           return this._dbService.addActivityToGoal(goalId, newActivity)
         })
       )

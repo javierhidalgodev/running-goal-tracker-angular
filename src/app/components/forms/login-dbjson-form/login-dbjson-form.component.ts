@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
 import { NotificationService } from '@services/notification.service';
 import { updateValidationErrors } from '@utils/goals.utils'
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login-dbjson-form',
   templateUrl: './login-dbjson-form.component.html',
   styleUrl: './login-dbjson-form.component.scss'
 })
-export class LoginDbjsonFormComponent implements OnInit {
-  loginForm: FormGroup = new FormGroup({})
+export class LoginDbjsonFormComponent implements OnInit, OnDestroy {
+  loginForm: FormGroup = new FormGroup({});
   isLogin: boolean = false;
+
+  private subscriptions$: Subscription = new Subscription();
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -31,9 +34,11 @@ export class LoginDbjsonFormComponent implements OnInit {
       ])]
     })
 
-    this.loginForm.statusChanges.subscribe(status => {
-      this.checkValidators()
-    })
+    this.subscriptions$.add(
+      this.loginForm.statusChanges.subscribe(status => {
+        this.checkValidators()
+      })
+    )
   }
 
   get email() {
@@ -53,20 +58,26 @@ export class LoginDbjsonFormComponent implements OnInit {
     this.isLogin = true
 
     if (this.loginForm.valid) {
-      this._authService.loginDBJSON(this.loginForm.value).subscribe({
-        next: token => {
-          localStorage.setItem('token', JSON.stringify(token))
-          this._router.navigate(['/home'])
-        },
-        error: error => {
-          this._notificationService.error(error)
-          this.isLogin = false
-        },
-        complete: () => {
-          console.log('Login attempt completed!')
-          this.isLogin = false
-        }
-      })
+      this.subscriptions$.add(
+        this._authService.loginDBJSON(this.loginForm.value).subscribe({
+          next: token => {
+            localStorage.setItem('token', JSON.stringify(token))
+            this._router.navigate(['/home'])
+          },
+          error: error => {
+            this._notificationService.error(error)
+            this.isLogin = false
+          },
+          complete: () => {
+            // console.log('Login attempt completed!')
+            this.isLogin = false
+          }
+        })
+      )
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions$.unsubscribe()
   }
 }

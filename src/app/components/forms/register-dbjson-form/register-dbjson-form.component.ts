@@ -1,22 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@services/auth.service';
 import { InputValidators, NotificationService } from '@services/notification.service';
 import { getValidationErrors } from '@utils/forms.utils';
 import { isEqualFn } from '@utils/goals.utils';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register-dbjson-form',
   templateUrl: './register-dbjson-form.component.html',
   styleUrl: './register-dbjson-form.component.scss'
 })
-export class RegisterDbjsonFormComponent implements OnInit {
+export class RegisterDbjsonFormComponent implements OnInit, OnDestroy {
   registerForm: FormGroup = new FormGroup({});
   validationErrors: InputValidators[] | null = null;
   isRegistering: boolean = false;
 
   selectedFile: File | null = null;
   imgURL: string | null = null
+
+  private subscriptions$: Subscription = new Subscription()
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -43,9 +46,11 @@ export class RegisterDbjsonFormComponent implements OnInit {
       confirmPassword: ['', Validators.required,]
     }, { validators: isEqualFn() })
 
-    this.registerForm.statusChanges.subscribe(status => {
-      this.updateValidationErrors()
-    })
+    this.subscriptions$.add(
+      this.registerForm.statusChanges.subscribe(status => {
+        this.updateValidationErrors()
+      })
+    )
   }
 
   get email() {
@@ -87,22 +92,21 @@ export class RegisterDbjsonFormComponent implements OnInit {
       const { confirmPassword, ...userData } = this.registerForm.value
 
       // TODO: Deberíamos pasar la imagen más adelante
-      this._authService.registerDBJSON(userData).subscribe({
-        next: value => {
-          console.log(value)
-        },
-        error: error => {
-          this.isRegistering = false
-          this._notificationService.error(error.message)
-        },
-        complete: () => {
-          this.isRegistering = false
-          this._notificationService.success('User registered!')
-          console.log('Registration complete')
-          this.registerForm.reset()
-          Object.keys(this.registerForm.controls).forEach(control => this.registerForm.get(control)?.setErrors(null))
-        }
-      })
+      this.subscriptions$.add(
+        this._authService.registerDBJSON(userData).subscribe({
+          // next: value => console.log(value),
+          error: error => {
+            this.isRegistering = false
+            this._notificationService.error(error.message)
+          },
+          complete: () => {
+            this.isRegistering = false
+            this._notificationService.success('User registered!')
+            this.registerForm.reset()
+            Object.keys(this.registerForm.controls).forEach(control => this.registerForm.get(control)?.setErrors(null))
+          }
+        })
+      )
     }
   }
 
@@ -113,5 +117,9 @@ export class RegisterDbjsonFormComponent implements OnInit {
       console.log(file.files[0])
       this.selectedFile = file.files[0]
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions$.unsubscribe()
   }
 }

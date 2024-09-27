@@ -36,7 +36,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { GoalDetailComponent } from './components/goal/goal-detail/goal-detail.component';
 import { GoalTableDetailComponent } from './components/goal/goal-detail/goal-table-detail/goal-table-detail.component';
-import { ActivityComponent } from './components/forms/activity/activity.component';
+import { ActivityFormComponent } from './components/forms/activity-form/activity-form.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { KMtoEndPipe } from './pipes/kmto-end.pipe';
 import { GoalCompleteModalComponent } from './components/goal/goal-detail/goal-complete-modal/goal-complete-modal.component';
@@ -69,7 +69,7 @@ import { ButtonWithLoadSpinnerComponent } from './components/button-with-load-sp
     GoalDetailsPageComponent,
     GoalDetailComponent,
     GoalTableDetailComponent,
-    ActivityComponent,
+    ActivityFormComponent,
     ModalComponent,
     KMtoEndPipe,
     GoalCompleteModalComponent,

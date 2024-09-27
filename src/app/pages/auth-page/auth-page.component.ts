@@ -1,17 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-auth-page',
   templateUrl: './auth-page.component.html',
   styleUrl: './auth-page.component.scss'
 })
-export class AuthPageComponent implements OnInit {
+export class AuthPageComponent implements OnInit, OnDestroy {
   currentAuthAction: 'login' | 'register' = 'login';
+
+  private paramsSubscription$: Subscription = new Subscription();
 
   constructor(private _router: Router, private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.paramsSubscription$ =
     this._route.params.subscribe(params => {
       const action = params['action']
 
@@ -35,5 +39,9 @@ export class AuthPageComponent implements OnInit {
 
   navigateTo(action: 'login' | 'register') {
     this._router.navigate(['/auth/', action])
+  }
+
+  ngOnDestroy(): void {
+    this.paramsSubscription$.unsubscribe()
   }
 }

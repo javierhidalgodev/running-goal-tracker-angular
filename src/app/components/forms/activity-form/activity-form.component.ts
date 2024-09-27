@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { dateValidatorFn } from '@utils/goals.utils';
 import { ActivatedRoute } from '@angular/router';
@@ -6,19 +6,22 @@ import { Goal, GoalActivity, GoalWithExtraDetails } from '@models/goals.model';
 import { GoalService } from '@services/goal.service';
 import { InputValidators, NotificationService } from '@services/notification.service';
 import { getValidationErrors } from '@utils/forms.utils';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-activity',
-  templateUrl: './activity.component.html',
-  styleUrl: './activity.component.scss'
+  selector: 'app-activity-form',
+  templateUrl: './activity-form.component.html',
+  styleUrl: './activity-form.component.scss'
 })
-export class ActivityComponent implements OnInit {
+export class ActivityFormComponent implements OnInit, OnDestroy {
   @Input() selectedGoal?: GoalWithExtraDetails;
   @Output() emitAddActivity = new EventEmitter<Goal>()
   activityForm: FormGroup = new FormGroup([])
   validationErrors: InputValidators[] | null = null;
   isAdding: boolean = false;
   errorNotification?: string;
+
+  subscriptions: Subscription = new Subscription();
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -28,9 +31,7 @@ export class ActivityComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.goalId = Number(this._route.snapshot.paramMap.get('id'))
-    // this.goalId = this.selectedGoal.id
-
+    console.log('me creo')
     this.activityForm = this._formBuilder.group({
       km: ['', Validators.compose([
         Validators.required,
@@ -42,7 +43,7 @@ export class ActivityComponent implements OnInit {
       ])]
     })
 
-    this.activityForm.statusChanges.subscribe(status => this.updateValidationErrors())
+    this.subscriptions.add(this.activityForm.statusChanges.subscribe(status => this.updateValidationErrors()))
   }
 
   updateValidationErrors(): void {
@@ -58,7 +59,7 @@ export class ActivityComponent implements OnInit {
       this.isAdding = true
       const activityToAdd = this.activityForm.value
 
-      this._goalService.addActivityToGoalDBJSON(this.selectedGoal.id, this.activityForm).subscribe({
+      this.subscriptions.add(this._goalService.addActivityToGoalDBJSON(this.selectedGoal.id, this.activityForm).subscribe({
         next: goal => {
           this.emitAddActivity.emit(goal)
         },
@@ -68,11 +69,14 @@ export class ActivityComponent implements OnInit {
           this._notificationService.error('Something went wrong')
         },
         complete: () => {
-          console.log('Activity addition process completed!')
           this.isAdding = false
           this.activityForm.reset()
         }
-      })
+      }))
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe()
   }
 }

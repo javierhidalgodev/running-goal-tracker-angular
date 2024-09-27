@@ -78,7 +78,36 @@
       "endDate": "2024-09-20T22:00:00.000Z",
       "km": 1234,
       "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
-      "activities": [],
+      "activities": [
+        {
+          "km": 12,
+          "date": "2024-09-03T22:00:00.000Z"
+        },
+        {
+          "km": 12,
+          "date": "2024-09-06T22:00:00.000Z"
+        },
+        {
+          "km": 12,
+          "date": "2024-09-09T22:00:00.000Z"
+        },
+        {
+          "km": 123,
+          "date": "2024-09-03T22:00:00.000Z"
+        },
+        {
+          "km": 23,
+          "date": "2024-09-09T22:00:00.000Z"
+        },
+        {
+          "km": 123,
+          "date": "2024-09-02T22:00:00.000Z"
+        },
+        {
+          "km": 123,
+          "date": "2024-09-11T22:00:00.000Z"
+        }
+      ],
       "completed": false,
       "userId": "f8dc"
     },
@@ -170,6 +199,78 @@
       "startDate": "2024-09-10T22:00:00.000Z",
       "endDate": "2024-09-17T22:00:00.000Z",
       "km": 2130,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": [],
+      "completed": false,
+      "userId": "f8dc"
+    },
+    {
+      "id": "2e60",
+      "name": "zxczxc",
+      "description": "zxczxc",
+      "startDate": "2024-08-31T22:00:00.000Z",
+      "endDate": "2024-09-06T22:00:00.000Z",
+      "km": 123,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": [],
+      "completed": false,
+      "userId": "f8dc"
+    },
+    {
+      "id": "2200",
+      "name": "vbnvbn",
+      "description": "vvbnvbn",
+      "startDate": "2024-08-31T22:00:00.000Z",
+      "endDate": "2024-09-01T22:00:00.000Z",
+      "km": 456,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": [],
+      "completed": false,
+      "userId": "f8dc"
+    },
+    {
+      "id": "7f40",
+      "name": "asdasd",
+      "description": "asdasd",
+      "startDate": "2024-09-04T22:00:00.000Z",
+      "endDate": "2024-09-11T22:00:00.000Z",
+      "km": 2134,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": [],
+      "completed": false,
+      "userId": "f8dc"
+    },
+    {
+      "id": "e7ff",
+      "name": "yuiyui",
+      "description": "yuiyui",
+      "startDate": "2024-09-08T22:00:00.000Z",
+      "endDate": "2024-09-16T22:00:00.000Z",
+      "km": 234,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": [],
+      "completed": false,
+      "userId": "f8dc"
+    },
+    {
+      "id": "0f4b",
+      "name": "cvbcvb",
+      "description": "cvbcvb",
+      "startDate": "2024-09-05T22:00:00.000Z",
+      "endDate": "2024-09-12T22:00:00.000Z",
+      "km": 678,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": [],
+      "completed": false,
+      "userId": "f8dc"
+    },
+    {
+      "id": "5fe4",
+      "name": "asdasdasd",
+      "description": "asdasdasd",
+      "startDate": "2024-09-02T22:00:00.000Z",
+      "endDate": "2024-09-10T22:00:00.000Z",
+      "km": 1234,
       "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
       "activities": [],
       "completed": false,
@@ -502,6 +603,13 @@
       "email": "batman@robin.dc",
       "password": "$2a$12$V8nPFhDDnYnbd/Ybwo/k9urP/j4zYZttAanlz433R2MntOloWn3pu",
       "registrationDate": "2024-09-26T16:18:09.242Z"
+    },
+    {
+      "id": "879f",
+      "username": "Robin",
+      "email": "robin@batman.dc",
+      "password": "$2a$12$Dmt2ya5bDRxNN1YYCr8paOLOOVHpW3WqOhK3hotLlT/d6FJMV9Aiu",
+      "registrationDate": "2024-09-27T14:05:32.295Z"
     }
   ]
 }
