@@ -139,7 +139,7 @@ export class DbService {
             ],
             completed
           }
-
+          console.log(updatedGoal)
           return this._http.put<Goal>(`${this._DB_URL}/goals/${goalId}`, updatedGoal)
         }
 

@@ -4,6 +4,7 @@ import { GoalService } from '@services/goal.service';
 import { dateValidatorFn, updateValidationErrors } from '@utils/goals.utils';
 import { Notification } from '@pages/new-goal-page/new-goal-page.component';
 import { NotificationService } from '@services/notification.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-goal-form',
@@ -19,7 +20,7 @@ export class GoalFormComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _goalService: GoalService,
-    private _notificationService: NotificationService
+    private _notificationService: NotificationService,
   ) { }
 
   ngOnInit(): void {
@@ -69,7 +70,7 @@ export class GoalFormComponent implements OnInit {
       // next: goal => console.log(goal), // En principio no necesito recibir nada, solo emitir un evento cuando la operación es exitosa
       error: error => {
         this.isAdding = false
-        this._notificationService.error(error.message)
+        this._notificationService.error('Something went wrong')
       },
       complete: () => {
         this.isAdding = false

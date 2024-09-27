@@ -1,20 +1,24 @@
 const authRouter = require('express').Router()
 const jwt = require('jsonwebtoken')
 
-authRouter.get('/', (req, res) => {
-  const token = req.headers.authorization
+const verifyToken = (req, res, next) => {
+  const authorization = req.headers.authorization
 
-  if (!token || token.substring(0, 7).toLowerCase() !== 'bearer ') {
-    return res.status(401).send('A valid token is required!')
+  if (authorization && authorization.substring(0, 7).toLocaleLowerCase() === 'bearer ') {
+    jwt.verify(authorization.split(' ')[1], process.env.JWT_KEY, (err, decoded) => {
+      if (err) {
+        res.status(400).send({ error: 'Invalid token' })
+      }
+
+      req.token = decoded
+      next()
+    })
   }
+}
 
-  jwt.verify(token.slice(7), process.env.JWT_KEY, (err, decoded) => {
-    if (err) {
-      return res.status(401).send('Invalid token!')
-    }
-
-    res.json({ message: 'Access granted', decoded })
-  })
+authRouter.get('/', verifyToken, (req, res) => {
+  const token = req.token
+  res.json({ message: 'Access granted', token })
 })
 
 authRouter.post('/', (req, res) => {
@@ -30,7 +34,7 @@ authRouter.post('/', (req, res) => {
   }
 
   const token = jwt.sign(payload, process.env.JWT_KEY, {
-    expiresIn: '10m'
+    expiresIn: '30s'
   })
 
   res.json({
@@ -40,17 +44,9 @@ authRouter.post('/', (req, res) => {
   })
 })
 
-authRouter.get('/check', (req, res) => {
-  const authorization = req.headers.authorization
-
-  if (authorization) {
-    try {
-      const token = jwt.verify(authorization, process.env.JWT_KEY)
-      res.status(200).send('ok')
-    } catch (error) {
-      res.status(400).send('nada')
-    }
-  }
+authRouter.get('/check-token', verifyToken, (req, res) => {
+  console.log('esta bien')
+  res.status(200).send()
 })
 
 module.exports = authRouter

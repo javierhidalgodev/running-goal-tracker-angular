@@ -58,14 +58,14 @@ export class ActivityComponent implements OnInit {
       this.isAdding = true
       const activityToAdd = this.activityForm.value
 
-      this._goalService.addActivityToGoalDBJSON(this.selectedGoal.id, activityToAdd).subscribe({
+      this._goalService.addActivityToGoalDBJSON(this.selectedGoal.id, this.activityForm).subscribe({
         next: goal => {
           this.emitAddActivity.emit(goal)
         },
         error: error => {
           console.error(error)
           this.isAdding = false
-          this._notificationService.error(error.message)
+          this._notificationService.error('Something went wrong')
         },
         complete: () => {
           console.log('Activity addition process completed!')

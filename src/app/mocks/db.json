@@ -37,9 +37,13 @@
         {
           "km": 123,
           "date": "2024-08-31T22:00:00.000Z"
+        },
+        {
+          "km": 12345,
+          "date": "2024-09-15T22:00:00.000Z"
         }
       ],
-      "completed": false,
+      "completed": true,
       "userId": "f8dc"
     },
     {
@@ -109,6 +113,63 @@
       "startDate": "2024-09-21T22:00:00.000Z",
       "endDate": "2024-09-29T22:00:00.000Z",
       "km": 78,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": [
+        {
+          "km": 2,
+          "date": "2024-09-24T22:00:00.000Z"
+        },
+        {
+          "km": 34,
+          "date": "2024-09-23T22:00:00.000Z"
+        }
+      ],
+      "completed": false,
+      "userId": "f8dc"
+    },
+    {
+      "id": "254a",
+      "name": "Lo que sea",
+      "description": "no me importa",
+      "startDate": "2024-09-21T22:00:00.000Z",
+      "endDate": "2024-09-27T22:00:00.000Z",
+      "km": 1234,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": [],
+      "completed": false,
+      "userId": "f8dc"
+    },
+    {
+      "id": "bc19",
+      "name": "asdasd",
+      "description": "asdasd",
+      "startDate": "2024-09-08T22:00:00.000Z",
+      "endDate": "2024-09-16T22:00:00.000Z",
+      "km": 123,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": [],
+      "completed": false,
+      "userId": "f8dc"
+    },
+    {
+      "id": "3eaf",
+      "name": "213123",
+      "description": "asdasd",
+      "startDate": "2024-09-11T22:00:00.000Z",
+      "endDate": "2024-09-18T22:00:00.000Z",
+      "km": 1232131,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "activities": [],
+      "completed": false,
+      "userId": "f8dc"
+    },
+    {
+      "id": "3e9b",
+      "name": "zxczxczxc",
+      "description": "zxczxc",
+      "startDate": "2024-09-10T22:00:00.000Z",
+      "endDate": "2024-09-17T22:00:00.000Z",
+      "km": 2130,
       "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
       "activities": [],
       "completed": false,

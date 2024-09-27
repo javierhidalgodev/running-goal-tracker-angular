@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { mockGoals } from '@mocks/goals.mock';
 import { Goal, GoalActivity } from '@models/goals.model';
 import { DbService } from './db.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 const DEFAULT_IMAGE = 'https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg'
 
@@ -17,7 +18,8 @@ export class GoalService {
 
   constructor(
     private _dbService: DbService,
-    private _http: HttpClient
+    private _http: HttpClient,
+    private _router: Router
   ) { }
 
   /**
@@ -30,21 +32,34 @@ export class GoalService {
    * @returns Retornamos un observable a partir del objetivo recibido, para poder visualizarlo en la interfaz.
    */
   createGoal(goalFormData: FormGroup): Observable<void> {
-    const token = localStorage.getItem('token')
+    const tok = localStorage.getItem('token')
 
-    if(token) {
-      const { userId } = JSON.parse(token)
-      const newGoal: Goal = {
-        ...goalFormData.value,
-        image: goalFormData.get('image') || DEFAULT_IMAGE,
-        activities: [],
-        completed: false,
-        userId
-      }
-      return this._dbService.addNewGoal(newGoal)
+    if (tok) {
+      const { userId, token } = JSON.parse(tok)
+      console.log('entro dentro paco', userId, token)
+      return this._http.get('http://localhost:5000/login/check-token', {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+        })
+      }).pipe(
+        switchMap(() => {
+          console.log('maríaaaaaa')
+          const newGoal: Goal = {
+            ...goalFormData.value,
+            image: goalFormData.get('image') || DEFAULT_IMAGE,
+            activities: [],
+            completed: false,
+            userId
+          }
+          return this._dbService.addNewGoal(newGoal)
+        }),
+        catchError(error => {
+          return throwError(() => new Error('Token has been expired or revoked'))
+        })
+      )
+    } else {
+      return throwError(() => new Error('Something went wrong during token verification'))
     }
-
-    return throwError(() => new Error('Something went wrong during token verification'))
   }
 
   /**
@@ -75,13 +90,27 @@ export class GoalService {
    * @returns 
    */
   addActivityToGoalDBJSON(goalId: string, activityFormData: FormGroup) {
-    // TODO: Verificar el token
+    const tok = localStorage.getItem('token')
 
-    const newActivity: GoalActivity = {
-      ...activityFormData.value
+    if (tok) {
+      const { userId, token } = JSON.parse(tok)
+      console.log('entro dentro paco', userId, token)
+      return this._http.get('http://localhost:5000/login/check-token', {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+        })
+      }).pipe(
+        switchMap(() => {
+          const newActivity = {
+            ...activityFormData.value
+          }
+          console.log(activityFormData, activityFormData.value)
+          return this._dbService.addActivityToGoal(goalId, newActivity)
+        })
+      )
+    } else {
+      return throwError(() => new Error('Something went wrong during token verification'))
     }
-
-    return this._dbService.addActivityToGoal(goalId, newActivity)
   }
 
   /**
