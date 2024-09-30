@@ -5,6 +5,9 @@ import { map, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
+import { ModalService } from '@services/modal.service';
+import { ModalYeahComponent } from '@components/modal-yeah/modal-yeah.component';
+import { ModalInterface } from '@models/modal.model';
 
 @Component({
   selector: 'app-navigation',
@@ -15,11 +18,16 @@ export class NavigationComponent implements OnInit {
   readonly dialog = inject(MatDialog)
   private breakpointObserver = inject(BreakpointObserver);
   user: string | null = null;
- 
+
+  constructor(
+    private readonly _router: Router,
+    private readonly _modalService: ModalService,
+  ) { }
+
   ngOnInit(): void {
     const token = localStorage.getItem('token')
 
-    if(token) {
+    if (token) {
       const { email } = JSON.parse(token)
       this.user = email
     }
@@ -29,26 +37,35 @@ export class NavigationComponent implements OnInit {
     .pipe(
       map(result => {
         return result.matches
-      } 
-    ),
+      }
+      ),
       shareReplay()
     );
 
-  constructor(private _router: Router) { }
 
-  openLogoutDialog (enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(DialogComponent, {
-      width: '250px',
-      enterAnimationDuration,
-      exitAnimationDuration
-    }).afterClosed().subscribe(value => {
-      if (value) {
-        this.logout()
-      }
+  openLogoutDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this._modalService.openDialog<ModalYeahComponent, ModalInterface>(ModalYeahComponent, {
+      cancelButtonLabel: 'No',
+      confirmAction: () => {
+        localStorage.removeItem('token')
+        this._router.navigate(['auth/login'])
+      },
+      confirmButtonLabel: 'Yes',
+      title: 'Logout',
+      content: 'Are you sure to logout?',
     })
+    // this.dialog.open(DialogComponent, {
+    //   width: '250px',
+    //   enterAnimationDuration,
+    //   exitAnimationDuration
+    // }).afterClosed().subscribe(value => {
+    //   if (value) {
+    //     this.logout()
+    //   }
+    // })
   }
 
-  logout () {
+  logout() {
     localStorage.removeItem('token')
     this._router.navigate(['auth/login'])
   }

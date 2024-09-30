@@ -4,6 +4,9 @@ import { GoalService } from '@services/goal.service';
 import { ActiveModal, Goal, GoalWithExtraDetails } from '@models/goals.model';
 import { calculateDaysToEnd, calculateGoalTotal, calculateProgress } from '@utils/goals.utils';
 import { Subscription } from 'rxjs';
+import { ModalService } from '@services/modal.service';
+import { ModalYeahComponent } from '@components/modal-yeah/modal-yeah.component';
+import { ModalInterface } from '@models/modal.model';
 
 @Component({
   selector: 'app-goal-details-page',
@@ -25,7 +28,8 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private _route: ActivatedRoute,
-    private _goalsService: GoalService
+    private _goalsService: GoalService,
+    private _modalService: ModalService,
   ) { }
 
   ngOnInit(): void {
@@ -34,6 +38,18 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
     if (this.id) {
       this.fetchGoalById(this.id)
     }
+  }
+
+  confirmDelete() {
+    const modalInterface: ModalInterface = {
+      cancelButtonLabel: 'No',
+      confirmAction: () => this._goalsService.deleteGoal(this.id!),
+      confirmButtonLabel: 'Delete',
+      title: 'Delete goal',
+      content: 'Are you sure to delete this goal?',
+    }
+
+    this._modalService.openDialog(ModalYeahComponent, modalInterface)
   }
 
   openModal(modalType: ActiveModal) {
@@ -58,10 +74,6 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.activitySuccessMessage = undefined
     }, 5000)
-  }
-
-  deleteGoal() {
-
   }
 
   private getGoalIdFromRoute(): string | null {

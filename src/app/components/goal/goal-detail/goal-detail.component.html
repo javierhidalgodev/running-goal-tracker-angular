@@ -23,8 +23,12 @@
     
             <mat-card-actions>
                 <button mat-flat-button (click)="openModal('activityForm')" [disabled]="this.selectedGoal.goalTotal >= selectedGoal.km"> {{ selectedGoal.completed ? 'COMPLETED' : 'ADD KMs' }} </button>
-                <button mat-flat-button (click)="delete()" class="warn-color">DELETE</button>
+                <div class="button-container">
+                    <mat-progress-spinner onButtonSpinner mode="indeterminate" diameter="20" *ngIf="isDeleting"></mat-progress-spinner>
+                    <button mat-flat-button (click)="onClickConfirmModal()" class="warn-color" [disabled]="isDeleting">DELETE</button>
+                </div>
             </mat-card-actions>
         </mat-card-content>
+        <app-notification />
     </mat-card>
 </ng-container>
