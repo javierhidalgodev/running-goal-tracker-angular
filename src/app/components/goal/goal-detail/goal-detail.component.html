@@ -7,12 +7,13 @@
             <small> {{ selectedGoal.startDate | date }} | {{ selectedGoal.endDate | date }}</small>
         </mat-card-header>
         <mat-card-content>
-            <mat-progress-bar mode="determinate" color="tertiary" [value]="this.selectedGoal.goalProgress"></mat-progress-bar>
+            <mat-progress-bar mode="determinate" color="tertiary"
+                [value]="this.selectedGoal.goalProgress"></mat-progress-bar>
             <p><strong>Objetivo:</strong> {{ selectedGoal.km | kMtoEnd }}</p>
             <p><strong>KM para finalizar:</strong> {{ selectedGoal.km | kMtoEnd: this.selectedGoal.goalTotal }}</p>
             <p><strong>Días para finalizar:</strong> {{ selectedGoal.daysToEnd }}</p>
             <p><strong>Descripción:</strong> {{ selectedGoal.description }}</p>
-    
+
             <p><strong>Actividades registradas:</strong></p>
             <ng-container *ngIf="selectedGoal.activities.length > 0; else noActivitiesYet">
                 <app-goal-table-detail [selectedGoal]="selectedGoal"></app-goal-table-detail>
@@ -20,15 +21,22 @@
             <ng-template #noActivitiesYet>
                 <div class="no-activities-yet">No activities yet</div>
             </ng-template>
-    
+
             <mat-card-actions>
-                <button mat-flat-button (click)="openModal('activityForm')" [disabled]="this.selectedGoal.goalTotal >= selectedGoal.km"> {{ selectedGoal.completed ? 'COMPLETED' : 'ADD KMs' }} </button>
+                <button mat-flat-button (click)="openActivityFormModal(activityForm)">ADD KMs</button>
+                <!-- <button mat-flat-button (click)="openModal('activityForm')" [disabled]="this.selectedGoal.goalTotal >= selectedGoal.km || inProcess"> {{ selectedGoal.completed ? 'COMPLETED' : 'ADD KMs' }} </button> -->
                 <div class="button-container">
-                    <mat-progress-spinner onButtonSpinner mode="indeterminate" diameter="20" *ngIf="isDeleting"></mat-progress-spinner>
-                    <button mat-flat-button (click)="onClickConfirmModal()" class="warn-color" [disabled]="isDeleting">DELETE</button>
+                    <mat-progress-spinner onButtonSpinner mode="indeterminate" diameter="20"
+                        *ngIf="inProcess"></mat-progress-spinner>
+                    <button mat-flat-button (click)="openDeleteModal()" class="warn-color"
+                        [disabled]="inProcess">DELETE</button>
                 </div>
             </mat-card-actions>
         </mat-card-content>
         <app-notification />
     </mat-card>
 </ng-container>
+
+<ng-template #activityForm>
+    <app-activity-form />
+</ng-template>

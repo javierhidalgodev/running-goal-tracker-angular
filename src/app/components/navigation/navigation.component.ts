@@ -46,10 +46,7 @@ export class NavigationComponent implements OnInit {
   openLogoutDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this._modalService.openDialog<ModalYeahComponent, ModalInterface>(ModalYeahComponent, {
       cancelButtonLabel: 'No',
-      confirmAction: () => {
-        localStorage.removeItem('token')
-        this._router.navigate(['auth/login'])
-      },
+      confirmAction: () => this.logout(),
       confirmButtonLabel: 'Yes',
       title: 'Logout',
       content: 'Are you sure to logout?',

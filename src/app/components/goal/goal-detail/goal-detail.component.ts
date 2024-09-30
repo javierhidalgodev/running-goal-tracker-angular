@@ -1,8 +1,13 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ActivityFormComponent } from '@components/forms/activity-form/activity-form.component';
+import { ModalYeahComponent } from '@components/modal-yeah/modal-yeah.component';
 import { ActiveModal, GoalWithExtraDetails } from '@models/goals.model';
 import { GoalService } from '@services/goal.service';
+import { ModalService } from '@services/modal.service';
 import { NotificationService } from '@services/notification.service';
+import { dateValidatorFn } from '@utils/goals.utils';
 
 @Component({
   selector: 'app-goal-detail',
@@ -14,45 +19,71 @@ export class GoalDetailComponent {
   @Output() emitOpenModal = new EventEmitter()
   @Output() emitOpenDeleteModal = new EventEmitter()
 
-  isDeleting: boolean = false;
+  inProcess: boolean = false;
 
-  constructor (
+  constructor(
     private _goalService: GoalService,
     private _router: Router,
     // ! Quitar este servicio una vez esté externalizado el manejo del error
     private _notificationService: NotificationService,
+    private readonly _modalService: ModalService,
   ) { }
+
+  private _createActivityForm() {
+    return new FormBuilder().group({
+      km: ['', Validators.compose([
+        Validators.required,
+        Validators.min(1)
+      ])],
+      date: ['', Validators.compose([
+        Validators.required,
+        dateValidatorFn()
+      ])]
+    })
+  }
 
   openModal(modalType: ActiveModal) {
     this.emitOpenModal.emit(modalType)
   }
 
-  onClickConfirmModal() {
-    this.emitOpenDeleteModal.emit()
+  openDeleteModal() {
+    this._modalService.openDialog(ModalYeahComponent, {
+      cancelButtonLabel: 'No',
+      confirmAction: () => this.delete(),
+      confirmButtonLabel: 'Delete',
+      title: 'Delete Goal',
+      content: 'Are you sure to delete this goal?'
+    })
   }
 
-  // ! Sacar de aquí y hacerlo con el modal. Esto es solo una prueba
-  // delete() {
-  //   if(this.selectedGoal) {
-  //     const confirmation = confirm('Are you sure to delete this goal?')
+  openActivityFormModal(template: TemplateRef<HTMLElement>) {
+    this._modalService.openDialog(ModalYeahComponent, {
+      cancelButtonLabel: 'Cancel',
+      confirmAction: () => this.addActivity,
+      confirmButtonLabel: 'Add',
+      title: 'New activity',
+      form: template
+    })
+  }
 
-  //     if(confirmation) {
-  //       this.isDeleting = true
-  //       this._goalService.deleteGoal(this.selectedGoal.id).subscribe({
-  //         next: value => {
-  //           console.log(value)
-  //           this._router.navigate(['/goals'])
-  //         },
-  //         error: error => {
-  //           console.error(error)
-  //           this.isDeleting = false
-  //           this._notificationService.error('Something went wrong deleting goal. Please, try again later.')
-  //         },
-  //         complete: () => {
-  //           this.isDeleting = false
-  //         }
-  //       })
-  //     }
-  //   }
-  // }
+  addActivity() { }
+
+  delete() {
+    if (this.selectedGoal) {
+      this.inProcess = true
+      this._goalService.deleteGoal(this.selectedGoal.id)
+        .subscribe({
+          next: () => {
+            this._router.navigate(['/goals'])
+          },
+          error: error => {
+            this.inProcess = false
+            this._notificationService.error('Something went wrong deleting goal. Please, try again later')
+          },
+          complete: () => {
+            this.inProcess = false
+          },
+        })
+    }
+  }
 }

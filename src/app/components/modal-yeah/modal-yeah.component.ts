@@ -20,11 +20,4 @@ export class ModalYeahComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.matDialog)
   }
-
-  // deleteGoal() {
-  //   if(this._matDialog.data) {
-  //     this._goalService.deleteGoal(this._matDialog.data)
-  //   }
-  //   this._modalService.closeModal()
-  // }
 }

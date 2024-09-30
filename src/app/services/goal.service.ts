@@ -140,19 +140,7 @@ export class GoalService {
         catchError(error => {
           return throwError(() => new Error(error))
         })
-      ).subscribe({
-        next: () => {
-          console.log('Deleteado')
-          this._router.navigate(['/goals'])
-        },
-        error(error) {
-          console.log(error);
-        },
-        complete() {
-          console.log('Completado');
-          
-        },
-      })
+      )
     } else {
       return throwError(() => new Error('Something went wrong during token verification'))
     }
