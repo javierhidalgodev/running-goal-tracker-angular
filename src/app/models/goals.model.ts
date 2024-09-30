@@ -1,4 +1,4 @@
-export type ActiveModal = 'activityForm' | 'goalCompleted' | null
+export type ActiveModal = 'activityForm' | 'goalCompleted' | 'deleteGoal' | null
 
 export interface NewGoal {
     name: string,

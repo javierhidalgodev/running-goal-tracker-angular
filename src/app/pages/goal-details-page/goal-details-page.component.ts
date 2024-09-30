@@ -36,8 +36,8 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  openModal() {
-    this.activeModal = 'activityForm'
+  openModal(modalType: ActiveModal) {
+    this.activeModal = modalType
   }
 
   closeModal() {
@@ -58,6 +58,10 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.activitySuccessMessage = undefined
     }, 5000)
+  }
+
+  deleteGoal() {
+
   }
 
   private getGoalIdFromRoute(): string | null {

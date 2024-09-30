@@ -26,27 +26,6 @@
       "userId": "bdf0"
     },
     {
-      "id": "3f1a",
-      "name": "Correr 2 maratones",
-      "description": "En el año 2024",
-      "startDate": "2024-08-31T22:00:00.000Z",
-      "endDate": "2024-09-29T22:00:00.000Z",
-      "km": 12345,
-      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
-      "activities": [
-        {
-          "km": 123,
-          "date": "2024-08-31T22:00:00.000Z"
-        },
-        {
-          "km": 12345,
-          "date": "2024-09-15T22:00:00.000Z"
-        }
-      ],
-      "completed": true,
-      "userId": "f8dc"
-    },
-    {
       "id": "b9b8",
       "name": "Primeros 200k",
       "description": "Correr en el mes de septiembre mis primeros 200km en total.",
@@ -69,47 +48,6 @@
       "activities": [],
       "completed": false,
       "userId": "bdf0"
-    },
-    {
-      "id": "8219",
-      "name": "Pues eso",
-      "description": "amigos míos",
-      "startDate": "2024-08-31T22:00:00.000Z",
-      "endDate": "2024-09-20T22:00:00.000Z",
-      "km": 1234,
-      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
-      "activities": [
-        {
-          "km": 12,
-          "date": "2024-09-03T22:00:00.000Z"
-        },
-        {
-          "km": 12,
-          "date": "2024-09-06T22:00:00.000Z"
-        },
-        {
-          "km": 12,
-          "date": "2024-09-09T22:00:00.000Z"
-        },
-        {
-          "km": 123,
-          "date": "2024-09-03T22:00:00.000Z"
-        },
-        {
-          "km": 23,
-          "date": "2024-09-09T22:00:00.000Z"
-        },
-        {
-          "km": 123,
-          "date": "2024-09-02T22:00:00.000Z"
-        },
-        {
-          "km": 123,
-          "date": "2024-09-11T22:00:00.000Z"
-        }
-      ],
-      "completed": false,
-      "userId": "f8dc"
     },
     {
       "id": "7536",

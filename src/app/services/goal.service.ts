@@ -123,4 +123,26 @@ export class GoalService {
 
     return of(null)
   }
+
+  deleteGoal(goalId: string) {
+    const tok = localStorage.getItem('token')
+
+    if (tok) {
+      const { token } = JSON.parse(tok)
+      return this._http.get('http://localhost:5000/login/check-token', {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+        })
+      }).pipe(
+        switchMap(() => {
+          return this._dbService.deleteGoal(goalId)
+        }),
+        catchError(error => {
+          return throwError(() => new Error(error))
+        })
+      )
+    } else {
+      return throwError(() => new Error('Something went wrong during token verification'))
+    }
+  }
 }

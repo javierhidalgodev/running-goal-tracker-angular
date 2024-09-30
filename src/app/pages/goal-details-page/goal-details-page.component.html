@@ -1,7 +1,7 @@
 <ng-container *ngIf="!isLoading; else loading">
     <a class="go-back-btn" mat-flat-button routerLink="/goals">GO BACK</a>
     <ng-container *ngIf="goalWithExtraDetails; else goalNotFound">
-        <app-goal-detail [selectedGoal]="goalWithExtraDetails" (emitOpenModal)="openModal()">
+        <app-goal-detail [selectedGoal]="goalWithExtraDetails" (emitOpenModal)="openModal('activityForm')">
         </app-goal-detail>
     </ng-container>
 

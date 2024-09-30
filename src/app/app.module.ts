@@ -51,6 +51,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { GoalPercentagePipe } from './pipes/goal-percentage.pipe';
 import { ButtonWithLoadSpinnerComponent } from './components/button-with-load-spinner/button-with-load-spinner.component';
+import { ModalYeahComponent } from './components/modal-yeah/modal-yeah.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { ButtonWithLoadSpinnerComponent } from './components/button-with-load-sp
     DialogComponent,
     GoalPercentagePipe,
     ButtonWithLoadSpinnerComponent,
+    ModalYeahComponent,
   ],
   imports: [
     BrowserModule,

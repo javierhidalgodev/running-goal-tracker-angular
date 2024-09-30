@@ -149,4 +149,8 @@ export class DbService {
       })
     )
   }
+
+  deleteGoal(goalId: string): Observable<Object> {
+    return this._http.delete(`${this._DB_URL}/goals/${goalId}`)
+  }
 }
