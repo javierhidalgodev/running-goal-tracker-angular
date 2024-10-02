@@ -1,4 +1,4 @@
-<!-- <h3 class="modal-content__header">NEW ACTIVITY</h3> -->
+<h3 class="modal-content__header">NEW ACTIVITY</h3>
 <form [formGroup]="activityForm" (submit)="addActivity()">
     <mat-form-field>
         <mat-label>KMs</mat-label>
@@ -17,10 +17,10 @@
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
-    <!-- <div class="button-container" matTooltip="Complete this form to register" [matTooltipDisabled]="activityForm.valid">
+    <div class="button-container" matTooltip="Complete this form to register" [matTooltipDisabled]="activityForm.valid">
         <mat-spinner *ngIf="isAdding" onButtonSpinner diameter="20"></mat-spinner>
         <button mat-flat-button type="submit" [disabled]="activityForm.invalid || isAdding">ADD</button>
-    </div> -->
+    </div>
 
     <ng-container>
         <app-notification />

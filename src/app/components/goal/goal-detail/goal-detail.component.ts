@@ -29,18 +29,6 @@ export class GoalDetailComponent {
     private readonly _modalService: ModalService,
   ) { }
 
-  private _createActivityForm() {
-    return new FormBuilder().group({
-      km: ['', Validators.compose([
-        Validators.required,
-        Validators.min(1)
-      ])],
-      date: ['', Validators.compose([
-        Validators.required,
-        dateValidatorFn()
-      ])]
-    })
-  }
 
   openModal(modalType: ActiveModal) {
     this.emitOpenModal.emit(modalType)
@@ -55,18 +43,6 @@ export class GoalDetailComponent {
       content: 'Are you sure to delete this goal?'
     })
   }
-
-  openActivityFormModal(template: TemplateRef<HTMLElement>) {
-    this._modalService.openDialog(ModalYeahComponent, {
-      cancelButtonLabel: 'Cancel',
-      confirmAction: () => this.addActivity,
-      confirmButtonLabel: 'Add',
-      title: 'New activity',
-      form: template
-    })
-  }
-
-  addActivity() { }
 
   delete() {
     if (this.selectedGoal) {

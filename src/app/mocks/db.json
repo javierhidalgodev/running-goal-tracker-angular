@@ -62,14 +62,27 @@
       "userId": "bdf0"
     },
     {
-      "id": "32d5",
+      "id": "e28d",
       "name": "asdasd",
       "description": "asdasd",
-      "startDate": "2024-09-02T22:00:00.000Z",
-      "endDate": "2024-09-15T22:00:00.000Z",
-      "km": 124,
+      "startDate": "2024-09-30T22:00:00.000Z",
+      "endDate": "2024-09-30T22:00:00.000Z",
+      "km": 123123,
       "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
-      "activities": [],
+      "activities": [
+        {
+          "km": 12,
+          "date": "2024-09-30T22:00:00.000Z"
+        },
+        {
+          "km": 1234,
+          "date": "2024-09-30T22:00:00.000Z"
+        },
+        {
+          "km": 12345,
+          "date": "2024-09-30T22:00:00.000Z"
+        }
+      ],
       "completed": false,
       "userId": "f8dc"
     }

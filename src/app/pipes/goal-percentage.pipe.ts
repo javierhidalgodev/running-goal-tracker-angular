@@ -9,7 +9,7 @@ export class GoalPercentagePipe implements PipeTransform {
   transform(goal: Goal): unknown {
     const kms = goal.activities.reduce((prev, curr) => curr.km + prev, 0)
 
-    return ((kms * 100) / goal.km).toFixed(2).toString() + '%'
+    return ((kms * 100) / goal.km).toFixed(2).toString()
   }
 
 }

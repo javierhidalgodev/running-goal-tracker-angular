@@ -7,8 +7,8 @@
             <mat-card-title>{{ goalObject.name }}</mat-card-title>
             <mat-card-subtitle>{{ goalObject.startDate | date }} | {{ goalObject.endDate | date }}</mat-card-subtitle>
         </mat-card-header>
-        <div class="progress-bar" [ngStyle]="{'width': goalObject | goalPercentage}"></div>
-        <!-- <mat-progress-bar [value]="goalObject | goalPercentage" color="tertiary"></mat-progress-bar> -->
+        <!-- <div class="progress-bar" [ngStyle]="{'width': goalObject | goalPercentage}"></div> -->
+        <mat-progress-bar [value]="goalObject | goalPercentage"></mat-progress-bar>
         <!-- TODO aquí podemos cargar un gráfico con el progreso -->
         <!-- Ahora estamos cargando una imágen que viene del usuario, o por defecto una propia del sistema -->
          <div class="mat-card-img">

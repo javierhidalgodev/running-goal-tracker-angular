@@ -25,7 +25,6 @@ export class ActivityFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _route: ActivatedRoute,
     private _goalService: GoalService,
     private _notificationService: NotificationService
   ) { }

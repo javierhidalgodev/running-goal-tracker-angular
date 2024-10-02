@@ -11,6 +11,16 @@
 - [ ] Refactorización BBDD a *Firebase*.
 - [ ] Configuración y despliegue en *Firebase*.
 
+#### 1-10
+- Se me complica mucho hacer un componente *modal* totalmente reutilizable.
+  - Si inserto un formulario como template, no encuentro el modo de que los botones del modal actúen sobre las acciones del formulario.
+  - Además, no quiero cerrar el modal hasta que el formulario esté enviado y grabado.
+  - Tengo que controlar también el botón de envío y la carga de la operación.
+
+- [x] Días restantes de la actividad si está en fecha pasada.
+- [x] Barra de fondo negativo en Progreso de cada tarea en la vista general de las tareas.
+  - De momento dejamos el original, a falta de investigar cómo cambiar el color.
+
 #### 30-9
 - Empiezo trabajando en la eliminación de objetivos, creando funciones en los servicios de `JSON SERVER`, servicio de objetivos y lógica del componente.
 
