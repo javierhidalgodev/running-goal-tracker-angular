@@ -1,19 +1,19 @@
-<ng-container *ngIf="selectedGoal; else error">
-    <table mat-table [dataSource]="selectedGoal.activities">
+<ng-container *ngIf="activities; else error">
+    <table mat-table [dataSource]="activities">
         <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef> Date </th>
             <td mat-cell *matCellDef="let item"> {{ item.date | date }} </td>
-            <td mat-footer-cell *matFooterCellDef> Total </td>
+            <!-- <td mat-footer-cell *matFooterCellDef> Total </td> -->
         </ng-container>
         <ng-container matColumnDef="km">
             <th mat-header-cell *matHeaderCellDef> KM </th>
             <td mat-cell *matCellDef="let item"> {{ item.km }} </td>
-            <td mat-footer-cell *matFooterCellDef>{{ this.selectedGoal.goalTotal }}</td>
+            <!-- <td mat-footer-cell *matFooterCellDef>{{ activities }}</td> -->
         </ng-container>
     
         <tr mat-header-row *matHeaderRowDef="['date', 'km']"></tr>
         <tr mat-row *matRowDef="let item; columns: ['date', 'km']"></tr>
-        <tr mat-footer-row *matFooterRowDef="['date', 'km']"></tr>
+        <!-- <tr mat-footer-row *matFooterRowDef="['date', 'km']"></tr> -->
     </table>
 </ng-container>
 

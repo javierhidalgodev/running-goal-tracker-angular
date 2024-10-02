@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Activity } from '@models/activity.model';
 import { Goal } from '@models/goals.model';
+import { GoalService } from '@services/goal.service';
 
 @Component({
   selector: 'app-goal',
@@ -8,15 +10,23 @@ import { Goal } from '@models/goals.model';
   styleUrl: './goal.component.scss'
 })
 export class GoalComponent implements OnInit {
-  @Input() goalObject?: Goal;
+  @Input() goalObject: Goal;
+  goalActivities: Activity[];
+  
   isImageLoading: boolean = true;
 
-  constructor (private _route: Router) { }
+  constructor (
+    private _route: Router,
+    private _goalService: GoalService,
+  ) { }
 
   // Podemos introducir un ngOnInit para verificar el estado del goal, y si es null renderizar algo concreto y avisar al usuario
   ngOnInit(): void {
     if (!this.goalObject) {
       console.warn('Something went wrong with data source!')
+    } else {
+      // * Hacer mejor
+      this._goalService.getActivitiesByGoalId(this.goalObject.id).subscribe(value => this.goalActivities = value)
     }
   }
 

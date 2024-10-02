@@ -1,7 +1,7 @@
 <ng-container *ngIf="!isLoading; else loading">
     <a class="go-back-btn" mat-flat-button routerLink="/goals">GO BACK</a>
-    <ng-container *ngIf="goalWithExtraDetails; else goalNotFound">
-        <app-goal-detail [selectedGoal]="goalWithExtraDetails" (emitOpenModal)="openModal('activityForm')" (emitOpenDeleteModal)="confirmDelete()">
+    <ng-container *ngIf="goal; else goalNotFound">
+        <app-goal-detail [selectedGoal]="goal" [activities]="activities" (emitOpenModal)="openModal('activityForm')" (emitOpenDeleteModal)="confirmDelete()">
         </app-goal-detail>
     </ng-container>
 
@@ -12,7 +12,7 @@
     <ng-container *ngIf="activeModal">
         <app-modal (emitCloseEvent)="closeModal()" [ngSwitch]="activeModal">
             <app-activity-form *ngSwitchCase="'activityForm'" (emitAddActivity)="activityAdded($event)"
-                [selectedGoal]="goalWithExtraDetails"></app-activity-form>
+                [selectedGoal]="goal"></app-activity-form>
             <app-goal-complete-modal *ngSwitchCase="'goalCompleted'"></app-goal-complete-modal>
         </app-modal>
     </ng-container>

@@ -2,11 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GoalService } from '@services/goal.service';
 import { ActiveModal, Goal, GoalWithExtraDetails } from '@models/goals.model';
-import { calculateDaysToEnd, calculateGoalTotal, calculateProgress } from '@utils/goals.utils';
 import { Subscription } from 'rxjs';
 import { ModalService } from '@services/modal.service';
 import { ModalYeahComponent } from '@components/modal-yeah/modal-yeah.component';
 import { ModalInterface } from '@models/modal.model';
+import { Activity } from '@models/activity.model';
 
 @Component({
   selector: 'app-goal-details-page',
@@ -14,8 +14,9 @@ import { ModalInterface } from '@models/modal.model';
   styleUrl: './goal-details-page.component.scss'
 })
 export class GoalDetailsPageComponent implements OnInit, OnDestroy {
-  id: string | null = null;
-  goalWithExtraDetails?: GoalWithExtraDetails;
+  idParam: string | null = null;
+  goal?: Goal;
+  activities: Activity[] = [];
   isLoading: boolean = true;
 
   // * Estos datos en principio permanecen, aunque los revisaremos más adelante
@@ -33,47 +34,14 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.id = this.getGoalIdFromRoute()
+    // 1. Recuperar el parámetro ID de la URL para obtener goal
+    this.idParam = this.getGoalIdFromRoute()
 
-    if (this.id) {
-      this.fetchGoalById(this.id)
+    // 2. Obtener goal
+    if (this.idParam) {
+      this.fetchGoalById(this.idParam)
+      // 3. Obtener actividades del goal
     }
-  }
-
-  confirmDelete() {
-    const modalInterface: ModalInterface = {
-      cancelButtonLabel: 'No',
-      confirmAction: () => this._goalsService.deleteGoal(this.id!),
-      confirmButtonLabel: 'Delete',
-      title: 'Delete goal',
-      content: 'Are you sure to delete this goal?',
-    }
-
-    this._modalService.openDialog(ModalYeahComponent, modalInterface)
-  }
-
-  openModal(modalType: ActiveModal) {
-    this.activeModal = modalType
-  }
-
-  closeModal() {
-    this.activeModal = null;
-    if (this.complete) {
-      this.complete = false
-    }
-  }
-
-  activityAdded(event: any) {
-    console.log('hola')
-    this.activeModal = null
-
-    if(this.id) {
-      this.fetchGoalById(this.id)
-    }
-    // this.activitySuccessMessage = 'Activity added successfully!'
-    // setTimeout(() => {
-    //   this.activitySuccessMessage = undefined
-    // }, 5000)
   }
 
   private getGoalIdFromRoute(): string | null {
@@ -83,16 +51,12 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
   private fetchGoalById(id: string) {
     this.fetchGoalByIdSubscription$ =
       this._goalsService.getGoalById(id).subscribe({
-        next: res => {
-          if (res) {
-            this.goalWithExtraDetails = {
-              ...res,
-              daysToEnd: calculateDaysToEnd(res),
-              goalTotal: calculateGoalTotal(res),
-              goalProgress: calculateProgress(res),
-            }
-          } else {
+        next: goal => {
+          if (!goal) {
             this.handleErrorMessage('Goal not found!')
+          } else {
+            this.goal = goal
+            this.fetchActivitiesByGoalId(id)
           }
         },
         error: error => {
@@ -106,8 +70,67 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
       })
   }
 
+  private fetchActivitiesByGoalId(goalId: string) {
+    this._goalsService.getActivitiesByGoalId(goalId).subscribe({
+      next: activities => {
+        // console.log(activities)
+        this.activities = activities
+      },
+      error: error => {
+        console.log(error)
+      },
+      complete: () => {
+        console.log('Get activities from user attempt completed!')
+      }
+    })
+  }
+
+  confirmDelete() {
+    const modalInterface: ModalInterface = {
+      cancelButtonLabel: 'No',
+      confirmAction: () => this._goalsService.deleteGoal(this.idParam!),
+      confirmButtonLabel: 'Delete',
+      title: 'Delete goal',
+      content: 'Are you sure to delete this goal?',
+    }
+
+    this._modalService.openDialog(ModalYeahComponent, modalInterface)
+  }
+
+  // ? Para añadir kilómetros
+  openModal(modalType: ActiveModal) {
+    this.activeModal = modalType
+    }
+    
+  // ? Para cerrar el modal de añadir kilómetros
+  closeModal() {
+    this.activeModal = null;
+    if (this.complete) {
+      this.complete = false
+    }
+  }
+
+  // ? Para recibir la acción de actualización del componente de goal-details, y actualizar la vista
+  activityAdded(event: any) {
+    this.activeModal = null
+
+    // if (this.idParam) {
+      this.fetchGoalById(this.idParam!)
+    // }
+
+    if(this.goal?.completed) {
+      this.openModal('goalCompleted')
+    }
+
+    this.activitySuccessMessage = 'Activity added successfully!'
+    setTimeout(() => {
+      this.activitySuccessMessage = undefined
+    }, 5000)
+  }
+
+  // ? Mostrar errores a la hora de fallar en la recuperación de goals o actividades
   private handleErrorMessage(message: string) {
-    console.log(message)
+    // console.log(message)
     this.errorMessage = message
   }
 

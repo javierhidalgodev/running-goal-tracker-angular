@@ -23,8 +23,8 @@ export class GoalsPageComponent implements OnInit {
     if (token) {
       const decodedToken: Token = JSON.parse(token)
       this._goalsService.getGoals(decodedToken.userId).subscribe({
-        next: res => {
-            this.goals = res
+        next: goals => {
+            this.goals = goals
             this.isLoading = false;
         },
         error: error => {

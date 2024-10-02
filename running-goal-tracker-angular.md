@@ -12,6 +12,9 @@
 - [ ] Configuración y despliegue en *Firebase*.
 
 #### 1-10
+- Al refactorizar las actividades como colección independiente, hay que revisar el guardado de *goals* además de la recuperación de estos y de las actividades para ser mostradas en la vista en detalle de los mismos.
+
+#### 1-10
 - Se me complica mucho hacer un componente *modal* totalmente reutilizable.
   - Si inserto un formulario como template, no encuentro el modo de que los botones del modal actúen sobre las acciones del formulario.
   - Además, no quiero cerrar el modal hasta que el formulario esté enviado y grabado.

@@ -2,6 +2,7 @@ import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from "@angu
 import { isValidDate } from "rxjs/internal/util/isDate"
 import { Goal, GoalWithExtraDetails } from "@models/goals.model"
 import { getValidationErrors } from "./forms.utils"
+import { Activity } from "@models/activity.model"
 
 export function dateValidatorFn(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -24,16 +25,16 @@ export function isEqualFn(): ValidatorFn {
   }
 }
 
-export function calculateGoalTotal(goal: Goal | GoalWithExtraDetails) {
-  return goal.activities.reduce((prev, curr) => prev + curr.km, 0)
+export function calculateGoalTotal(activities: Activity[]) {
+  return activities.reduce((prev, curr) => prev + curr.km, 0)
 }
 
-export const calculateProgress = (goal: Goal | GoalWithExtraDetails) => {
-  return (calculateGoalTotal(goal) * 100) / goal.km
+export const calculateProgress = (goal: Goal | GoalWithExtraDetails, activities: Activity[]) => {
+  return (calculateGoalTotal(activities) * 100) / goal.km
 }
 
-export const calculateDaysToEnd = (goal: Goal): number => {
-  return Number(((new Date(goal.endDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24) + 1).toFixed())
+export const calculateDaysToEnd = (endDate: Date): number => {
+  return Number(((new Date(endDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24) + 1).toFixed())
 }
 
 export const updateValidationErrors = (formToCheck: FormGroup) => {

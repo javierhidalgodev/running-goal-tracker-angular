@@ -1,14 +1,46 @@
 {
   "activities": [
+    {
+      "id": "4d5f",
+      "km": 12,
+      "date": "2024-10-07T22:00:00.000Z",
+      "goalId": "0500",
+      "added": "2024-10-02T10:44:41.007Z"
+    },
+    {
+      "id": "d05d",
+      "km": 123,
+      "date": "2024-10-09T22:00:00.000Z",
+      "goalId": "0500",
+      "added": "2024-10-02T10:44:48.823Z"
+    },
+    {
+      "id": "6c8b",
+      "km": 123,
+      "date": "2024-10-15T22:00:00.000Z",
+      "goalId": "3505",
+      "added": "2024-10-02T10:54:11.400Z"
+    }
   ],
   "goals": [
     {
-      "id": "ffec",
-      "name": "2024km",
-      "description": "Correr",
-      "startDate": "2024-09-30T22:00:00.000Z",
-      "endDate": "2024-10-30T23:00:00.000Z",
-      "km": 2014,
+      "id": "0500",
+      "name": "123km",
+      "description": "123km",
+      "startDate": "2024-10-05T22:00:00.000Z",
+      "endDate": "2024-10-11T22:00:00.000Z",
+      "km": 123,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "completed": true,
+      "userId": "f8dc"
+    },
+    {
+      "id": "3505",
+      "name": "1234km",
+      "description": "1234km",
+      "startDate": "2024-10-15T22:00:00.000Z",
+      "endDate": "2024-10-23T22:00:00.000Z",
+      "km": 1234,
       "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
       "completed": false,
       "userId": "f8dc"

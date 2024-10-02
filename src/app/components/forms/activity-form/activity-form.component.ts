@@ -15,7 +15,7 @@ import { Activity } from '@models/activity.model';
   styleUrl: './activity-form.component.scss'
 })
 export class ActivityFormComponent implements OnInit, OnDestroy {
-  @Input() selectedGoal?: GoalWithExtraDetails;
+  @Input() selectedGoal?: GoalWithExtraDetails | Goal;
   @Output() emitAddActivity = new EventEmitter()
   activityForm: FormGroup = new FormGroup([])
   validationErrors: InputValidators[] | null = null;

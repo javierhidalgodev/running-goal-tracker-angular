@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
+import { catchError, forkJoin, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { User, UserDBJSON } from '@models/user.model';
 import { Goal, GoalActivity, NewGoal } from '@models/goals.model';
 import { environment } from '../../environments/environment'
-import { Activity, NewActivity } from '@models/activity.model';
+import { Activity, ActivityFromDBJSON, NewActivity } from '@models/activity.model';
 
 @Injectable({
   providedIn: 'root'
@@ -98,8 +98,8 @@ export class DbService {
     )
   }
 
-  getUserActivities(goalId: string): Observable<Activity[] | null> {
-    return this._http.get<Activity[]>(`${this._DB_URL}/activities/goalId=${goalId}`)
+  getUserActivities(goalId: string): Observable<ActivityFromDBJSON[]> {
+    return this._http.get<ActivityFromDBJSON[]>(`${this._DB_URL}/activities?goalId=${goalId}`)
   }
 
   /**
@@ -141,7 +141,7 @@ export class DbService {
           }
           return this._http.post<Activity>(`${this._DB_URL}/activities`, newActivity).pipe(
             switchMap(() => {
-              return this.checkGoalStatus(goalId)
+              return this.checkGoalStatus(goal)
             })
           )
         }
@@ -154,14 +154,14 @@ export class DbService {
     )
   }
 
-  checkGoalStatus(goalId: string): Observable<void> {
-    return this.getUserActivities(goalId).pipe(
-      switchMap(goal => {
-        if (goal) {
-          const kmsCovered = goal.activities.reduce((prev, curr) => prev + curr.km , 0)
+  checkGoalStatus(goal: Goal): Observable<void> {
+    return this.getUserActivities(goal.id).pipe(
+      switchMap(activities => {
+        if (activities) {
+          const kmsCovered = activities.reduce((prev, curr) => prev + curr.km , 0)
 
           if (kmsCovered >= goal.km) {
-            return this._http.patch(`${this._DB_URL}/goals/${goalId}`, { completed: true }).pipe(
+            return this._http.patch(`${this._DB_URL}/goals/${goal.id}`, { completed: true }).pipe(
               map(() => void 0)
             )
           }
@@ -174,8 +174,22 @@ export class DbService {
     )
   }
 
-  deleteGoal(goalId: string): Observable<Object> {
-    return this._http.delete(`${this._DB_URL}/goals/${goalId}`)
+  deleteGoal(goalId: string): Observable<void> {
+    // * Obtener todas las actividades a eliminar
+    return this.getUserActivities(goalId).pipe(
+      switchMap(activities => {
+        const deleteAtivities$ = activities.map(activity => {
+          return this._http.delete<void>(`${this._DB_URL}/activities/${activity.id}`)
+        })
+
+        return forkJoin(deleteAtivities$).pipe(
+          switchMap(() => this._http.delete<void>(`${this._DB_URL}/goals/${goalId}`))
+        )
+      }),
+      catchError(error => {
+        return throwError(() => new Error('Error deleting goals and its activities.'))
+      })
+    )
   }
 
   // deleteActivityFromGoal()

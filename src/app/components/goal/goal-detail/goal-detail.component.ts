@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActivityFormComponent } from '@components/forms/activity-form/activity-form.component';
 import { ModalYeahComponent } from '@components/modal-yeah/modal-yeah.component';
-import { ActiveModal, GoalWithExtraDetails } from '@models/goals.model';
+import { Activity } from '@models/activity.model';
+import { ActiveModal, Goal, GoalWithExtraDetails } from '@models/goals.model';
 import { GoalService } from '@services/goal.service';
 import { ModalService } from '@services/modal.service';
 import { NotificationService } from '@services/notification.service';
@@ -15,7 +16,8 @@ import { dateValidatorFn } from '@utils/goals.utils';
   styleUrl: './goal-detail.component.scss'
 })
 export class GoalDetailComponent {
-  @Input() selectedGoal?: GoalWithExtraDetails;
+  @Input() selectedGoal: Goal;
+  @Input() activities: Activity[];
   @Output() emitOpenModal = new EventEmitter()
   @Output() emitOpenDeleteModal = new EventEmitter()
 

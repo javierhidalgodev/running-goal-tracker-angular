@@ -8,22 +8,22 @@
         </mat-card-header>
         <mat-card-content>
             <mat-progress-bar mode="determinate" color="tertiary"
-                [value]="this.selectedGoal.goalProgress"></mat-progress-bar>
+                [value]="selectedGoal | goalPercentage:activities"></mat-progress-bar>
             <p><strong>Objetivo:</strong> {{ selectedGoal.km | kMtoEnd }}</p>
-            <p><strong>KM para finalizar:</strong> {{ selectedGoal.km | kMtoEnd: this.selectedGoal.goalTotal }}</p>
-            <p><strong>Días para finalizar:</strong> {{ selectedGoal.daysToEnd | daysToEnd }}</p>
+            <p><strong>KM para finalizar:</strong> {{ selectedGoal.km | kMtoEnd:activities }}</p>
+            <p><strong>Días para finalizar:</strong> {{ selectedGoal.endDate | daysToEnd }}</p>
             <p><strong>Descripción:</strong> {{ selectedGoal.description }}</p>
 
             <p><strong>Actividades registradas:</strong></p>
-            <ng-container *ngIf="selectedGoal.activities.length > 0; else noActivitiesYet">
-                <app-goal-table-detail [selectedGoal]="selectedGoal"></app-goal-table-detail>
+            <ng-container *ngIf="activities.length > 0; else noActivitiesYet">
+                <app-goal-table-detail [activities]="activities"></app-goal-table-detail>
             </ng-container>
             <ng-template #noActivitiesYet>
                 <div class="no-activities-yet">No activities yet</div>
             </ng-template>
 
             <mat-card-actions>
-                <button mat-flat-button (click)="openModal('activityForm')" [disabled]="this.selectedGoal.goalTotal >= selectedGoal.km || inProcess"> {{ selectedGoal.completed ? 'COMPLETED' : 'ADD KMs' }} </button>
+                <button mat-flat-button (click)="openModal('activityForm')" [disabled]="selectedGoal.completed || inProcess"> {{ selectedGoal.completed ? 'COMPLETED' : 'ADD KMs' }} </button>
                 <div class="button-container">
                     <mat-progress-spinner onButtonSpinner mode="indeterminate" diameter="20"
                         *ngIf="inProcess"></mat-progress-spinner>

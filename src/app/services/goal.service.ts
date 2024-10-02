@@ -6,7 +6,7 @@ import { DbService } from './db.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NewActivity } from '@models/activity.model';
+import { Activity, NewActivity } from '@models/activity.model';
 
 const DEFAULT_IMAGE = 'https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg'
 
@@ -122,6 +122,10 @@ export class GoalService {
     }
 
     return of(null)
+  }
+
+  getActivitiesByGoalId(goalId: string): Observable<Activity[]> {
+    return this._dbService.getUserActivities(goalId)
   }
 
   deleteGoal(goalId: string) {

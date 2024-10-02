@@ -2,14 +2,14 @@
 <ng-container *ngIf="goalObject">
     <mat-card class="example-card" appearance="raised" (click)="navigateTo(goalObject.id.toString())">
         <mat-card-header>
-            <!-- TODO la idea sería que el usuario pudiera poner una imagen relacionada a su objetivo, o cargar una por defecto -->
+            <!-- TODO: la idea sería que el usuario pudiera poner una imagen relacionada a su objetivo, o cargar una por defecto -->
             <!-- <div mat-card-avatar class="example-header-image"></div> -->
             <mat-card-title>{{ goalObject.name }}</mat-card-title>
             <mat-card-subtitle>{{ goalObject.startDate | date }} | {{ goalObject.endDate | date }}</mat-card-subtitle>
         </mat-card-header>
         <!-- <div class="progress-bar" [ngStyle]="{'width': goalObject | goalPercentage}"></div> -->
-        <mat-progress-bar [value]="goalObject | goalPercentage"></mat-progress-bar>
-        <!-- TODO aquí podemos cargar un gráfico con el progreso -->
+        <mat-progress-bar [value]="goalObject | goalPercentage:goalActivities"></mat-progress-bar>
+        <!-- TODO: aquí podemos cargar un gráfico con el progreso -->
         <!-- Ahora estamos cargando una imágen que viene del usuario, o por defecto una propia del sistema -->
          <div class="mat-card-img">
              <div class="skeleton" *ngIf="isImageLoading"></div>
