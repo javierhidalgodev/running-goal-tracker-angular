@@ -8,7 +8,7 @@ export class DaysToEndPipe implements PipeTransform {
 
   transform(value: Date): string {
     const daysToEnd = calculateDaysToEnd(value)
-    console.log(daysToEnd)
+
     if (daysToEnd < 0) {
       return `El objetivo se terminó hace ${daysToEnd * -1} día/s`
     }

@@ -20,6 +20,34 @@
       "date": "2024-10-15T22:00:00.000Z",
       "goalId": "3505",
       "added": "2024-10-02T10:54:11.400Z"
+    },
+    {
+      "id": "f7fd",
+      "km": 12,
+      "date": "2024-10-06T22:00:00.000Z",
+      "goalId": "5429",
+      "added": "2024-10-02T16:35:57.793Z"
+    },
+    {
+      "id": "3d41",
+      "km": 90,
+      "date": "2024-10-22T22:00:00.000Z",
+      "goalId": "5429",
+      "added": "2024-10-02T16:36:04.953Z"
+    },
+    {
+      "id": "aef1",
+      "km": 1,
+      "date": "2024-10-15T22:00:00.000Z",
+      "goalId": "3505",
+      "added": "2024-10-02T16:58:06.668Z"
+    },
+    {
+      "id": "f05f",
+      "km": 1234,
+      "date": "2024-10-16T22:00:00.000Z",
+      "goalId": "3505",
+      "added": "2024-10-02T16:58:18.484Z"
     }
   ],
   "goals": [
@@ -42,7 +70,18 @@
       "endDate": "2024-10-23T22:00:00.000Z",
       "km": 1234,
       "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
-      "completed": false,
+      "completed": true,
+      "userId": "f8dc"
+    },
+    {
+      "id": "5429",
+      "name": "2 marathons",
+      "description": "Correr dos maratones este año",
+      "startDate": "2024-09-30T22:00:00.000Z",
+      "endDate": "2024-10-30T23:00:00.000Z",
+      "km": 90,
+      "image": "https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg",
+      "completed": true,
       "userId": "f8dc"
     }
   ],

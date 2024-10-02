@@ -45,7 +45,6 @@ authRouter.post('/', (req, res) => {
 })
 
 authRouter.get('/check-token', verifyToken, (req, res) => {
-  console.log('esta bien')
   res.status(200).send()
 })
 

@@ -11,8 +11,17 @@
 - [ ] Refactorización BBDD a *Firebase*.
 - [ ] Configuración y despliegue en *Firebase*.
 
-#### 1-10
+#### 3-10
+- [ ] Buscar el completado de el objetivo en el flujo de la lógica de añadir una actividad, para terminar mostrando el modal.
+- [ ] Depurar las funciones que necesitan validación de token, para usar una utilidad y no duplicar código.
+- [ ] Revisar código refactorizado en relación a la creación de la colección `actividades` y la implicación en el tratamiento de los objetos `goal`.
+
+#### 2-10
 - Al refactorizar las actividades como colección independiente, hay que revisar el guardado de *goals* además de la recuperación de estos y de las actividades para ser mostradas en la vista en detalle de los mismos.
+
+- He revisado los estilos en los botones de acción de la tarjeta que presenta los detalles de una actividad.
+- He revisado los estilos del navside en `role=navigation`, ya que se superponía en el modal de añadir actividades.
+- Queda recuperar el modal de completado; hay que revisar la lógica.
 
 #### 1-10
 - Se me complica mucho hacer un componente *modal* totalmente reutilizable.

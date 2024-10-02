@@ -31,7 +31,6 @@ export class ActivityFormComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    console.log('me creo')
     this.activityForm = this._formBuilder.group({
       km: ['', Validators.compose([
         Validators.required,

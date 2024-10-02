@@ -9,7 +9,7 @@ import { ModalInterface } from '@models/modal.model';
   templateUrl: './modal-yeah.component.html',
   styleUrl: './modal-yeah.component.scss'
 })
-export class ModalYeahComponent implements OnInit {
+export class ModalYeahComponent {
   matDialog = inject(MAT_DIALOG_DATA)
   
   constructor (
@@ -17,7 +17,7 @@ export class ModalYeahComponent implements OnInit {
     private readonly _goalService: GoalService,
   ) { }
 
-  ngOnInit(): void {
-    console.log(this.matDialog)
-  }
+  // ngOnInit(): void {
+  //   console.log(this.matDialog)
+  // }
 }

@@ -15,7 +15,11 @@ mat-card-header {
 }
 
 mat-card-actions {
-    place-content: center;
+    margin-top: 10px;
+    
+    display: flex;
+    justify-content: right;
+    gap: 10px;
 }
 
 .no-activities-yet {

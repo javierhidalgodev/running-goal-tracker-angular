@@ -25,7 +25,7 @@ export const authGuard: CanActivateFn = () => {
     }).pipe(
       map(() => true),
       catchError(error => {
-        console.log('Token verification failed:', error)
+        // console.log('Token verification failed:', error)
 
         localStorage.removeItem('token')
         router.navigate(['auth/login']);

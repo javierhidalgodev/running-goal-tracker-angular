@@ -79,9 +79,9 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
       error: error => {
         console.log(error)
       },
-      complete: () => {
-        console.log('Get activities from user attempt completed!')
-      }
+      // complete: () => {
+        // console.log('Get activities from user attempt completed!')
+      // }
     })
   }
 
@@ -117,10 +117,6 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
     // if (this.idParam) {
       this.fetchGoalById(this.idParam!)
     // }
-
-    if(this.goal?.completed) {
-      this.openModal('goalCompleted')
-    }
 
     this.activitySuccessMessage = 'Activity added successfully!'
     setTimeout(() => {

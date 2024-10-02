@@ -10,6 +10,10 @@ mat-sidenav {
   max-width: 200px;
   border-radius: 0;
 
+  &[role="navigation"] {
+    z-index: 1 !important;
+  }
+
   h4 {
     text-align: center;
   }
