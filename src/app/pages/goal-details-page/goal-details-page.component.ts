@@ -63,17 +63,17 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  activityAdded(event: Goal) {
+  activityAdded(event: any) {
+    console.log('hola')
     this.activeModal = null
 
-    if (this.goalWithExtraDetails) {
-      this.recalculateAfterAdd(event)
+    if(this.id) {
+      this.fetchGoalById(this.id)
     }
-
-    this.activitySuccessMessage = 'Activity added successfully!'
-    setTimeout(() => {
-      this.activitySuccessMessage = undefined
-    }, 5000)
+    // this.activitySuccessMessage = 'Activity added successfully!'
+    // setTimeout(() => {
+    //   this.activitySuccessMessage = undefined
+    // }, 5000)
   }
 
   private getGoalIdFromRoute(): string | null {
@@ -109,20 +109,6 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
   private handleErrorMessage(message: string) {
     console.log(message)
     this.errorMessage = message
-  }
-
-  private recalculateAfterAdd(goal: Goal) {
-    this.goalWithExtraDetails = {
-      ...goal,
-      goalTotal: calculateGoalTotal(goal),
-      goalProgress: calculateProgress(goal),
-      daysToEnd: calculateDaysToEnd(goal),
-    }
-
-    if (this.goalWithExtraDetails.goalTotal >= this.goalWithExtraDetails.km) {
-      this.goalWithExtraDetails.completed = true
-      this.activeModal = 'goalCompleted'
-    }
   }
 
   ngOnDestroy(): void {

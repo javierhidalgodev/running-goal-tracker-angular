@@ -7,6 +7,7 @@ import { GoalService } from '@services/goal.service';
 import { InputValidators, NotificationService } from '@services/notification.service';
 import { getValidationErrors } from '@utils/forms.utils';
 import { Subscription } from 'rxjs';
+import { Activity } from '@models/activity.model';
 
 @Component({
   selector: 'app-activity-form',
@@ -15,7 +16,7 @@ import { Subscription } from 'rxjs';
 })
 export class ActivityFormComponent implements OnInit, OnDestroy {
   @Input() selectedGoal?: GoalWithExtraDetails;
-  @Output() emitAddActivity = new EventEmitter<Goal>()
+  @Output() emitAddActivity = new EventEmitter()
   activityForm: FormGroup = new FormGroup([])
   validationErrors: InputValidators[] | null = null;
   isAdding: boolean = false;
@@ -60,7 +61,7 @@ export class ActivityFormComponent implements OnInit, OnDestroy {
 
       this.subscriptions.add(this._goalService.addActivityToGoalDBJSON(this.selectedGoal.id, this.activityForm).subscribe({
         next: goal => {
-          this.emitAddActivity.emit(goal)
+          this.emitAddActivity.emit()
         },
         error: error => {
           console.error(error)

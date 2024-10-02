@@ -24,7 +24,6 @@ export interface Goal {
     km: number,
     image?: string,
     completed: boolean,
-    activities: GoalActivity[]
 }
 
 export interface GoalWithExtraDetails extends Goal {

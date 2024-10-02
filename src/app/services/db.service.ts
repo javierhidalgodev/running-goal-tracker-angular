@@ -4,6 +4,7 @@ import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { User, UserDBJSON } from '@models/user.model';
 import { Goal, GoalActivity, NewGoal } from '@models/goals.model';
 import { environment } from '../../environments/environment'
+import { Activity, NewActivity } from '@models/activity.model';
 
 @Injectable({
   providedIn: 'root'
@@ -97,6 +98,10 @@ export class DbService {
     )
   }
 
+  getUserActivities(goalId: string): Observable<Activity[] | null> {
+    return this._http.get<Activity[]>(`${this._DB_URL}/activities/goalId=${goalId}`)
+  }
+
   /**
    * Método del servicio de base de datos encargado de devolver un observable de un objetivo nuevo, usando el objeto que recibe por parámetro.
    * 
@@ -124,22 +129,21 @@ export class DbService {
    * @param activity Objeto formateado de la actividad que se añadirá al objetivo.
    * @returns Un observable con el resultado de la operación, el objetivo completo.
    */
-  addActivityToGoal(goalId: string, activity: GoalActivity): Observable<Goal> {
+  addActivityToGoal(goalId: string, activity: NewActivity): Observable<void> {
     return this.getGoalById(goalId).pipe(
       switchMap(goal => {
         if (goal) {
-          const goalTotal = goal.activities.reduce((prev, curr) => curr.km + prev, 0)
-          const completed = goalTotal + activity.km > goal.km
-
-          const updatedGoal: Goal = {
-            ...goal,
-            activities: [
-              ...goal.activities,
-              activity
-            ],
-            completed
+          const newActivity: Activity = {
+            km: activity.km,
+            date: activity.date,
+            goalId,
+            added: new Date()
           }
-          return this._http.put<Goal>(`${this._DB_URL}/goals/${goalId}`, updatedGoal)
+          return this._http.post<Activity>(`${this._DB_URL}/activities`, newActivity).pipe(
+            switchMap(() => {
+              return this.checkGoalStatus(goalId)
+            })
+          )
         }
 
         return throwError(() => new Error('Goal not found!'))
@@ -150,7 +154,29 @@ export class DbService {
     )
   }
 
+  checkGoalStatus(goalId: string): Observable<void> {
+    return this.getUserActivities(goalId).pipe(
+      switchMap(goal => {
+        if (goal) {
+          const kmsCovered = goal.activities.reduce((prev, curr) => prev + curr.km , 0)
+
+          if (kmsCovered >= goal.km) {
+            return this._http.patch(`${this._DB_URL}/goals/${goalId}`, { completed: true }).pipe(
+              map(() => void 0)
+            )
+          }
+
+          return of(void 0)
+        }
+
+        return throwError(() => new Error('Goal not found!'))
+      })
+    )
+  }
+
   deleteGoal(goalId: string): Observable<Object> {
     return this._http.delete(`${this._DB_URL}/goals/${goalId}`)
   }
+
+  // deleteActivityFromGoal()
 }

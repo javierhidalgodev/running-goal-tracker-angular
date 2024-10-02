@@ -6,6 +6,7 @@ import { DbService } from './db.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NewActivity } from '@models/activity.model';
 
 const DEFAULT_IMAGE = 'https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg'
 
@@ -45,7 +46,6 @@ export class GoalService {
           const newGoal: Goal = {
             ...goalFormData.value,
             image: goalFormData.get('image') || DEFAULT_IMAGE,
-            activities: [],
             completed: false,
             userId
           }
@@ -98,7 +98,7 @@ export class GoalService {
         })
       }).pipe(
         switchMap(() => {
-          const newActivity = {
+          const newActivity: NewActivity = {
             ...activityFormData.value
           }
           return this._dbService.addActivityToGoal(goalId, newActivity)
