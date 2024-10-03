@@ -73,10 +73,10 @@ export class DbService {
    */
   getGoals(userId: string): Observable<Goal[] | null> {
     return this._http.get<Goal[]>(`${this._DB_URL}/goals?userId=${userId}`).pipe(
-      map(goals => goals.length > 0 ? goals : null),
+      map(goals => goals.length > 0 ? goals : []),
       catchError(error => {
         console.log(error)
-        return throwError(() => new Error('Something went wrong. Please try again later.'))
+        return throwError(() => new Error('Something went wrong getting goals. Please try again later.'))
       })
     )
   }

@@ -66,7 +66,7 @@ export class ActivityFormComponent implements OnInit, OnDestroy {
         error: error => {
           // console.error(error)
           this.isAdding = false
-          this._notificationService.error('Something went wrong', true)
+          this._notificationService.error('Something went wrong')
         },
         complete: () => {
           this.isAdding = false

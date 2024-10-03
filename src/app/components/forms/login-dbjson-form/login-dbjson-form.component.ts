@@ -65,7 +65,7 @@ export class LoginDbjsonFormComponent implements OnInit, OnDestroy {
             this._router.navigate(['/home'])
           },
           error: error => {
-            this._notificationService.error(error, true)
+            this._notificationService.error(error)
             this.isLogin = false
           },
           complete: () => {

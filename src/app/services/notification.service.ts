@@ -22,15 +22,16 @@ export class NotificationService {
   // * Cada uno de las funciones aquí emite valores de un tipo y con un mensaje
   success(message: string, autoremove?: boolean) {
     if (message) {
-      this._notification$.next({ type: 'success', message, autoremove: autoremove || true })
+      this._notification$.next({ type: 'success', message })
     } else {
       this._notification$.next(null)
     }
   }
   
-  error(message: string, autoremove: boolean) {
+  error(message: string, autoremove?: boolean) {
     // if (message) {
-      this._notification$.next({ type: 'error', message, autoremove })
+    // console.log('servicio de notificaciones ejecutándose')
+      this._notification$.next({ type: 'error', message, autoremove: autoremove ?? true })
     // } else {
       // this._notification$.next(null)
     // }

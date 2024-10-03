@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GoalService } from '@services/goal.service';
-import { delay } from 'rxjs';
 import { Goal } from '@models/goals.model';
 import { Token } from '@guards/auth.guard';
+import { NotificationService } from '@services/notification.service';
 
 @Component({
   selector: 'app-goals-page',
@@ -14,7 +14,10 @@ export class GoalsPageComponent implements OnInit {
   errorMessage: string | null = null; 
   goals: Goal[] | null = null;
 
-  constructor(private _goalsService: GoalService) { }
+  constructor(
+    private _goalsService: GoalService,
+    private _notificationService: NotificationService,
+  ) { }
 
   ngOnInit(): void {
     const token = localStorage.getItem('token')
@@ -29,7 +32,9 @@ export class GoalsPageComponent implements OnInit {
         },
         error: error => {
           this.isLoading = false
-          this.errorMessage = error.message
+          console.log(error)
+          // this.errorMessage = error.message
+          this._notificationService.error(error.message, false)
         },
         // complete: () => console.log('Get goals attempt completed!')
       })

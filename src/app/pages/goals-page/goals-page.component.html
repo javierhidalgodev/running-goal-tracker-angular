@@ -1,23 +1,26 @@
 <h1>NEVER GIVE UP!</h1>
 
 <!-- TODO: Revisar cómo se está visualzando y cómo lo estamos estructurando -->
-<ng-container *ngIf="!isLoading; else noGoals">
-    <div class="cards-container">
-        <ng-template ngFor let-goal [ngForOf]="goals">
-            <app-goal [goalObject]="goal"></app-goal>
+<ng-container *ngIf="!isLoading; else loadingGoals">
+    <ng-container *ngIf="goals">
+        <ng-container *ngIf="goals.length > 0; else noGoalsYet">
+            <div class="cards-container">
+                <ng-template ngFor let-goal [ngForOf]="goals">
+                    <app-goal [goalObject]="goal"></app-goal>
+                </ng-template>
+            </div>
+        </ng-container>
+        <ng-template #noGoalsYet>
+            <div class="no-goals-yet">
+                <h3>Don't have goals yet?</h3>
+                <a mat-flat-button routerLink="/new-goal">Start here</a>
+            </div>
         </ng-template>
-    </div>
-    <ng-container *ngIf="goals === null && !errorMessage">
-        <div class="no-goals-yet">
-            <h3>Don't have goals yet?</h3>
-            <a mat-flat-button routerLink="/new-goal">Start here</a>
-        </div>
-    </ng-container>
-    <ng-container *ngIf="errorMessage">
-        <div errorMessage> {{ errorMessage }}</div>
     </ng-container>
 </ng-container>
 
-<ng-template #noGoals>
+<ng-template #loadingGoals>
     <mat-spinner></mat-spinner>
 </ng-template>
+
+<app-notification />

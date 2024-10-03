@@ -18,7 +18,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
       next: notification => {
         if(notification) {
           this.notificationMessage = notification
-          console.log(notification)
+          // console.log(notification)
           if(notification.autoremove === true) {
             setTimeout(() => this._notificationService.clear(), 5000)
           }
