@@ -97,7 +97,7 @@ export class RegisterDbjsonFormComponent implements OnInit, OnDestroy {
           // next: value => console.log(value),
           error: error => {
             this.isRegistering = false
-            this._notificationService.error(error.message)
+            this._notificationService.error(error.message, true)
           },
           complete: () => {
             this.isRegistering = false

@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GoalService } from '@services/goal.service';
-import { ActiveModal, Goal, GoalWithExtraDetails } from '@models/goals.model';
+import { ActiveModal, Goal } from '@models/goals.model';
 import { Subscription } from 'rxjs';
 import { ModalService } from '@services/modal.service';
 import { ModalYeahComponent } from '@components/modal-yeah/modal-yeah.component';
 import { ModalInterface } from '@models/modal.model';
 import { Activity } from '@models/activity.model';
+import { NotificationService } from '@services/notification.service';
 
 @Component({
   selector: 'app-goal-details-page',
@@ -15,7 +16,7 @@ import { Activity } from '@models/activity.model';
 })
 export class GoalDetailsPageComponent implements OnInit, OnDestroy {
   idParam: string | null = null;
-  goal?: Goal;
+  goal: Goal;
   activities: Activity[] = [];
   isLoading: boolean = true;
 
@@ -31,6 +32,7 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute,
     private _goalsService: GoalService,
     private _modalService: ModalService,
+    private _notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -53,14 +55,16 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
       this._goalsService.getGoalById(id).subscribe({
         next: goal => {
           if (!goal) {
-            this.handleErrorMessage('Goal not found!')
+            this._notificationService.error('Goal not found!', false)
+            // this.handleErrorMessage('Goal not found!')
           } else {
             this.goal = goal
             this.fetchActivitiesByGoalId(id)
           }
         },
         error: error => {
-          this.handleErrorMessage('Lo sentimos pero hubo un error. Por favor, inténtelo de nuevo más tarde.')
+          this._notificationService.error('Lo sentimos pero hubo un error. Por favor, inténtelo de nuevo más tarde.', false)
+          // this.handleErrorMessage('Lo sentimos pero hubo un error. Por favor, inténtelo de nuevo más tarde.')
           this.isLoading = false
         },
         complete: () => {
@@ -80,7 +84,7 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
         console.log(error)
       },
       // complete: () => {
-        // console.log('Get activities from user attempt completed!')
+      // console.log('Get activities from user attempt completed!')
       // }
     })
   }
@@ -100,8 +104,8 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
   // ? Para añadir kilómetros
   openModal(modalType: ActiveModal) {
     this.activeModal = modalType
-    }
-    
+  }
+
   // ? Para cerrar el modal de añadir kilómetros
   closeModal() {
     this.activeModal = null;
@@ -110,18 +114,21 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  // ? Para recibir la acción de actualización del componente de goal-details, y actualizar la vista
-  activityAdded(event: any) {
+  // * Para recibir la acción de actualización del componente de goal-details, y actualizar la vista
+  activityAdded(event: Goal) {
     this.activeModal = null
 
-    // if (this.idParam) {
-      this.fetchGoalById(this.idParam!)
-    // }
+    // * Necesito usar esta función que actualiza el objetivo y sus actividades a la vez para ver reflejados los cambios en la UI
+    this.fetchGoalById(event.id)
 
-    this.activitySuccessMessage = 'Activity added successfully!'
-    setTimeout(() => {
-      this.activitySuccessMessage = undefined
-    }, 5000)
+    if (event.completed) {
+      this.activeModal = 'goalCompleted'
+    } else {
+      this.activitySuccessMessage = 'Activity added successfully!'
+      setTimeout(() => {
+        this.activitySuccessMessage = undefined
+      }, 5000)
+    }
   }
 
   // ? Mostrar errores a la hora de fallar en la recuperación de goals o actividades

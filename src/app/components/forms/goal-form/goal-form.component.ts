@@ -75,7 +75,7 @@ export class GoalFormComponent implements OnInit, OnDestroy {
         // next: goal => console.log(goal), // En principio no necesito recibir nada, solo emitir un evento cuando la operación es exitosa
         error: error => {
           this.isAdding = false
-          this._notificationService.error('Something went wrong')
+          this._notificationService.error('Something went wrong', true)
         },
         complete: () => {
           this.isAdding = false

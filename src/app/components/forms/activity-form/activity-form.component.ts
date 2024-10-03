@@ -1,13 +1,11 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { dateValidatorFn } from '@utils/goals.utils';
-import { ActivatedRoute } from '@angular/router';
-import { Goal, GoalActivity, GoalWithExtraDetails } from '@models/goals.model';
+import { Goal, GoalWithExtraDetails } from '@models/goals.model';
 import { GoalService } from '@services/goal.service';
 import { InputValidators, NotificationService } from '@services/notification.service';
 import { getValidationErrors } from '@utils/forms.utils';
-import { Subscription } from 'rxjs';
-import { Activity } from '@models/activity.model';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-activity-form',
@@ -15,14 +13,15 @@ import { Activity } from '@models/activity.model';
   styleUrl: './activity-form.component.scss'
 })
 export class ActivityFormComponent implements OnInit, OnDestroy {
-  @Input() selectedGoal?: GoalWithExtraDetails | Goal;
-  @Output() emitAddActivity = new EventEmitter()
+  @Input() selectedGoal: GoalWithExtraDetails | Goal;
+  @Output() emitAddActivity = new EventEmitter<Goal>()
+
   activityForm: FormGroup = new FormGroup([])
   validationErrors: InputValidators[] | null = null;
   isAdding: boolean = false;
-  errorNotification?: string;
+  errorNotification: string | null;
 
-  subscriptions: Subscription = new Subscription();
+  private _subscriptions$: Subscription = new Subscription();
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -42,7 +41,7 @@ export class ActivityFormComponent implements OnInit, OnDestroy {
       ])]
     })
 
-    this.subscriptions.add(this.activityForm.statusChanges.subscribe(status => this.updateValidationErrors()))
+    this._subscriptions$.add(this.activityForm.statusChanges.subscribe(() => this.updateValidationErrors()))
   }
 
   updateValidationErrors(): void {
@@ -54,28 +53,30 @@ export class ActivityFormComponent implements OnInit, OnDestroy {
   }
 
   addActivity() {
-    if (this.selectedGoal) {
-      this.isAdding = true
-      const activityToAdd = this.activityForm.value
+    // if (this.selectedGoal) {
+    this.isAdding = true
+    // const activityToAdd = this.activityForm.value
 
-      this.subscriptions.add(this._goalService.addActivityToGoalDBJSON(this.selectedGoal.id, this.activityForm).subscribe({
+    this._subscriptions$.add(
+      this._goalService.addActivityToGoalDBJSON(this.selectedGoal.id, this.activityForm).subscribe({
         next: goal => {
-          this.emitAddActivity.emit()
+          // console.log(goal)
+          this.emitAddActivity.emit(goal)
         },
         error: error => {
-          console.error(error)
+          // console.error(error)
           this.isAdding = false
-          this._notificationService.error('Something went wrong')
+          this._notificationService.error('Something went wrong', true)
         },
         complete: () => {
           this.isAdding = false
           this.activityForm.reset()
         }
       }))
-    }
+    // }
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.unsubscribe()
+    this._subscriptions$.unsubscribe()
   }
 }

@@ -4,15 +4,16 @@
         <app-goal-detail [selectedGoal]="goal" [activities]="activities" (emitOpenModal)="openModal('activityForm')" (emitOpenDeleteModal)="confirmDelete()">
         </app-goal-detail>
     </ng-container>
-
+    
+    
     <ng-template #goalNotFound>
-        <div errorMessage>{{ errorMessage }}</div>
+        <!-- <div errorMessage>{{ errorMessage }}</div> -->
     </ng-template>
-
+    
     <ng-container *ngIf="activeModal">
         <app-modal (emitCloseEvent)="closeModal()" [ngSwitch]="activeModal">
             <app-activity-form *ngSwitchCase="'activityForm'" (emitAddActivity)="activityAdded($event)"
-                [selectedGoal]="goal"></app-activity-form>
+            [selectedGoal]="goal"></app-activity-form>
             <app-goal-complete-modal *ngSwitchCase="'goalCompleted'"></app-goal-complete-modal>
         </app-modal>
     </ng-container>
@@ -21,3 +22,5 @@
 <ng-template #loading>
     <mat-spinner></mat-spinner>
 </ng-template>
+
+<app-notification />

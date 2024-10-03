@@ -56,7 +56,7 @@ export class GoalDetailComponent {
           },
           error: error => {
             this.inProcess = false
-            this._notificationService.error('Something went wrong deleting goal. Please, try again later')
+            this._notificationService.error('Something went wrong deleting goal. Please, try again later' , true)
           },
           complete: () => {
             this.inProcess = false

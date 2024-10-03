@@ -129,7 +129,7 @@ export class DbService {
    * @param activity Objeto formateado de la actividad que se añadirá al objetivo.
    * @returns Un observable con el resultado de la operación, el objetivo completo.
    */
-  addActivityToGoal(goalId: string, activity: NewActivity): Observable<void> {
+  addActivityToGoal(goalId: string, activity: NewActivity): Observable<Goal> {
     return this.getGoalById(goalId).pipe(
       switchMap(goal => {
         if (goal) {
@@ -154,19 +154,23 @@ export class DbService {
     )
   }
 
-  checkGoalStatus(goal: Goal): Observable<void> {
+  checkGoalStatus(goal: Goal): Observable<Goal> {
     return this.getUserActivities(goal.id).pipe(
       switchMap(activities => {
         if (activities) {
           const kmsCovered = activities.reduce((prev, curr) => prev + curr.km , 0)
 
           if (kmsCovered >= goal.km) {
-            return this._http.patch(`${this._DB_URL}/goals/${goal.id}`, { completed: true }).pipe(
-              map(() => void 0)
+            return this._http.patch<Goal>(`${this._DB_URL}/goals/${goal.id}`, { completed: true }).pipe(
+              map(updatedGoal => {
+                console.log('actividad completada', updatedGoal)
+                return updatedGoal
+              })
             )
           }
 
-          return of(void 0)
+          console.log('actividad sin completar', goal)
+          return of(goal)
         }
 
         return throwError(() => new Error('Goal not found!'))

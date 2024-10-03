@@ -87,7 +87,7 @@ export class GoalService {
    * @param activityFormData 
    * @returns 
    */
-  addActivityToGoalDBJSON(goalId: string, activityFormData: FormGroup) {
+  addActivityToGoalDBJSON(goalId: string, activityFormData: FormGroup): Observable<Goal> {
     const tok = localStorage.getItem('token')
 
     if (tok) {
@@ -101,7 +101,11 @@ export class GoalService {
           const newActivity: NewActivity = {
             ...activityFormData.value
           }
+          
           return this._dbService.addActivityToGoal(goalId, newActivity)
+        }),
+        catchError(error => {
+          return throwError(() => new Error(`Something went wrong: ${error.message}`))
         })
       )
     } else {

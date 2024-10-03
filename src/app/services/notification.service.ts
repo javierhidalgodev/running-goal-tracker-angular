@@ -20,20 +20,20 @@ export class NotificationService {
   }
 
   // * Cada uno de las funciones aquí emite valores de un tipo y con un mensaje
-  success(message: string) {
+  success(message: string, autoremove?: boolean) {
     if (message) {
-      this._notification$.next({ type: 'success', message })
+      this._notification$.next({ type: 'success', message, autoremove: autoremove || true })
     } else {
       this._notification$.next(null)
     }
   }
   
-  error(message: string) {
-    if (message) {
-      this._notification$.next({ type: 'error', message })
-    } else {
-      this._notification$.next(null)
-    }
+  error(message: string, autoremove: boolean) {
+    // if (message) {
+      this._notification$.next({ type: 'error', message, autoremove })
+    // } else {
+      // this._notification$.next(null)
+    // }
   }
 
   validation(messages: InputValidators[]) {
@@ -45,14 +45,15 @@ export class NotificationService {
   }
 
   clear() {
-    this._notification$.next({ type: null, message: null })
+    this._notification$.next(null)
   }
 }
 
 // * Una interfaz propia para la notificaciones de éxito/error
 export interface NotificationMessage {
   type: 'success' | 'error' | null,
-  message: string | null
+  message: string | null,
+  autoremove?: boolean
 }
 
 export interface ValidationMessages {
