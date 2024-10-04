@@ -45,7 +45,8 @@ authRouter.post('/', (req, res) => {
 })
 
 authRouter.get('/check-token', verifyToken, (req, res) => {
-  res.status(200).send()
+  const token = req.token
+  res.status(200).send(token)
 })
 
 module.exports = authRouter
