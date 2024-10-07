@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
+import { AuthService } from '@services/auth.service';
 import { catchError, map, of } from 'rxjs';
 
 export type Token = {
@@ -11,32 +12,10 @@ export type Token = {
 
 export const authGuard: CanActivateFn = () => {
   const router = inject(Router);
-  const http = inject(HttpClient)
+  const _http = inject(HttpClient)
+  const _authService = inject(AuthService)
 
-  const token = localStorage.getItem('token');
-
-  if (token) {
-    let decodedToken: Token = JSON.parse(token)
-
-    return http.get('http://localhost:5000/login/check-token', {
-      headers: {
-        "Authorization": `Bearer ${decodedToken.token}`
-      }
-    }).pipe(
-      map(() => true),
-      catchError(error => {
-        // console.log('Token verification failed:', error)
-
-        localStorage.removeItem('token')
-        router.navigate(['auth/login']);
-
-        return of(false)
-      })
-    )
-  }
-
-  router.navigate(['auth/login']);
-  return false;
+  return _authService.checkToken()
 }
 
 // ? ¿Por Qué No Suscribirse Directamente en el Guard?

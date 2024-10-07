@@ -1,69 +1,84 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
+import { NotificationService } from '@services/notification.service';
+import { updateValidationErrors } from '@utils/goals.utils'
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss'
 })
-export class LoginFormComponent implements OnInit {
+export class LoginFormComponent implements OnInit, OnDestroy {
+  loginForm: FormGroup = new FormGroup({});
+  isLogin: boolean = false;
 
-  loginForm: FormGroup = new FormGroup({})
-  errorMessage: string | null = null
+  private subscriptions$: Subscription = new Subscription();
 
   constructor(
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
+    private _notificationService: NotificationService,
     private _router: Router) { }
 
   ngOnInit(): void {
     this.loginForm = this._formBuilder.group({
-      username: ['', Validators.compose([
+      email: ['', Validators.compose([
         Validators.required,
         Validators.email
       ])],
       password: ['', Validators.compose([
         Validators.required,
-        Validators.minLength(5)
       ])]
     })
 
-    this.loginForm.valueChanges.subscribe(status => {
-      console.log(status);
-    })
+    this.subscriptions$.add(
+      this.loginForm.statusChanges.subscribe(status => {
+        this.checkValidators()
+      })
+    )
   }
 
-  get username() {
-    return this.loginForm.get('username')
+  get email() {
+    return this.loginForm.get('email')
   }
   get password() {
     return this.loginForm.get('password')
   }
 
-  login() {
-    if (this.loginForm.valid) {
-      this._authService.login(this.username?.value, this.password?.value).subscribe({
-        next: value => {
-          console.log('Login successful. Welcome', this.username?.value)
-          localStorage.setItem('token', value.token)
-          this._router.navigate([''])
-        },
-        error: error => {
-          console.log('Login failed: ', error);
-          if(error) {
-            this.errorMessage = 'Wrong credentials.'
-          } else {
-            this.errorMessage = 'Something went wrong during login process. Please, try again later.'
-          }
+  checkValidators() {
+    const errors = updateValidationErrors(this.loginForm)
 
-          setTimeout(() => {
-            this.errorMessage = null;
-          }, 5000)
-        },
-        complete: () => console.log('Login attempt completed!')
-      })
+    errors && this._notificationService.validation(errors)
+  }
+
+  login() {
+    this.isLogin = true
+
+    if (this.loginForm.valid) {
+      this.subscriptions$.add(
+        this._authService.loginDBJSON(this.loginForm.value).subscribe({
+          next: token => {
+            console.log(token)
+            localStorage.setItem('token', JSON.stringify(token))
+            this._router.navigate(['/home'])
+          },
+          error: error => {
+            this._notificationService.error(error)
+            this.isLogin = false
+          },
+          complete: () => {
+            // console.log('Login attempt completed!')
+            this.isLogin = false
+          }
+        })
+      )
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions$.unsubscribe()
   }
 }

@@ -7,6 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Activity, NewActivity } from '@models/activity.model';
+import { AuthService } from './auth.service';
 
 const DEFAULT_IMAGE = 'https://www.kieferusa.com/wp-content/uploads/2015/08/winner_products-200x200.jpg'
 
@@ -20,7 +21,8 @@ export class GoalService {
   constructor(
     private _dbService: DbService,
     private _http: HttpClient,
-    private _router: Router
+    private _router: Router,
+    private _authService: AuthService,
   ) { }
 
   /**
@@ -33,21 +35,14 @@ export class GoalService {
    * @returns Retornamos un observable a partir del objetivo recibido, para poder visualizarlo en la interfaz.
    */
   createGoal(goalFormData: FormGroup): Observable<void> {
-    const tok = localStorage.getItem('token')
-
-    if (tok) {
-      const { userId, token } = JSON.parse(tok)
-      return this._http.get('http://localhost:5000/login/check-token', {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${token}`
-        })
-      }).pipe(
-        switchMap(() => {
+    return this._authService.checkToken()
+      .pipe(
+        switchMap(token => {
           const newGoal: Goal = {
             ...goalFormData.value,
             image: goalFormData.get('image') || DEFAULT_IMAGE,
             completed: false,
-            userId
+            userId: token.userId // ! DESCOMENTAR
           }
           return this._dbService.addNewGoal(newGoal)
         }),
@@ -55,9 +50,6 @@ export class GoalService {
           return throwError(() => new Error('Token has been expired or revoked'))
         })
       )
-    } else {
-      return throwError(() => new Error('Something went wrong during token verification'))
-    }
   }
 
   /**
@@ -101,7 +93,7 @@ export class GoalService {
           const newActivity: NewActivity = {
             ...activityFormData.value
           }
-          
+
           return this._dbService.addActivityToGoal(goalId, newActivity)
         }),
         catchError(error => {

@@ -13,6 +13,13 @@ export interface UserDBJSON extends User {
     id: string
 }
 
+export interface UserAppData {
+    id: string,
+    email: string,
+    username: string,
+    profileIMG: string
+}
+
 export interface Login {
     email: string,
     password: string

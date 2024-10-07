@@ -11,10 +11,13 @@
 - [ ] Refactorización BBDD a *Firebase*.
 - [ ] Configuración y despliegue en *Firebase*.
 
-#### 3-10
-- [ ] Buscar el completado de el objetivo en el flujo de la lógica de añadir una actividad, para terminar mostrando el modal.
+#### 4-10
 - [ ] Depurar las funciones que necesitan validación de token, para usar una utilidad y no duplicar código.
 - [ ] Revisar código refactorizado en relación a la creación de la colección `actividades` y la implicación en el tratamiento de los objetos `goal`.
+
+
+#### 3-10
+- [x] Buscar el completado de el objetivo en el flujo de la lógica de añadir una actividad, para terminar mostrando el modal.
 
 #### 2-10
 - Al refactorizar las actividades como colección independiente, hay que revisar el guardado de *goals* además de la recuperación de estos y de las actividades para ser mostradas en la vista en detalle de los mismos.

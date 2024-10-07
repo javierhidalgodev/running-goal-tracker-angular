@@ -4,8 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthPageComponent } from './pages/auth-page/auth-page.component';
-import { LoginFormComponent } from './components/forms/login-form/login-form.component';
-import { RegisterFormComponent } from './components/forms/register-form/register-form.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -41,14 +39,14 @@ import { ModalComponent } from './components/modal/modal.component';
 import { KMtoEndPipe } from './pipes/kmto-end.pipe';
 import { GoalCompleteModalComponent } from './components/goal/goal-detail/goal-complete-modal/goal-complete-modal.component';
 import { ErrorMessageDirective } from './directives/error-message.directive';
-import { RegisterDbjsonFormComponent } from './components/forms/register-dbjson-form/register-dbjson-form.component';
-import { LoginDbjsonFormComponent } from './components/forms/login-dbjson-form/login-dbjson-form.component';
+import { RegisterFormComponent } from './components/forms/register-form/register-form.component';
+import { LoginFormComponent } from './components/forms/login-form/login-form.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { ValidationContainerComponent } from './components/validation-container/validation-container.component';
 import { OnButtonSpinnerDirective } from './directives/on-button-spinner.directive';
 import { InputStylesDirective } from './directives/input-styles.directive';
 import { DialogComponent } from './components/dialog/dialog.component';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { GoalPercentagePipe } from './pipes/goal-percentage.pipe';
 import { ButtonWithLoadSpinnerComponent } from './components/button-with-load-spinner/button-with-load-spinner.component';
 import { ModalYeahComponent } from './components/modal-yeah/modal-yeah.component';
@@ -58,8 +56,6 @@ import { DaysToEndPipe } from './pipes/days-to-end.pipe';
   declarations: [
     AppComponent,
     AuthPageComponent,
-    LoginFormComponent,
-    RegisterFormComponent,
     HomePageComponent,
     GoalFormComponent,
     GoalsPageComponent,
@@ -76,8 +72,8 @@ import { DaysToEndPipe } from './pipes/days-to-end.pipe';
     KMtoEndPipe,
     GoalCompleteModalComponent,
     ErrorMessageDirective,
-    RegisterDbjsonFormComponent,
-    LoginDbjsonFormComponent,
+    RegisterFormComponent,
+    LoginFormComponent,
     NotificationComponent,
     ValidationContainerComponent,
     OnButtonSpinnerDirective,

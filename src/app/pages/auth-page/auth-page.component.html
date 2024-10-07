@@ -5,11 +5,11 @@
 </div>
 
 <ng-container *ngIf="currentAuthAction === 'login'; else isRegister">
-    <app-login-dbjson-form></app-login-dbjson-form>
+    <app-login-form></app-login-form>
     <!-- <app-login-form></app-login-form> -->
 </ng-container>
 
 <ng-template #isRegister>
-    <app-register-dbjson-form></app-register-dbjson-form>
+    <app-register-form></app-register-form>
     <!-- <app-register-form></app-register-form> -->
 </ng-template>

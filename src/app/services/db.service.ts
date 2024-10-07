@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, forkJoin, map, Observable, of, switchMap, throwError } from 'rxjs';
-import { User, UserDBJSON } from '@models/user.model';
+import { User, UserAppData, UserDBJSON } from '@models/user.model';
 import { Goal, GoalActivity, NewGoal } from '@models/goals.model';
 import { environment } from '../../environments/environment'
 import { Activity, ActivityFromDBJSON, NewActivity } from '@models/activity.model';
@@ -40,7 +40,7 @@ export class DbService {
     return this._http.get<UserDBJSON[]>(`${this._DB_URL}/users?email=${email}`).pipe(
       map(users => users.length > 0 ? users[0] : null),
       catchError(error => {
-        console.log(error)
+        // console.log(error)
         return throwError(() => new Error('Something went wrong. Please try again later.'))
       })
     )
@@ -54,9 +54,22 @@ export class DbService {
    * 
    * TODO: revisar si es meramente comprobativo, ya que tal vez no es necesario devolver el valor, y solo se puede devolver un valor booleano.
    */
-  getUserById(id: string): Observable<UserDBJSON | null> {
-    return this._http.get<UserDBJSON[]>(`${this._DB_URL}/users?id=${id}`).pipe(
-      map(users => users.length > 0 ? users[0] : null),
+  getUserById(id: string): Observable<UserAppData | null> {
+    return this._http.get<UserAppData[]>(`${this._DB_URL}/users?id=${id}`).pipe(
+      map(users => {
+        if(users.length > 0) {
+          const user: UserAppData = {
+            email: users[0].email,
+            id: users[0].id,
+            profileIMG: users[0].profileIMG,
+            username: users[0].username
+          }
+          return user
+        }
+
+        return null
+      }
+      ),
       catchError(error => {
         console.log(error)
         return throwError(() => new Error('Something went wrong. Please try again later.'))
@@ -158,7 +171,7 @@ export class DbService {
     return this.getUserActivities(goal.id).pipe(
       switchMap(activities => {
         if (activities) {
-          const kmsCovered = activities.reduce((prev, curr) => prev + curr.km , 0)
+          const kmsCovered = activities.reduce((prev, curr) => prev + curr.km, 0)
 
           if (kmsCovered >= goal.km) {
             return this._http.patch<Goal>(`${this._DB_URL}/goals/${goal.id}`, { completed: true }).pipe(

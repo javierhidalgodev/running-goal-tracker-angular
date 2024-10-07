@@ -1,9 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
-import { Login, NewUser, User } from '@models/user.model';
+import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
+import { DEFAULT_PROFILE_USER_IMG, Login, NewUser, User } from '@models/user.model';
 import { DbService } from './db.service';
 import bcrypt from 'bcryptjs'
+import { ErrorMessageDirective } from '@directives/error-message.directive';
+import { Router } from '@angular/router';
 
 const API_URL = 'https://reqres.in/api';
 const API_DBJSON_URL = 'http://localhost:3000';
@@ -23,26 +25,9 @@ interface RegistrationResponse {
 export class AuthService {
   constructor(
     private _http: HttpClient,
-    private _dbService: DbService
+    private _dbService: DbService,
+    private _router: Router,
   ) { }
-
-  login(email: string, password: string): Observable<AuthResponse> {
-    const body = { email, password };
-
-    return this._http.post<AuthResponse>(`${API_URL}/login`, body).pipe(
-      catchError(error => {
-        console.log('Login error: ', error);
-
-        let errorMessage = 'Failed to login. Please, try again.'
-
-        if (error.status === 400) {
-          errorMessage = 'Wrong credentials'
-        }
-
-        return throwError(() => new Error(errorMessage));
-      })
-    )
-  }
 
   loginDBJSON(loginData: Login): Observable<string> {
     return this._dbService.getUserByEmail(loginData.email).pipe(
@@ -57,10 +42,45 @@ export class AuthService {
               return throwError(() => new Error('Invalid login'))
             }
 
-            return this.generateToken(user.id!, user.email)
-          }))
+            return this.generateToken(user.id!, user.email).pipe(
+              catchError(error => {
+                return throwError(() => new Error('internal error. Please, try again later.'))
+              })
+            )
+          })
+        )
       })
     )
+  }
+
+  checkToken(): Observable<any> {
+    const localStorageToken = localStorage.getItem('token')
+
+    if (localStorageToken) {
+      const { token } = JSON.parse(localStorageToken)
+      
+      return this._http.get('http://localhost:5000/login/check-token', {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+        })
+      }).pipe(
+        switchMap(value => {
+          console.log(value)
+          return of(true)
+        }),
+        catchError(error => {
+          console.log('Token verification failed:', error)
+
+          localStorage.removeItem('token')
+          this._router.navigate(['auth/login']);
+
+          return of(false)
+        })
+      )
+    }
+
+    this._router.navigate(['auth/login']);
+    return of(false);
   }
 
   private comparePassword(password: string, hash: string): Observable<boolean> {
@@ -80,7 +100,7 @@ export class AuthService {
   private hashPassword(password: string): Observable<string> {
     return new Observable<string>(observer => {
       bcrypt.hash(password, 12, (err, res) => {
-        if(err) observer.error(err)
+        if (err) observer.error(err)
 
         observer.next(res)
         observer.complete()
@@ -95,29 +115,15 @@ export class AuthService {
     })
   }
 
-  /**
-   * ? Esto no está bien hecho, ya que la constraseña debería de ir con un hash
-   */
-  register(email: string, password: string): Observable<RegistrationResponse> {
-    const body = { email, password }
+  // uploadImage(selectedFile: File | null): Observable<{ filePath: string } | null> {
+  //   if (selectedFile) {
+  //     const formData = new FormData()
+  //     formData.append('image', selectedFile as File)
+  //     return this._http.post<{ filePath: string }>('http://localhost:5000/upload', formData)
+  //   }
 
-    return this._http.post<RegistrationResponse>(`${API_URL}/register`, body).pipe(
-      catchError(error => {
-        console.log('Registration error: ', error);
-        return throwError(() => new Error('Failed to registration. Please, try again.'))
-      })
-    )
-  }
-
-  uploadImage(selectedFile: File | null): Observable<{ filePath: string } | null> {
-    if (selectedFile) {
-      const formData = new FormData()
-      formData.append('image', selectedFile as File)
-      return this._http.post<{ filePath: string }>('http://localhost:5000/upload', formData)
-    }
-    
-    return of(null)
-  }
+  //   return of(null)
+  // }
 
   registerDBJSON(userData: NewUser, selectedFile?: File) {
     // 1. Comprobar si existe el usuario
@@ -130,6 +136,7 @@ export class AuthService {
                 ...userData,
                 password: hash,
                 registrationDate: new Date(),
+                profileIMG: userData.profileIMG ?? DEFAULT_PROFILE_USER_IMG
               }
 
               return this._http.post<User>(`${API_DBJSON_URL}/users`, newUser)

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DbService } from '@services/db.service';
-import { User } from '../../models/user.model';
+import { User, UserAppData } from '../../models/user.model';
 import { Goal } from '@models/goals.model';
 import { catchError, Observable, Subscription, switchMap, throwError } from 'rxjs';
 import { NotificationService } from '@services/notification.service';
@@ -11,7 +11,7 @@ import { NotificationService } from '@services/notification.service';
   styleUrl: './home-page.component.scss'
 })
 export class HomePageComponent implements OnInit, OnDestroy {
-  user: User | null = null;
+  user: UserAppData | null = null;
   goals: Goal[] | null = null;
   pendingTasks: number = 0;
   completedTasks: number = 0;
@@ -42,7 +42,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
           this.isLoading = false
         },
         complete: () => {
-          console.log('Get user and goals attempt completed!')
+          // console.log('Get user and goals attempt completed!')
           this.isLoading = false
         }
       })
@@ -52,6 +52,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   private _fetchUser$(userId: string): Observable<Goal[] | null> {
     return this._dbService.getUserById(userId).pipe(
       switchMap(user => {
+        // console.log(user)
         this.user = user
 
         return this._dbService.getGoals(user?.id!)
