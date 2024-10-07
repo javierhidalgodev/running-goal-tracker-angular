@@ -8,6 +8,7 @@ import { ModalYeahComponent } from '@components/modal-yeah/modal-yeah.component'
 import { ModalInterface } from '@models/modal.model';
 import { Activity } from '@models/activity.model';
 import { NotificationService } from '@services/notification.service';
+import { FirestoreService } from '@services/firestore.service';
 
 @Component({
   selector: 'app-goal-details-page',
@@ -32,7 +33,8 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute,
     private _goalsService: GoalService,
     private _modalService: ModalService,
-    private _notificationService: NotificationService
+    private _notificationService: NotificationService,
+    private _firestoreService: FirestoreService,
   ) { }
 
   ngOnInit(): void {
@@ -51,27 +53,34 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
   }
 
   private fetchGoalById(id: string) {
-    this.fetchGoalByIdSubscription$ =
-      this._goalsService.getGoalById(id).subscribe({
-        next: goal => {
-          if (!goal) {
-            this._notificationService.error('Goal not found!', false)
-            // this.handleErrorMessage('Goal not found!')
-          } else {
-            this.goal = goal
-            this.fetchActivitiesByGoalId(id)
-          }
-        },
-        error: error => {
-          this._notificationService.error('Lo sentimos pero hubo un error. Por favor, inténtelo de nuevo más tarde.', false)
-          // this.handleErrorMessage('Lo sentimos pero hubo un error. Por favor, inténtelo de nuevo más tarde.')
-          this.isLoading = false
-        },
-        complete: () => {
-          // console.log('Get goal by id attempt completed!')
-          this.isLoading = false
-        }
-      })
+    console.log(id)
+    this._firestoreService.getGoalById(id).subscribe(goal => {
+      console.log(goal)
+      this.goal = goal
+      this.isLoading = false
+    })
+
+    // this.fetchGoalByIdSubscription$ =
+    //   this._goalsService.getGoalById(id).subscribe({
+    //     next: goal => {
+    //       if (!goal) {
+    //         this._notificationService.error('Goal not found!', false)
+    //         // this.handleErrorMessage('Goal not found!')
+    //       } else {
+    //         this.goal = goal
+    //         this.fetchActivitiesByGoalId(id)
+    //       }
+    //     },
+    //     error: error => {
+    //       this._notificationService.error('Lo sentimos pero hubo un error. Por favor, inténtelo de nuevo más tarde.', false)
+    //       // this.handleErrorMessage('Lo sentimos pero hubo un error. Por favor, inténtelo de nuevo más tarde.')
+    //       this.isLoading = false
+    //     },
+    //     complete: () => {
+    //       // console.log('Get goal by id attempt completed!')
+    //       this.isLoading = false
+    //     }
+    //   })
   }
 
   private fetchActivitiesByGoalId(goalId: string) {

@@ -1,21 +1,5 @@
 {
   "activities": [],
   "goals": [],
-  "users": [
-    {
-      "id": "9cf7",
-      "username": "Elsa Pataky",
-      "email": "elsa@pataky.com",
-      "password": "$2a$12$ffutE0k/h66hWZaqWOVPuenup8B0KoppIVAyQFubNeQ.1qsNQEOmO",
-      "registrationDate": "2024-10-03T12:24:23.624Z"
-    },
-    {
-      "id": "751a",
-      "username": "Josefa Maria",
-      "email": "josefa@gmail.com",
-      "password": "$2a$12$X6GnO0A3lnU7uXgElRioSu5wYPPqaJasmXRLDidaCobdVMCPusdM.",
-      "registrationDate": "2024-10-03T12:41:55.686Z",
-      "profileIMG": "profile-default.png"
-    }
-  ]
+  "users": []
 }

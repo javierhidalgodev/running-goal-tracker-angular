@@ -5,6 +5,8 @@ import { dateValidatorFn, updateValidationErrors } from '@utils/goals.utils';
 import { Notification } from '@pages/new-goal-page/new-goal-page.component';
 import { NotificationService } from '@services/notification.service';
 import { Subscription, tap } from 'rxjs';
+import { FirestoreService } from '@services/firestore.service';
+import { Goal } from '@models/goals.model';
 
 @Component({
   selector: 'app-goal-form',
@@ -23,6 +25,7 @@ export class GoalFormComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder,
     private _goalService: GoalService,
     private _notificationService: NotificationService,
+    private _firestoreService: FirestoreService,
   ) { }
 
   ngOnInit(): void {
@@ -65,6 +68,25 @@ export class GoalFormComponent implements OnInit, OnDestroy {
     const errors = updateValidationErrors(this.goalForm)
 
     errors && this._notificationService.validation(errors)
+  }
+
+  async addGoalToFirestore() {
+    const token = localStorage.getItem('token')
+
+    if (token) {
+      const decodedToken = JSON.parse(token)
+
+      console.log(this.goalForm.value, console.log(decodedToken))
+      const newGoal: Goal = {
+        ...this.goalForm.value,
+        completed: false,
+        userId: decodedToken.userId
+      }
+
+      const res = await this._firestoreService.addGoal(newGoal)
+      console.log(res)
+    }
+
   }
 
   addGoal() {
