@@ -1,26 +1,32 @@
 import { Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, deleteDoc, doc, docData, documentId, Firestore, getDocs, query, where } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, CollectionReference, deleteDoc, doc, docData, documentId, Firestore, getDocs, query, where } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth'
 import { Goal } from '@models/goals.model';
-import { NewUser, User } from '@models/user.model';
+import { Login, NewUser, User } from '@models/user.model';
 import { Observable } from 'rxjs';
 import CryptoJS from 'crypto-js';
+import jwt from 'jsonwebtoken'
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreService {
 
+  private usersRef: CollectionReference = collection(this._firestore, 'users')
+  private goalsRef: CollectionReference = collection(this._firestore, 'goals')
+
   constructor(
     private _firestore: Firestore,
-    private _authFirestore: AngularFireAuth
+    private _httpClient: HttpClient
   ) { }
 
   async userExists(email: string) {
-    const usersRef = collection(this._firestore, 'users')
-    const q = query(usersRef, where("email", "==", email))
+
+    const q = query(this.usersRef, where("email", "==", email))
     const querySnapshot = await getDocs(q)
-    return !querySnapshot.empty
+
+    return querySnapshot
   }
 
   hashPassword(password: string): string {
@@ -30,8 +36,8 @@ export class FirestoreService {
   async addUser(user: NewUser) {
     const userAlreadyExists = await this.userExists(user.email)
 
-    if(userAlreadyExists) {
-      throw new Error('El usuario ya existe.')
+    if (!userAlreadyExists.empty) {
+      throw new Error('el usuario ya existe.')
     }
 
     const hashedPassword = this.hashPassword(user.password)
@@ -42,7 +48,6 @@ export class FirestoreService {
       registrationDate: new Date()
     }
 
-    this._authFirestore.createUserWithEmailAndPassword(user.email, user.password)
     await addDoc(collection(this._firestore, 'users'), userData)
   }
 
@@ -75,8 +80,52 @@ export class FirestoreService {
 
   deleteGoal(goal: Goal) {
     console.log(goal)
-    documentId()
+
     const goalDocRef = doc(this._firestore, `goals/${goal.id}`)
     return deleteDoc(goalDocRef)
+  }
+
+  comparePasswords(password: string, hash: string): boolean {
+    return CryptoJS.SHA256(password).toString() === hash
+  }
+
+  generateToken(payload: { email: string, userId: string }) {
+    console.log(payload)
+
+    return this._httpClient.post('http://localhost:5000/login', payload)
+  }
+
+  async login(userFormData: Login) {
+    // 1. Buscar usuario en la base de datos
+    const userExists = await this.userExists(userFormData.email)
+
+    if (!userExists.empty) {
+      // console.log(userExists.docs[0].data())
+      const user = userExists.docs[0]
+      const passwordMatch = this.comparePasswords(userFormData.password, user.data()['password'])
+
+      // 2. Comparar password
+      if (passwordMatch) {
+        const payload = {
+          email: userFormData.email,
+          userId: user.id
+        }
+
+        // 3. Generar token y guardarlo
+        this.generateToken(payload).subscribe({
+          next: token => {
+            localStorage.setItem('token', JSON.stringify(payload))
+          },
+          error: err => {
+            console.log(err)
+          },
+          complete: () => {
+            console.log('Login attempt completed!')
+          }
+        })
+      }
+    }
+
+    // 4. Redirigir
   }
 }

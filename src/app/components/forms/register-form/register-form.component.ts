@@ -87,13 +87,22 @@ export class RegisterFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  registerFirestore() {
+  async registerFirestore() {
     this.isRegistering = true
     
     if (this.registerForm.valid) {
       const { confirmPassword, ...userData } = this.registerForm.value
 
-      this._firestoreService.addUser(userData)
+      try {
+        await this._firestoreService.addUser(userData)
+
+        this.isRegistering = false
+        this._notificationService.success('User registered!')
+      } catch (error: any) {
+        console.error(error)
+        this.isRegistering = false
+        this._notificationService.error(error)
+      }
     }
   }
 

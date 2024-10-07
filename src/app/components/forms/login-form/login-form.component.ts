@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { NotificationService } from '@services/notification.service';
 import { updateValidationErrors } from '@utils/goals.utils'
 import { Subscription } from 'rxjs';
+import { FirestoreService } from '@services/firestore.service';
 
 @Component({
   selector: 'app-login-form',
@@ -21,7 +22,9 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
     private _notificationService: NotificationService,
-    private _router: Router) { }
+    private _router: Router,
+    private _firestoreService: FirestoreService,
+  ) { }
 
   ngOnInit(): void {
     this.loginForm = this._formBuilder.group({
@@ -58,23 +61,24 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     this.isLogin = true
 
     if (this.loginForm.valid) {
-      this.subscriptions$.add(
-        this._authService.loginDBJSON(this.loginForm.value).subscribe({
-          next: token => {
-            console.log(token)
-            localStorage.setItem('token', JSON.stringify(token))
-            this._router.navigate(['/home'])
-          },
-          error: error => {
-            this._notificationService.error(error)
-            this.isLogin = false
-          },
-          complete: () => {
-            // console.log('Login attempt completed!')
-            this.isLogin = false
-          }
-        })
-      )
+      this._firestoreService.login(this.loginForm.value)
+      // this.subscriptions$.add(
+      //   this._authService.loginDBJSON(this.loginForm.value).subscribe({
+      //     next: token => {
+      //       console.log(token)
+      //       localStorage.setItem('token', JSON.stringify(token))
+      //       this._router.navigate(['/home'])
+      //     },
+      //     error: error => {
+      //       this._notificationService.error(error)
+      //       this.isLogin = false
+      //     },
+      //     complete: () => {
+      //       // console.log('Login attempt completed!')
+      //       this.isLogin = false
+      //     }
+      //   })
+      // )
     }
   }
 
