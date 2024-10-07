@@ -32,7 +32,7 @@ export class GoalsPageComponent implements OnInit {
       const decodedToken = JSON.parse(token)
 
       this._firestoreService.getGoals(decodedToken.userId).subscribe(goals => {
-        console.log(goals)
+        // console.log(goals)
         this.goals = goals
         this.isLoading = false
       })

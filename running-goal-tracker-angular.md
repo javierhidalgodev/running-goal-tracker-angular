@@ -10,6 +10,8 @@
 #### 7-10
 - [ ] Continar la refactorización con `Firestore`.
 
+- Hay que dominar *AngularFire*.
+- Creación de usuario: comprobar si existe; hashear password + guardar usuario; notificar.
 
 ### 30-9/4-0//2024
 - [x] Operación de eliminación en *goals* + *activities* + *profile* [Video CRUD Angular:](https://youtu.be/56syqNBu0bg?feature=shared)

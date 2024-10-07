@@ -5,7 +5,7 @@
             <!-- TODO: la idea sería que el usuario pudiera poner una imagen relacionada a su objetivo, o cargar una por defecto -->
             <!-- <div mat-card-avatar class="example-header-image"></div> -->
             <mat-card-title>{{ goalObject.name }}</mat-card-title>
-            <mat-card-subtitle>{{ goalObject.startDate | date }} | {{ goalObject.endDate | date }}</mat-card-subtitle>
+            <mat-card-subtitle>{{ goalObject.startDate | timestamp | date }} | {{ goalObject.endDate | timestamp | date }}</mat-card-subtitle>
         </mat-card-header>
         <!-- <div class="progress-bar" [ngStyle]="{'width': goalObject | goalPercentage}"></div> -->
         <mat-progress-bar [value]="goalObject | goalPercentage:goalActivities"></mat-progress-bar>

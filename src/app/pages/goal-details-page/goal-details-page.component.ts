@@ -53,10 +53,9 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
   }
 
   private fetchGoalById(id: string) {
-    console.log(id)
+    // console.log(id)
     this._firestoreService.getGoalById(id)
       .subscribe(goal => {
-        console.log(goal)
         this.goal = goal
         this.isLoading = false
       })

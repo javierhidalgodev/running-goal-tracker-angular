@@ -53,6 +53,7 @@ import { ModalYeahComponent } from './components/modal-yeah/modal-yeah.component
 import { DaysToEndPipe } from './pipes/days-to-end.pipe';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { TimestampPipe } from './pipes/timestamp.pipe';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
     ButtonWithLoadSpinnerComponent,
     ModalYeahComponent,
     DaysToEndPipe,
+    TimestampPipe,
   ],
   imports: [
     BrowserModule,

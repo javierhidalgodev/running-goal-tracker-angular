@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@services/auth.service';
+import { FirestoreService } from '@services/firestore.service';
 import { InputValidators, NotificationService } from '@services/notification.service';
 import { getValidationErrors } from '@utils/forms.utils';
 import { isEqualFn } from '@utils/goals.utils';
@@ -24,7 +25,8 @@ export class RegisterFormComponent implements OnInit, OnDestroy {
   constructor(
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
-    private _notificationService: NotificationService
+    private _notificationService: NotificationService,
+    private _firestoreService: FirestoreService,
   ) { }
 
   ngOnInit(): void {
@@ -82,6 +84,16 @@ export class RegisterFormComponent implements OnInit, OnDestroy {
 
     if (this.validationErrors) {
       this._notificationService.validation(this.validationErrors)
+    }
+  }
+
+  registerFirestore() {
+    this.isRegistering = true
+    
+    if (this.registerForm.valid) {
+      const { confirmPassword, ...userData } = this.registerForm.value
+
+      this._firestoreService.addUser(userData)
     }
   }
 

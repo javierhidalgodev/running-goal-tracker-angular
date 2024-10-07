@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
-import { mockGoals } from '@mocks/goals.mock';
-import { Goal, GoalActivity } from '@models/goals.model';
+// import { mockGoals } from '@mocks/goals.mock';
+import { Goal, GoalActivity, NewGoal } from '@models/goals.model';
 import { DbService } from './db.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
@@ -16,7 +16,7 @@ const DEFAULT_IMAGE = 'https://www.kieferusa.com/wp-content/uploads/2015/08/winn
 })
 export class GoalService {
 
-  private goals = mockGoals;
+  // private goals = mockGoals;
 
   constructor(
     private _dbService: DbService,
@@ -38,7 +38,7 @@ export class GoalService {
     return this._authService.checkToken()
       .pipe(
         switchMap(token => {
-          const newGoal: Goal = {
+          const newGoal: NewGoal = {
             ...goalFormData.value,
             image: goalFormData.get('image') || DEFAULT_IMAGE,
             completed: false,
@@ -110,15 +110,15 @@ export class GoalService {
    * 
    * Primera versión del método encargado de añadir actividades a un objetivo. Usaba un mock personalizado para poder hacer las primeras pruebas.
    */
-  addActivityToGoal(goalId: string, activity: GoalActivity): Observable<GoalActivity | null> {
-    const goal = this.goals.find(g => g.id === goalId)
+  // addActivityToGoal(goalId: string, activity: GoalActivity): Observable<GoalActivity | null> {
+  //   const goal = this.goals.find(g => g.id === goalId)
 
-    if (goal) {
-      return of(activity)
-    }
+  //   if (goal) {
+  //     return of(activity)
+  //   }
 
-    return of(null)
-  }
+  //   return of(null)
+  // }
 
   getActivitiesByGoalId(goalId: string): Observable<Activity[]> {
     return this._dbService.getUserActivities(goalId)

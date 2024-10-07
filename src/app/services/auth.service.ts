@@ -10,15 +10,6 @@ import { Router } from '@angular/router';
 const API_URL = 'https://reqres.in/api';
 const API_DBJSON_URL = 'http://localhost:3000';
 
-interface AuthResponse {
-  token: string
-}
-
-interface RegistrationResponse {
-  token: string,
-  id: string
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -65,7 +56,7 @@ export class AuthService {
         })
       }).pipe(
         switchMap(value => {
-          console.log(value)
+          // console.log(value)
           return of(true)
         }),
         catchError(error => {
@@ -124,6 +115,29 @@ export class AuthService {
 
   //   return of(null)
   // }
+
+  register(userData: NewUser) {
+    return this._dbService.getUserByEmail(userData.email).pipe(
+      switchMap(user => {
+        if(!user) {
+          return this.hashPassword(userData.password).pipe(
+            switchMap(hash => {
+              const newUser: User = {
+                ...userData,
+                password: hash,
+                registrationDate: new Date(),
+                profileIMG: userData.profileIMG ?? DEFAULT_PROFILE_USER_IMG
+              }
+
+              return of(newUser)
+            })
+          )
+        }
+
+        return throwError(() => new Error('Usuario ya registrado'))
+      })
+    )
+  }
 
   registerDBJSON(userData: NewUser, selectedFile?: File) {
     // 1. Comprobar si existe el usuario

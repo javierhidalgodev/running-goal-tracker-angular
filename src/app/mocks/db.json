@@ -9,6 +9,14 @@
       "password": "$2a$12$m7ykfuH28oRnffGQMVYLwOY7OKyl/8uTI9gPFAzZn9eG.94ml1ZYS",
       "registrationDate": "2024-10-07T05:11:32.253Z",
       "profileIMG": "profile-default.png"
+    },
+    {
+      "id": "38a9",
+      "username": "Robin Hood",
+      "email": "robin@hood.com",
+      "password": "$2a$12$n/nW9sDPRYNLju/FDXePtOqZdlRgQdWLJcNVKthNIlJKT30kB95Y6",
+      "registrationDate": "2024-10-07T10:14:39.262Z",
+      "profileIMG": "profile-default.png"
     }
   ]
 }

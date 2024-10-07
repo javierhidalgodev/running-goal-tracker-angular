@@ -1,3 +1,5 @@
+import { Timestamp } from "@angular/fire/firestore";
+
 export type ActiveModal = 'activityForm' | 'goalCompleted' | 'deleteGoal' | null
 
 export interface NewGoal {
@@ -19,8 +21,8 @@ export interface Goal {
     userId: string,
     name: string,
     description: string,
-    startDate: Date,
-    endDate: Date,
+    startDate: Timestamp,
+    endDate: Timestamp,
     km: number,
     image?: string,
     completed: boolean,
