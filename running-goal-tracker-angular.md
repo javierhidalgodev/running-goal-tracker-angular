@@ -1,14 +1,25 @@
 # Running Goal Tracker (ANGULAR PROJECT)
 
+### 7/11-10//2024
+- [ ] Continar la refactorización con `Firestore`.
+- [ ] Depurar la lógica.
+- [ ] *Lazy loading*.
+- [ ] Revisión general de estilos.
+- [ ] Despliegue.
+
+#### 7-10
+- [ ] Continar la refactorización con `Firestore`.
+
+
 ### 30-9/4-0//2024
-- [ ] Operación de eliminación en *goals* + *activities* + *profile* [Video CRUD Angular:](https://youtu.be/56syqNBu0bg?feature=shared)
+- [x] Operación de eliminación en *goals* + *activities* + *profile* [Video CRUD Angular:](https://youtu.be/56syqNBu0bg?feature=shared)
 - [ ] Página *profile*.
 - [ ] Imágenes en...
   - [ ] Actividad (portada).
   - [ ] *Profile*.
 - [ ] Revisión de estilos.
 - [ ] Tests.
-- [ ] Refactorización BBDD a *Firebase*.
+- [x] Refactorización BBDD a *Firebase*.
 - [ ] Configuración y despliegue en *Firebase*.
 
 #### 4-10

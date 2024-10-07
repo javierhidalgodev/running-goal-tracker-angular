@@ -1,5 +1,14 @@
 {
   "activities": [],
   "goals": [],
-  "users": []
+  "users": [
+    {
+      "id": "0348",
+      "username": "Elsa Pataky",
+      "email": "elsa@pataky.com",
+      "password": "$2a$12$m7ykfuH28oRnffGQMVYLwOY7OKyl/8uTI9gPFAzZn9eG.94ml1ZYS",
+      "registrationDate": "2024-10-07T05:11:32.253Z",
+      "profileIMG": "profile-default.png"
+    }
+  ]
 }

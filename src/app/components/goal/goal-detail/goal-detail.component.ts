@@ -1,14 +1,12 @@
-import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { ActivityFormComponent } from '@components/forms/activity-form/activity-form.component';
 import { ModalYeahComponent } from '@components/modal-yeah/modal-yeah.component';
 import { Activity } from '@models/activity.model';
-import { ActiveModal, Goal, GoalWithExtraDetails } from '@models/goals.model';
+import { ActiveModal, Goal } from '@models/goals.model';
+import { FirestoreService } from '@services/firestore.service';
 import { GoalService } from '@services/goal.service';
 import { ModalService } from '@services/modal.service';
 import { NotificationService } from '@services/notification.service';
-import { dateValidatorFn } from '@utils/goals.utils';
 
 @Component({
   selector: 'app-goal-detail',
@@ -24,11 +22,12 @@ export class GoalDetailComponent {
   inProcess: boolean = false;
 
   constructor(
-    private _goalService: GoalService,
-    private _router: Router,
+    // private _goalService: GoalService,
+    // private _router: Router,
     // ! Quitar este servicio una vez esté externalizado el manejo del error
-    private _notificationService: NotificationService,
+    // private _notificationService: NotificationService,
     private readonly _modalService: ModalService,
+    private _firestoreService: FirestoreService,
   ) { }
 
 
@@ -39,29 +38,43 @@ export class GoalDetailComponent {
   openDeleteModal() {
     this._modalService.openDialog(ModalYeahComponent, {
       cancelButtonLabel: 'No',
-      confirmAction: () => this.delete(),
+      confirmAction: () => this.delete(this.selectedGoal),
       confirmButtonLabel: 'Delete',
       title: 'Delete Goal',
       content: 'Are you sure to delete this goal?'
     })
   }
 
-  delete() {
-    if (this.selectedGoal) {
-      this.inProcess = true
-      this._goalService.deleteGoal(this.selectedGoal.id)
-        .subscribe({
-          next: () => {
-            this._router.navigate(['/goals'])
-          },
-          error: error => {
-            this.inProcess = false
-            this._notificationService.error('Something went wrong deleting goal. Please, try again later')
-          },
-          complete: () => {
-            this.inProcess = false
-          },
-        })
+  async delete(goal: Goal) {
+    this.inProcess = true
+
+    try {
+      const res = await this._firestoreService.deleteGoal(goal)
+      console.log(res)
+      this.inProcess = false
+    } catch (error) {
+      console.error(error)
+      this.inProcess = false
     }
   }
+
+  // delete() {
+  //   if (this.selectedGoal) {
+  //     this.inProcess = true
+  //     this._goalService.deleteGoal(this.selectedGoal.id)
+  //       .subscribe({
+  //         next: () => {
+  //           this._router.navigate(['/goals'])
+  //         },
+  //         error: error => {
+  //           this.inProcess = false
+  //           this._notificationService.error('Something went wrong deleting goal. Please, try again later')
+  //         },
+  //         complete: () => {
+  //           this.inProcess = false
+  //         },
+  //       })
+  //   }
+  // }
+
 }

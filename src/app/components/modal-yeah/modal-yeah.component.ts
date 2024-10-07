@@ -17,7 +17,7 @@ export class ModalYeahComponent {
     private readonly _goalService: GoalService,
   ) { }
 
-  // ngOnInit(): void {
-  //   console.log(this.matDialog)
-  // }
+  ngOnInit(): void {
+    console.log(this.matDialog)
+  }
 }

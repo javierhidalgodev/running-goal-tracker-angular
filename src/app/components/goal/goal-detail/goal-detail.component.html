@@ -27,8 +27,10 @@
                 <div class="button-container">
                     <mat-progress-spinner onButtonSpinner mode="indeterminate" diameter="20"
                         *ngIf="inProcess"></mat-progress-spinner>
-                    <button mat-flat-button (click)="openDeleteModal()" class="warn-color"
+                    <button mat-flat-button (click)="delete(selectedGoal)" class="warn-color"
                         [disabled]="inProcess">DELETE</button>
+                    <!-- <button mat-flat-button (click)="openDeleteModal()" class="warn-color"
+                        [disabled]="inProcess">DELETE</button> -->
                 </div>
             </mat-card-actions>
         </mat-card-content>
