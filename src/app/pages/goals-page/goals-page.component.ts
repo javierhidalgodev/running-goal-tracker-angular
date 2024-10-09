@@ -4,6 +4,7 @@ import { Goal } from '@models/goals.model';
 import { Token } from '@guards/auth.guard';
 import { NotificationService } from '@services/notification.service';
 import { FirestoreService } from '@services/firestore.service';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-goals-page',
@@ -19,24 +20,26 @@ export class GoalsPageComponent implements OnInit {
     private _goalsService: GoalService,
     private _notificationService: NotificationService,
     private _firestoreService: FirestoreService,
+    private _authService: AuthService,
   ) { }
 
   ngOnInit(): void {
+    console.log(this._authService.currentUserSignal())
     this.fetchGoals()
   }
 
   fetchGoals(): void {
     const token = localStorage.getItem('token')
 
-    if (token) {
-      const decodedToken = JSON.parse(token)
+    // if (token) {
+    //   const decodedToken = JSON.parse(token)
 
-      this._firestoreService.getGoals(decodedToken.userId).subscribe(goals => {
-        // console.log(goals)
-        this.goals = goals
-        this.isLoading = false
-      })
-    }
+    //   this._firestoreService.getGoals(decodedToken.userId).subscribe(goals => {
+    //     // console.log(goals)
+    //     this.goals = goals
+    //     this.isLoading = false
+    //   })
+    // }
   }
   // ngOnInit(): void {
   //   const token = localStorage.getItem('token')

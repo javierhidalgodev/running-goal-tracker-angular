@@ -83,19 +83,19 @@ export class GoalFormComponent implements OnInit, OnDestroy {
         userId: decodedToken.userId
       }
 
-      try {
-        const res = await this._firestoreService.addGoal(newGoal)
-        this.isAdding = false
-        this._notificationService.success('Goal added!')
-        this.goalForm.reset()
+      // try {
+      //   const res = await this._firestoreService.addGoal(newGoal)
+      //   this.isAdding = false
+      //   this._notificationService.success('Goal added!')
+      //   this.goalForm.reset()
 
-        Object.keys(this.goalForm.controls).forEach(control => {
-          this.goalForm.get(control)?.setErrors(null)
-        })
-      } catch (error: any) {
-        this.isAdding = false
-        this._notificationService.error(error)
-      }
+      //   Object.keys(this.goalForm.controls).forEach(control => {
+      //     this.goalForm.get(control)?.setErrors(null)
+      //   })
+      // } catch (error: any) {
+      //   this.isAdding = false
+      //   this._notificationService.error(error)
+      // }
     }
 
   }

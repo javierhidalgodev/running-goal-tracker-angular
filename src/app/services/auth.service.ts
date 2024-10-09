@@ -1,11 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { DEFAULT_PROFILE_USER_IMG, Login, NewUser, User } from '@models/user.model';
 import { DbService } from './db.service';
 import bcrypt from 'bcryptjs'
 import { ErrorMessageDirective } from '@directives/error-message.directive';
 import { Router } from '@angular/router';
+import { Auth, authInstance$ } from '@angular/fire/auth';
 
 const API_URL = 'https://reqres.in/api';
 const API_DBJSON_URL = 'http://localhost:3000';
@@ -18,7 +19,11 @@ export class AuthService {
     private _http: HttpClient,
     private _dbService: DbService,
     private _router: Router,
+    public _auth: Auth
   ) { }
+
+  user$ = authInstance$
+  currentUserSignal = signal<{email: string} | null | undefined>(undefined)
 
   loginDBJSON(loginData: Login): Observable<string> {
     return this._dbService.getUserByEmail(loginData.email).pipe(

@@ -6,6 +6,7 @@ import { NotificationService } from '@services/notification.service';
 import { updateValidationErrors } from '@utils/goals.utils'
 import { Subscription } from 'rxjs';
 import { FirestoreService } from '@services/firestore.service';
+import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login-form',
@@ -24,6 +25,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     private _notificationService: NotificationService,
     private _router: Router,
     private _firestoreService: FirestoreService,
+    private _auth: Auth,
   ) { }
 
   ngOnInit(): void {
@@ -57,11 +59,24 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     errors && this._notificationService.validation(errors)
   }
 
+  async loginFirestore() {
+    if (this.loginForm.valid) {
+      try {
+        const loginRes = await this._firestoreService.login(this.loginForm.value)
+        console.log(loginRes)
+        this._router.navigate(['/home'])
+      } catch (error: any) {
+        console.log(error)
+        this._notificationService.error('Invalid login')
+      }
+    }
+  }
+
   login() {
     this.isLogin = true
 
     if (this.loginForm.valid) {
-      this._firestoreService.login(this.loginForm.value)
+      // this._firestoreService.login(this.loginForm.value)
       // this.subscriptions$.add(
       //   this._authService.loginDBJSON(this.loginForm.value).subscribe({
       //     next: token => {

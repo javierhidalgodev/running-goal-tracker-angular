@@ -7,8 +7,19 @@
 - [ ] Revisión general de estilos.
 - [ ] Despliegue.
 
+#### 9-10
+- [x] Implementación de `AngularFire Auth`.
+  - [x] Login.
+  - [x] Logout.
+  - [x] Register.
+- [ ] Recuperar la data en relación al usuario loggeado.
+
+
+#### 8-10
+- [x] Investigando `AngularFire Auth`.
+
 #### 7-10
-- [ ] Continar la refactorización con `Firestore`.
+- [x] Continar la refactorización con `Firestore`.
 
 - Hay que dominar *AngularFire*.
 - Creación de usuario: comprobar si existe; hashear password + guardar usuario; notificar.

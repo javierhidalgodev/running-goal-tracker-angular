@@ -48,14 +48,14 @@ export class GoalDetailComponent {
   async delete(goal: Goal) {
     this.inProcess = true
 
-    try {
-      const res = await this._firestoreService.deleteGoal(goal)
-      console.log(res)
-      this.inProcess = false
-    } catch (error) {
-      console.error(error)
-      this.inProcess = false
-    }
+    // try {
+    //   const res = await this._firestoreService.deleteGoal(goal)
+    //   console.log(res)
+    //   this.inProcess = false
+    // } catch (error) {
+    //   console.error(error)
+    //   this.inProcess = false
+    // }
   }
 
   // delete() {

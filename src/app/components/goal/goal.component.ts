@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Activity } from '@models/activity.model';
 import { Goal } from '@models/goals.model';
+import { AuthService } from '@services/auth.service';
+import { FirestoreService } from '@services/firestore.service';
 import { GoalService } from '@services/goal.service';
 
 @Component({
@@ -18,10 +20,12 @@ export class GoalComponent implements OnInit {
   constructor (
     private _route: Router,
     private _goalService: GoalService,
+    private _authService: AuthService
   ) { }
 
   // Podemos introducir un ngOnInit para verificar el estado del goal, y si es null renderizar algo concreto y avisar al usuario
   ngOnInit(): void {
+    console.log(this._authService.currentUserSignal())
     if (!this.goalObject) {
       console.warn('Something went wrong with data source!')
     } else {

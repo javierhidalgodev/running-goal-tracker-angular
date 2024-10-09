@@ -54,11 +54,11 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
 
   private fetchGoalById(id: string) {
     // console.log(id)
-    this._firestoreService.getGoalById(id)
-      .subscribe(goal => {
-        this.goal = goal
-        this.isLoading = false
-      })
+    // this._firestoreService.getGoalById(id)
+    //   .subscribe(goal => {
+    //     this.goal = goal
+    //     this.isLoading = false
+    //   })
 
     // this.fetchGoalByIdSubscription$ =
     //   this._goalsService.getGoalById(id).subscribe({
@@ -99,15 +99,15 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
   }
 
   confirmDelete() {
-    const modalInterface: ModalInterface = {
-      cancelButtonLabel: 'No',
-      confirmAction: () => this._firestoreService.deleteGoal(this.goal),
-      confirmButtonLabel: 'Delete',
-      title: 'Delete goal', 
-      content: 'Are you sure to delete this goal?',
-    }
+    // const modalInterface: ModalInterface = {
+    //   cancelButtonLabel: 'No',
+    //   confirmAction: () => this._firestoreService.deleteGoal(this.goal),
+    //   confirmButtonLabel: 'Delete',
+    //   title: 'Delete goal', 
+    //   content: 'Are you sure to delete this goal?',
+    // }
 
-    this._modalService.openDialog(ModalYeahComponent, modalInterface)
+    // this._modalService.openDialog(ModalYeahComponent, modalInterface)
   }
 
   // ? Para añadir kilómetros

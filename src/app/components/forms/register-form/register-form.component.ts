@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '@services/auth.service';
 import { FirestoreService } from '@services/firestore.service';
 import { InputValidators, NotificationService } from '@services/notification.service';
@@ -27,6 +28,7 @@ export class RegisterFormComponent implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _notificationService: NotificationService,
     private _firestoreService: FirestoreService,
+    private _router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -89,19 +91,18 @@ export class RegisterFormComponent implements OnInit, OnDestroy {
 
   async registerFirestore() {
     this.isRegistering = true
-    
+
     if (this.registerForm.valid) {
       const { confirmPassword, ...userData } = this.registerForm.value
 
       try {
-        await this._firestoreService.addUser(userData)
-
-        this.isRegistering = false
-        this._notificationService.success('User registered!')
-      } catch (error: any) {
-        console.error(error)
-        this.isRegistering = false
-        this._notificationService.error(error)
+        const res = await this._firestoreService.register(userData)
+        this._notificationService.success('Use registered successfully!')
+        setTimeout(() => {
+          this._router.navigate(['/auth/login'])
+        }, 5000)
+      } catch (error) {
+        console.log(error)
       }
     }
   }

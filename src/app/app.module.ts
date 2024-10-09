@@ -54,6 +54,7 @@ import { DaysToEndPipe } from './pipes/days-to-end.pipe';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { TimestampPipe } from './pipes/timestamp.pipe';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 
 @NgModule({
   declarations: [
@@ -118,7 +119,8 @@ import { TimestampPipe } from './pipes/timestamp.pipe';
     provideHttpClient(withInterceptorsFromDi()),
     provideNativeDateAdapter(),
     provideFirebaseApp(() => initializeApp({"projectId":"running-goal-tracker-app","appId":"1:160114620249:web:5d4d94002dc004f0c13e48","storageBucket":"running-goal-tracker-app.appspot.com","apiKey":"AIzaSyBvpnOVrrVsHOYWWa2AduaGElCwv91xphY","authDomain":"running-goal-tracker-app.firebaseapp.com","messagingSenderId":"160114620249"})),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth())
   ],
   bootstrap: [AppComponent]
 })

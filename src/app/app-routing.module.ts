@@ -8,13 +8,16 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { NewGoalPageComponent } from './pages/new-goal-page/new-goal-page.component';
 import { GoalDetailsPageComponent } from './pages/goal-details-page/goal-details-page.component';
+import { AuthGuard, canActivate, redirectUnauthorizedTo,redirectLoggedInTo } from '@angular/fire/auth-guard'
+
+const redirectUnauthorizedToLanding = () => redirectUnauthorizedTo(['/auth/login'])
 
 const routes: Routes = [
   {
     path: '',
     component: NavigationComponent,
     // canActivate: [authGuard],
-    canActivateChild: [authGuard],
+    ...canActivate(() => redirectUnauthorizedTo(['/auth/login'])),
     children: [
       {
         path: '',
@@ -41,7 +44,8 @@ const routes: Routes = [
   },
   {
     path: 'auth/:action',
-    component: AuthPageComponent
+    component: AuthPageComponent,
+    ...canActivate(() => redirectLoggedInTo(['/home'])),
   },
   {
     path: '**',

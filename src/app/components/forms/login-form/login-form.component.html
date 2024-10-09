@@ -1,4 +1,4 @@
-<form [formGroup]="loginForm" (submit)="login()">
+<form [formGroup]="loginForm" (submit)="loginFirestore()">
     <mat-form-field>
         <mat-label>Email</mat-label>
         <input (blur)="checkValidators()" matInput formControlName="email" type="email" placeholder="eve.holt@reqres.in" required aria-required="true" aria-label="Email">
