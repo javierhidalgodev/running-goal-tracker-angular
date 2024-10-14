@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { GoalService } from '@services/goal.service';
+import { Firestore } from '@angular/fire/firestore';
 import { Goal } from '@models/goals.model';
-import { Token } from '@guards/auth.guard';
-import { NotificationService } from '@services/notification.service';
-import { FirestoreService } from '@services/firestore.service';
 import { AuthService } from '@services/auth.service';
+import { FirestoreService } from '@services/firestore.service';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-goals-page',
@@ -12,61 +11,38 @@ import { AuthService } from '@services/auth.service';
   styleUrl: './goals-page.component.scss'
 })
 export class GoalsPageComponent implements OnInit {
+  goals: Goal[];
   isLoading: boolean = true;
-  errorMessage: string | null = null;
-  goals: Goal[] | null = null;
 
   constructor(
-    private _goalsService: GoalService,
-    private _notificationService: NotificationService,
+    private _auth: AuthService,
     private _firestoreService: FirestoreService,
-    private _authService: AuthService,
   ) { }
 
   ngOnInit(): void {
-    // console.log(this._authService.currentUserSignal())
-    // this.fetchGoals()
+    const user = this._auth.currentUserSignal()
 
-    if(this._authService._auth.currentUser) {
-      console.log(this._authService._auth.currentUser.uid)
+    if (user) {
+      this.fetchUserGoals(user)
+    } else {
+
     }
   }
 
-  fetchGoals(): void {
-    const token = localStorage.getItem('token')
+  // ! Tipar
+  fetchUserGoals(user: any) {
+    this._firestoreService.getUserGoals(user.uid).subscribe({
+      next: res => {
+        this.goals = res
+      },
+      error: error => {
+        console.log(error)
+      },
+      complete: () => {
+        console.log('Fetching data complete!')
+      }
+    })
 
-    // if (token) {
-    //   const decodedToken = JSON.parse(token)
-
-    //   this._firestoreService.getGoals(decodedToken.userId).subscribe(goals => {
-    //     // console.log(goals)
-    //     this.goals = goals
-    //     this.isLoading = false
-    //   })
-    // }
+    this.isLoading = false
   }
-  // ngOnInit(): void {
-  //   const token = localStorage.getItem('token')
-
-  //   // TODO: En este punto lo que habría que hacer es hacer una petición al BACKEND, a un endpoint previamente protegido por un middleware que comprueba el token. Depende de lo que devuelva, se gestiona aquí, el éxito o el error, ya que de no haber token, el GUARD directamente redirecciona, y de existir un error con el token que enviemos al hacer la petición, se puede ver reflejado el error.
-  //   if (token) {
-  //     const decodedToken: Token = JSON.parse(token)
-  //     this._goalsService.getGoals(decodedToken.userId).subscribe({
-  //       next: goals => {
-  //           this.goals = goals
-  //           this.isLoading = false;
-  //       },
-  //       error: error => {
-  //         this.isLoading = false
-  //         console.log(error)
-  //         // this.errorMessage = error.message
-  //         this._notificationService.error(error.message, false)
-  //       },
-  //       // complete: () => console.log('Get goals attempt completed!')
-  //     })
-  //   } else {
-  //     this.isLoading = false
-  //     this.errorMessage = 'Connection error'
-  //   }
-  // }
 }

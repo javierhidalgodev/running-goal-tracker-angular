@@ -6,7 +6,7 @@ import { DbService } from './db.service';
 import bcrypt from 'bcryptjs'
 import { ErrorMessageDirective } from '@directives/error-message.directive';
 import { Router } from '@angular/router';
-import { Auth, authInstance$ } from '@angular/fire/auth';
+import { Auth, authInstance$, user, User as UserFirebase } from '@angular/fire/auth';
 
 const API_URL = 'https://reqres.in/api';
 const API_DBJSON_URL = 'http://localhost:3000';
@@ -15,15 +15,24 @@ const API_DBJSON_URL = 'http://localhost:3000';
   providedIn: 'root'
 })
 export class AuthService {
+  user$: Observable<UserFirebase | null> = user(this._auth);
+  currentUserSignal = signal<{ uid: string } | null | undefined>(undefined)
+
   constructor(
     private _http: HttpClient,
     private _dbService: DbService,
     private _router: Router,
     public _auth: Auth
-  ) { }
+  ) {
+    this.user$.subscribe(user => {
+      if(user) {
+        this.currentUserSignal.set({uid: user.uid!})
+      } else {
+        this.currentUserSignal.set(null)
+      }
+    })
+  }
 
-  user$ = authInstance$
-  currentUserSignal = signal<{email: string} | null | undefined>(undefined)
 
   loginDBJSON(loginData: Login): Observable<string> {
     return this._dbService.getUserByEmail(loginData.email).pipe(
@@ -54,7 +63,7 @@ export class AuthService {
 
     if (localStorageToken) {
       const { token } = JSON.parse(localStorageToken)
-      
+
       return this._http.get('http://localhost:5000/login/check-token', {
         headers: new HttpHeaders({
           'Authorization': `Bearer ${token}`
@@ -124,7 +133,7 @@ export class AuthService {
   register(userData: NewUser) {
     return this._dbService.getUserByEmail(userData.email).pipe(
       switchMap(user => {
-        if(!user) {
+        if (!user) {
           return this.hashPassword(userData.password).pipe(
             switchMap(hash => {
               const newUser: User = {

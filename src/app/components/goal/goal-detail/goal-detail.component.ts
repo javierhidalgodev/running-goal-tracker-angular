@@ -45,36 +45,7 @@ export class GoalDetailComponent {
     })
   }
 
-  async delete(goal: Goal) {
-    this.inProcess = true
-
-    // try {
-    //   const res = await this._firestoreService.deleteGoal(goal)
-    //   console.log(res)
-    //   this.inProcess = false
-    // } catch (error) {
-    //   console.error(error)
-    //   this.inProcess = false
-    // }
+  delete(goal: Goal) {
+    this.emitOpenDeleteModal.emit()
   }
-
-  // delete() {
-  //   if (this.selectedGoal) {
-  //     this.inProcess = true
-  //     this._goalService.deleteGoal(this.selectedGoal.id)
-  //       .subscribe({
-  //         next: () => {
-  //           this._router.navigate(['/goals'])
-  //         },
-  //         error: error => {
-  //           this.inProcess = false
-  //           this._notificationService.error('Something went wrong deleting goal. Please, try again later')
-  //         },
-  //         complete: () => {
-  //           this.inProcess = false
-  //         },
-  //       })
-  //   }
-  // }
-
 }

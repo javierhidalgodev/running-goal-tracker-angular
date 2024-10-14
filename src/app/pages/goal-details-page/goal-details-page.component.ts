@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { GoalService } from '@services/goal.service';
 import { ActiveModal, Goal } from '@models/goals.model';
-import { Subscription } from 'rxjs';
+import { catchError, Observable, Subscription, switchMap, throwError } from 'rxjs';
 import { ModalService } from '@services/modal.service';
 import { ModalYeahComponent } from '@components/modal-yeah/modal-yeah.component';
 import { ModalInterface } from '@models/modal.model';
@@ -35,24 +35,55 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
     private _modalService: ModalService,
     private _notificationService: NotificationService,
     private _firestoreService: FirestoreService,
+    private _router: Router,
   ) { }
 
   ngOnInit(): void {
-    // 1. Recuperar el parámetro ID de la URL para obtener goal
     this.idParam = this.getGoalIdFromRoute()
 
-    // 2. Obtener goal
     if (this.idParam) {
-      this.fetchGoalById(this.idParam)
-      // 3. Obtener actividades del goal
+      this.fetchGoalById(this.idParam).subscribe({
+        next: activities => {
+          console.log(this.goal)
+          console.log(activities)
+
+          this.activities = activities
+        },
+        error: error => {
+          console.error(error)
+          this._notificationService.error(error.message, false)
+        },
+        complete: () => {
+          console.log('Completed!');
+        }
+      })
+    } else {
+      this._notificationService.error('Goal not found')
     }
+    this.isLoading = false
   }
 
   private getGoalIdFromRoute(): string | null {
     return this._route.snapshot.paramMap.get('id')
   }
 
-  private fetchGoalById(id: string) {
+  private fetchGoalById(id: string): Observable<Activity[]> {
+    return this._firestoreService.getGoalById(id).pipe(
+      switchMap(res => {
+        if(res) {
+          this.goal = res
+          return this._firestoreService.getGoalActivities(id)
+        } else {
+          return throwError(() => new Error('Goal not found'))
+        }
+      }),
+      catchError(error => {
+        return throwError(() => new Error(error))
+      })
+    )
+
+
+    this.isLoading = false
     // console.log(id)
     // this._firestoreService.getGoalById(id)
     //   .subscribe(goal => {
@@ -99,15 +130,20 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
   }
 
   confirmDelete() {
-    // const modalInterface: ModalInterface = {
-    //   cancelButtonLabel: 'No',
-    //   confirmAction: () => this._firestoreService.deleteGoal(this.goal),
-    //   confirmButtonLabel: 'Delete',
-    //   title: 'Delete goal', 
-    //   content: 'Are you sure to delete this goal?',
-    // }
+    const modalInterface: ModalInterface = {
+      cancelButtonLabel: 'No',
+      confirmAction: () => this.deleteGoal(),
+      confirmButtonLabel: 'Delete',
+      title: 'Delete goal', 
+      content: 'Are you sure to delete this goal?',
+    }
 
-    // this._modalService.openDialog(ModalYeahComponent, modalInterface)
+    this._modalService.openDialog(ModalYeahComponent, modalInterface)
+  }
+
+  async deleteGoal() {
+    await this._firestoreService.deleteGoal(this.goal)
+    this._router.navigate(['/goals'])
   }
 
   // ? Para añadir kilómetros
@@ -124,19 +160,23 @@ export class GoalDetailsPageComponent implements OnInit, OnDestroy {
   }
 
   // * Para recibir la acción de actualización del componente de goal-details, y actualizar la vista
-  activityAdded(event: Goal) {
+  activityAdded(event: any) {
     this.activeModal = null
 
-    // * Necesito usar esta función que actualiza el objetivo y sus actividades a la vez para ver reflejados los cambios en la UI
-    this.fetchGoalById(event.id)
+    this.checkGoalProgress()
+    console.log(this.goal.km,)
+  }
 
-    if (event.completed) {
-      this.activeModal = 'goalCompleted'
-    } else {
-      this.activitySuccessMessage = 'Activity added successfully!'
-      setTimeout(() => {
-        this.activitySuccessMessage = undefined
-      }, 5000)
+  async checkGoalProgress() {
+    const goalTotal = this.activities.reduce((prev, acc) => prev + acc.km, 0)
+
+    if (goalTotal > this.goal.km) {
+      try {
+        const res = await this._firestoreService.updateGoalStatus(this.idParam!)
+        console.log(res)
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 

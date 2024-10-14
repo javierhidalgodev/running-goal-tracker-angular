@@ -17,7 +17,7 @@ export interface GoalActivity {
 }
 
 export interface Goal {
-    id: string,
+    uid: string,
     userId: string,
     name: string,
     description: string,
@@ -25,7 +25,7 @@ export interface Goal {
     endDate: Timestamp,
     km: number,
     image?: string,
-    completed: boolean,
+    completed: boolean
 }
 
 export interface GoalWithExtraDetails extends Goal {

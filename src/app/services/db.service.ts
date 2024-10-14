@@ -168,13 +168,13 @@ export class DbService {
   }
 
   checkGoalStatus(goal: Goal): Observable<Goal> {
-    return this.getUserActivities(goal.id).pipe(
+    return this.getUserActivities(goal.uid).pipe(
       switchMap(activities => {
         if (activities) {
           const kmsCovered = activities.reduce((prev, curr) => prev + curr.km, 0)
 
           if (kmsCovered >= goal.km) {
-            return this._http.patch<Goal>(`${this._DB_URL}/goals/${goal.id}`, { completed: true }).pipe(
+            return this._http.patch<Goal>(`${this._DB_URL}/goals/${goal.uid}`, { completed: true }).pipe(
               map(updatedGoal => {
                 console.log('actividad completada', updatedGoal)
                 return updatedGoal

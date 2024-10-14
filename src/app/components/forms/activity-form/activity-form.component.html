@@ -11,8 +11,8 @@
             formControlName="date"
             [matDatepicker]="picker"
             [min]="selectedGoal.
-            startDate"
-            [max]="selectedGoal.endDate"
+            startDate.toDate()"
+            [max]="selectedGoal.endDate.toDate()"
         >
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>

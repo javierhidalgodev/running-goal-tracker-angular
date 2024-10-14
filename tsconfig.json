@@ -3,7 +3,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "types": ["node"],
+    "types": ["node", "rxjs"],
     "baseUrl": "./src",
     "outDir": "./dist/out-tsc",
     "strict": true,

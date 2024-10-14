@@ -25,12 +25,11 @@ export class GoalComponent implements OnInit {
 
   // Podemos introducir un ngOnInit para verificar el estado del goal, y si es null renderizar algo concreto y avisar al usuario
   ngOnInit(): void {
-    console.log(this._authService.currentUserSignal())
     if (!this.goalObject) {
       console.warn('Something went wrong with data source!')
     } else {
-      // * Hacer mejor
-      this._goalService.getActivitiesByGoalId(this.goalObject.id).subscribe(value => this.goalActivities = value)
+      // console.log(this.goalObject)
+      
     }
   }
 

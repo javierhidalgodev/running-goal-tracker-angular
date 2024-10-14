@@ -1,3 +1,4 @@
+import { environment } from 'environments/environment';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -118,7 +119,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
     provideAnimationsAsync(),
     provideHttpClient(withInterceptorsFromDi()),
     provideNativeDateAdapter(),
-    provideFirebaseApp(() => initializeApp({"projectId":"running-goal-tracker-app","appId":"1:160114620249:web:5d4d94002dc004f0c13e48","storageBucket":"running-goal-tracker-app.appspot.com","apiKey":"AIzaSyBvpnOVrrVsHOYWWa2AduaGElCwv91xphY","authDomain":"running-goal-tracker-app.firebaseapp.com","messagingSenderId":"160114620249"})),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth())
   ],

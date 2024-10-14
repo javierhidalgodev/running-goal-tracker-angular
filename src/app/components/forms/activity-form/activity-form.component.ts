@@ -6,6 +6,8 @@ import { GoalService } from '@services/goal.service';
 import { InputValidators, NotificationService } from '@services/notification.service';
 import { getValidationErrors } from '@utils/forms.utils';
 import { Observable, Subscription } from 'rxjs';
+import { FirestoreService } from '@services/firestore.service';
+import { Activity } from '@models/activity.model';
 
 @Component({
   selector: 'app-activity-form',
@@ -14,7 +16,8 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class ActivityFormComponent implements OnInit, OnDestroy {
   @Input() selectedGoal: GoalWithExtraDetails | Goal;
-  @Output() emitAddActivity = new EventEmitter<Goal>()
+  @Input() goalId: string;
+  @Output() emitAddActivity = new EventEmitter()
 
   activityForm: FormGroup = new FormGroup([])
   validationErrors: InputValidators[] | null = null;
@@ -26,7 +29,8 @@ export class ActivityFormComponent implements OnInit, OnDestroy {
   constructor(
     private _formBuilder: FormBuilder,
     private _goalService: GoalService,
-    private _notificationService: NotificationService
+    private _notificationService: NotificationService,
+    private _firestoreService: FirestoreService,
   ) { }
 
   ngOnInit(): void {
@@ -52,27 +56,45 @@ export class ActivityFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  addActivity() {
-    // if (this.selectedGoal) {
+  async addActivity() {
     this.isAdding = true
+
+    const newActivity = {
+      ...this.activityForm.value,
+      added: new Date(),
+      goalId: this.goalId
+    }
+
+    try {
+      const res = await this._firestoreService.addActivity(newActivity)
+      console.log(res)
+      this.emitAddActivity.emit()
+    } catch (error) {
+      console.log(error)
+      this._notificationService.error('todo mal tú')
+    }
+
+    this.isAdding = false
+    // if (this.selectedGoal) {
+    // this.isAdding = true
     // const activityToAdd = this.activityForm.value
 
-    this._subscriptions$.add(
-      this._goalService.addActivityToGoalDBJSON(this.selectedGoal.id, this.activityForm).subscribe({
-        next: goal => {
-          // console.log(goal)
-          this.emitAddActivity.emit(goal)
-        },
-        error: error => {
-          // console.error(error)
-          this.isAdding = false
-          this._notificationService.error('Something went wrong')
-        },
-        complete: () => {
-          this.isAdding = false
-          this.activityForm.reset()
-        }
-      }))
+    // this._subscriptions$.add(
+    // this._goalService.addActivityToGoalDBJSON(this.selectedGoal.id, this.activityForm).subscribe({
+    // next: goal => {
+    // console.log(goal)
+    // this.emitAddActivity.emit(goal)
+    // },
+    // error: error => {
+    // console.error(error)
+    // this.isAdding = false
+    // this._notificationService.error('Something went wrong')
+    // },
+    // complete: () => {
+    // this.isAdding = false
+    // this.activityForm.reset()
+    // }
+    // }))
     // }
   }
 
