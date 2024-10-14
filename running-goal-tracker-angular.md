@@ -1,11 +1,25 @@
 # Running Goal Tracker (ANGULAR PROJECT)
 
-### 7/11-10//2024
+### 14/18-10//2024
 - [ ] Continar la refactorización con `Firestore`.
 - [ ] Depurar la lógica.
 - [ ] *Lazy loading*.
 - [ ] Revisión general de estilos.
 - [ ] Despliegue.
+
+#### 14-10
+- [ ] Conseguir data a través del usuario.
+
+
+### 7/11-10//2024
+- [x] Continar la refactorización con `Firestore`.
+- [x] Depurar la lógica.
+- [ ] *Lazy loading*.
+- [ ] Revisión general de estilos.
+- [ ] Despliegue.
+
+#### 10/11-10
+- [x] Preparación técnica para la entrevista con `Revel`.
 
 #### 9-10
 - [x] Implementación de `AngularFire Auth`.

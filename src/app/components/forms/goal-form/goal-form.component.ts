@@ -7,6 +7,7 @@ import { NotificationService } from '@services/notification.service';
 import { Subscription, tap } from 'rxjs';
 import { FirestoreService } from '@services/firestore.service';
 import { Goal } from '@models/goals.model';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-goal-form',
@@ -26,6 +27,7 @@ export class GoalFormComponent implements OnInit, OnDestroy {
     private _goalService: GoalService,
     private _notificationService: NotificationService,
     private _firestoreService: FirestoreService,
+    private _authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -71,57 +73,75 @@ export class GoalFormComponent implements OnInit, OnDestroy {
   }
 
   async addGoalToFirestore() {
-    const token = localStorage.getItem('token')
+    // *v3
+    const user = this._authService._auth.currentUser
 
-    if (token) {
-      const decodedToken = JSON.parse(token)
-
-      console.log(this.goalForm.value, console.log(decodedToken))
+    if (user) {
       const newGoal: Goal = {
         ...this.goalForm.value,
         completed: false,
-        userId: decodedToken.userId
+        userId: user.uid
       }
 
-      // try {
-      //   const res = await this._firestoreService.addGoal(newGoal)
-      //   this.isAdding = false
-      //   this._notificationService.success('Goal added!')
-      //   this.goalForm.reset()
-
-      //   Object.keys(this.goalForm.controls).forEach(control => {
-      //     this.goalForm.get(control)?.setErrors(null)
-      //   })
-      // } catch (error: any) {
-      //   this.isAdding = false
-      //   this._notificationService.error(error)
-      // }
+      try {
+        const res = await this._firestoreService.addGoal(newGoal)
+        console.log(res)
+      } catch (error) {
+        console.log(error)
+      }
     }
 
+    // * v2
+    // const token = localStorage.getItem('token')
+
+    // if (token) {
+    //   const decodedToken = JSON.parse(token)
+
+    //   console.log(this.goalForm.value, console.log(decodedToken))
+    //   const newGoal: Goal = {
+    //     ...this.goalForm.value,
+    //     completed: false,
+    //     userId: decodedToken.userId
+    //   }
+
+    // * v1
+    // try {
+    //   const res = await this._firestoreService.addGoal(newGoal)
+    //   this.isAdding = false
+    //   this._notificationService.success('Goal added!')
+    //   this.goalForm.reset()
+
+    //   Object.keys(this.goalForm.controls).forEach(control => {
+    //     this.goalForm.get(control)?.setErrors(null)
+    //   })
+    // } catch (error: any) {
+    //   this.isAdding = false
+    //   this._notificationService.error(error)
+    // }
   }
 
-  addGoal() {
-    this.isAdding = true
+  // addGoal() {
+  //   this.isAdding = true
 
-    this.subscriptions$.add(
-      this._goalService.createGoal(this.goalForm).subscribe({
-        // next: goal => console.log(goal), // En principio no necesito recibir nada, solo emitir un evento cuando la operación es exitosa
-        error: error => {
-          this.isAdding = false
-          this._notificationService.error('Something went wrong')
-        },
-        complete: () => {
-          this.isAdding = false
-          this._notificationService.success('Goal added!')
-          this.goalForm.reset()
+  //   this.subscriptions$.add(
+  //     this._goalService.createGoal(this.goalForm).subscribe({
+  //       // next: goal => console.log(goal), // En principio no necesito recibir nada, solo emitir un evento cuando la operación es exitosa
+  //       error: error => {
+  //         this.isAdding = false
+  //         this._notificationService.error('Something went wrong')
+  //       },
+  //       complete: () => {
+  //         this.isAdding = false
+  //         this._notificationService.success('Goal added!')
+  //         this.goalForm.reset()
 
-          Object.keys(this.goalForm.controls).forEach(control => {
-            this.goalForm.get(control)?.setErrors(null)
-          })
-        }
-      })
-    )
-  }
+  //         Object.keys(this.goalForm.controls).forEach(control => {
+  //           this.goalForm.get(control)?.setErrors(null)
+  //         })
+  //       }
+  //     })
+  //   )
+  // }
 
   ngOnDestroy(): void {
     this.subscriptions$.unsubscribe()

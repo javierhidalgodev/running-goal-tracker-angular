@@ -24,8 +24,12 @@ export class GoalsPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this._authService.currentUserSignal())
-    this.fetchGoals()
+    // console.log(this._authService.currentUserSignal())
+    // this.fetchGoals()
+
+    if(this._authService._auth.currentUser) {
+      console.log(this._authService._auth.currentUser.uid)
+    }
   }
 
   fetchGoals(): void {

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
-import { collection, CollectionReference, Firestore } from '@angular/fire/firestore';
+import { addDoc, collection, CollectionReference, Firestore } from '@angular/fire/firestore';
+import { Goal } from '@models/goals.model';
 import { NewUser } from '@models/user.model';
 
 @Injectable({
@@ -26,5 +27,9 @@ export class FirestoreService {
 
   logout() {
     return signOut(this._auth)
+  }
+
+  addGoal(data: Goal) {
+    return addDoc(this.goalsRef, data)
   }
 }
